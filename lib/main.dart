@@ -30,18 +30,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final boxes = _generateGameBoxes();
+
   @override
   Widget build(BuildContext context) {
-    GameBox box = GameBox()
-      ..loc = Offset.zero
-      ..color = Colors.red;
-
     return Scaffold(
       body: Center(
         child: GestureDetector(
           child: Stack(
             alignment: Alignment.center,
-            children: [GameBoxWidget(box: box)],
+            children: boxes
+                .map((e) => GameBoxWidget(
+                      box: e,
+                      text: boxes.indexOf(e).toString(),
+                    ))
+                .toList(),
           ),
         ),
       ),
@@ -50,8 +53,14 @@ class _HomePageState extends State<HomePage> {
 }
 
 class GameBox {
-  late Offset loc;
-  late Color color;
+  GameBox({
+    required this.loc,
+    required this.color,
+  });
+
+  final Offset loc;
+
+  final Color color;
 
   Rect getRect(Size parentSize) {
     final totalBoxWidth = parentSize.shortestSide / gridSize;
@@ -65,9 +74,14 @@ class GameBox {
 }
 
 class GameBoxWidget extends StatelessWidget {
-  const GameBoxWidget({Key? key, required this.box}) : super(key: key);
+  const GameBoxWidget({
+    Key? key,
+    required this.box,
+    required this.text,
+  }) : super(key: key);
 
   final GameBox box;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +92,26 @@ class GameBoxWidget extends StatelessWidget {
       top: gameBoxRect.top,
       width: gameBoxRect.width,
       height: gameBoxRect.height,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          color: box.color,
+      child: Padding(
+        padding: EdgeInsets.all(gameBoxRect.width * relativeGapSize / 2),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            color: box.color,
+          ),
+          child: Center(child: Text(text)),
         ),
       ),
     );
   }
+}
+
+List<GameBox> _generateGameBoxes() {
+  final result = <GameBox>[];
+  for (double x = -2.5; x <= 2.5; x++) {
+    for (double y = -2.5; y <= 2.5; y++) {
+      result.add(GameBox(loc: Offset(x, y), color: Colors.red));
+    }
+  }
+  return result;
 }
