@@ -34,28 +34,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     GameBox box = GameBox()
       ..loc = Offset.zero
-      ..color = Colors.amber;
-    final screenSize = MediaQuery.of(context).size;
-    final gameBoxRect = box.getRect(screenSize);
+      ..color = Colors.red;
+
     return Scaffold(
       body: Center(
         child: GestureDetector(
           child: Stack(
             alignment: Alignment.center,
-            children: [
-              Positioned(
-                left: gameBoxRect.left,
-                top: gameBoxRect.top,
-                width: gameBoxRect.width,
-                height: gameBoxRect.height,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: box.color,
-                  ),
-                ),
-              )
-            ],
+            children: [GameBoxWidget(box: box)],
           ),
         ),
       ),
@@ -74,6 +60,30 @@ class GameBox {
           parentSize.height / 2 + loc.dy * totalBoxWidth),
       width: totalBoxWidth,
       height: totalBoxWidth,
+    );
+  }
+}
+
+class GameBoxWidget extends StatelessWidget {
+  const GameBoxWidget({Key? key, required this.box}) : super(key: key);
+
+  final GameBox box;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final gameBoxRect = box.getRect(screenSize);
+    return Positioned(
+      left: gameBoxRect.left,
+      top: gameBoxRect.top,
+      width: gameBoxRect.width,
+      height: gameBoxRect.height,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: box.color,
+        ),
+      ),
     );
   }
 }
