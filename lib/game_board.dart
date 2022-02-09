@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const gridSize = 4;
+const gridSize = 3;
 const relativeGapSize = 1 / 12;
 
 class GameBox {
@@ -16,11 +16,11 @@ class GameBox {
 
   Rect getRect(Size parentSize) {
     final totalBoxWidth = parentSize.shortestSide / gridSize;
-    return Rect.fromCenter(
-      center: Offset(parentSize.shortestSide / 2 + loc.dx * totalBoxWidth,
-          parentSize.shortestSide / 2 + loc.dy * totalBoxWidth),
-      width: totalBoxWidth,
-      height: totalBoxWidth,
+    return Rect.fromLTWH(
+      loc.dx * totalBoxWidth,
+      loc.dy * totalBoxWidth,
+      totalBoxWidth,
+      totalBoxWidth,
     );
   }
 }
@@ -39,7 +39,6 @@ class GameBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final screenSize = MediaQuery.of(context).size;
     final gameBoxRect = box.getRect(parentSize);
     return Positioned(
       left: gameBoxRect.left,
@@ -62,10 +61,15 @@ class GameBoxWidget extends StatelessWidget {
 
 List<GameBox> _generateGameBoxes() {
   final result = <GameBox>[];
-  for (double y = -1.5; y <= 1.5; y++) {
-    for (double x = -1.5; x <= 1.5; x++) {
-      result.add(GameBox(
-          startLoc: Offset(x, y), loc: Offset(x, y), color: Colors.red));
+  for (double y = 0; y < gridSize; y++) {
+    for (double x = 0; x < gridSize; x++) {
+      result.add(
+        GameBox(
+          startLoc: Offset(x, y),
+          loc: Offset(x, y),
+          color: Colors.red,
+        ),
+      );
     }
   }
   return result;
@@ -90,11 +94,6 @@ class _GameBoardState extends State<GameBoard> {
   @override
   Widget build(BuildContext context) {
     Size parentSize = widget.parentSize;
-    Rect gameBoxRect = GameBox(
-      startLoc: Offset.zero,
-      loc: Offset.zero,
-      color: Colors.black,
-    ).getRect(parentSize);
     return Center(
       child: SizedBox(
         width: parentSize.shortestSide,
@@ -114,12 +113,12 @@ class _GameBoardState extends State<GameBoard> {
                 if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
                   for (GameBox box in tappedRow) {
                     box.loc = box.startLoc +
-                        Offset(dragOffset.dx / gameBoxRect.width, 0);
+                        Offset(dragOffset.dx / parentSize.width * gridSize, 0);
                   }
                 } else {
                   for (GameBox box in tappedColumn) {
                     box.loc = box.startLoc +
-                        Offset(0, dragOffset.dy / gameBoxRect.height);
+                        Offset(0, dragOffset.dy / parentSize.height * gridSize);
                   }
                 }
               }
@@ -141,9 +140,9 @@ class _GameBoardState extends State<GameBoard> {
               ),
               ...boxes
                   .map(
-                    (e) => GameBoxWidget(
-                      box: e,
-                      text: boxes.indexOf(e).toString(),
+                    (box) => GameBoxWidget(
+                      box: box,
+                      text: '${boxes.indexOf(box) + 1}',
                       parentSize: parentSize,
                     ),
                   )
@@ -186,10 +185,10 @@ class _GameBoardState extends State<GameBoard> {
 
   void _snapBoxes() {
     for (GameBox box in boxes) {
-      Offset translatedLoc = box.loc + const Offset(0.5, 0.5);
+      Offset translatedLoc = box.loc + const Offset(1, 1);
       box.loc = Offset(
-        translatedLoc.dx.round() - 0.5,
-        translatedLoc.dy.round() - 0.5,
+        translatedLoc.dx.round() - 1,
+        translatedLoc.dy.round() - 1,
       );
     }
   }
