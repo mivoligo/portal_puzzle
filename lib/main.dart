@@ -37,11 +37,13 @@ class _HomePageState extends State<HomePage> {
             height: 100,
             color: Colors.green,
           ),
-          Expanded(child: LayoutBuilder(builder: (context, constraints) {
-            return GameBoard(
-              parentSize: constraints.biggest * 0.8,
-            );
-          })),
+          Expanded(
+            child: LayoutBuilder(builder: (context, constraints) {
+              return GameBoard(
+                parentSize: constraints.biggest * 0.8,
+              );
+            }),
+          ),
         ],
       ),
     );

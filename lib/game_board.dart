@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const gridSize = 3;
+const gridSize = 4;
 const relativeGapSize = 1 / 12;
 
 class GameBox {
@@ -127,6 +127,9 @@ class _GameBoardState extends State<GameBoard> {
           onPanEnd: (detail) {
             setState(() {
               _snapBoxes();
+              _moveBoxesInRows(_getRows());
+              _moveBoxesInColumns(_getColumns());
+
               for (GameBox box in boxes) {
                 box.startLoc = box.loc;
               }
@@ -191,5 +194,55 @@ class _GameBoardState extends State<GameBoard> {
         translatedLoc.dy.round() - 1,
       );
     }
+  }
+
+  void _moveBoxesInRows(List<List<GameBox>> rows) {
+    // Set<GameBox> boxesToRemove = {};
+    for (List<GameBox> row in rows) {
+      for (GameBox box in row) {
+        if (box.loc.dx < 0) {
+          box.loc = Offset(gridSize - 1, box.loc.dy);
+        }
+        if (box.loc.dx >= gridSize) {
+          box.loc = Offset(0, box.loc.dy);
+        }
+      }
+    }
+
+    // boxes.removeWhere((element) => boxesToRemove.contains(element));
+  }
+
+  void _moveBoxesInColumns(List<List<GameBox>> columns) {
+    // Set<GameBox> boxesToRemove = {};
+    for (List<GameBox> column in columns) {
+      for (GameBox box in column) {
+        if (box.loc.dy < 0) {
+          box.loc = Offset(box.loc.dx, gridSize - 1);
+        }
+        if (box.loc.dy >= gridSize) {
+          box.loc = Offset(box.loc.dx, 0);
+        }
+      }
+    }
+
+    // boxes.removeWhere((element) => boxesToRemove.contains(element));
+  }
+
+  List<List<GameBox>> _getRows() {
+    Map<double, List<GameBox>> rows = {};
+    for (GameBox box in boxes) {
+      List<GameBox> row = rows.putIfAbsent(box.loc.dy, () => []);
+      row.add(box);
+    }
+    return rows.values.toList();
+  }
+
+  List<List<GameBox>> _getColumns() {
+    Map<double, List<GameBox>> columns = {};
+    for (GameBox box in boxes) {
+      List<GameBox> column = columns.putIfAbsent(box.loc.dx, () => []);
+      column.add(box);
+    }
+    return columns.values.toList();
   }
 }
