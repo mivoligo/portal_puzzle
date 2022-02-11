@@ -23,25 +23,22 @@ class LargeLayout extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
+                children: const [
+                  SizedBox(
                     width: 250,
                     child: AppTitle(isLarge: true),
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
+                  SizedBox(height: 24),
+                  Text(
                     'Difficulty: Medium',
                     style: TextStyle(fontSize: 24),
                   ),
-                  const SizedBox(height: 24),
-                  const MovesCounter(
+                  SizedBox(height: 24),
+                  MovesCounter(
                     isLarge: true,
                   ),
-                  const SizedBox(height: 24),
-                  HeroButton(
-                    label: 'Shuffle',
-                    onPressed: () {},
-                  ),
+                  SizedBox(height: 24),
+                  ShuffleButton(),
                 ],
               ),
             ),

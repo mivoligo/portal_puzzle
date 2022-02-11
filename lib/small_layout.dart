@@ -26,12 +26,9 @@ class SmallLayout extends StatelessWidget {
                 const MovesCounter(),
                 const SizedBox(height: 12),
                 GameBoard(parentSize: constraints.biggest * 0.8),
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: HeroButton(
-                    label: 'Shuffle',
-                    onPressed: () {},
-                  ),
+                const Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: ShuffleButton(),
                 ),
               ],
             ),

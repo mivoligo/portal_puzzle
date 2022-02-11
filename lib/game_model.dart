@@ -12,5 +12,10 @@ class GameModel extends ChangeNotifier {
 
   void resetNumOfMoves() {
     _numOfMoves = 0;
+    notifyListeners();
+  }
+
+  void resetGame() {
+    resetNumOfMoves();
   }
 }
