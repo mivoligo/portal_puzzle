@@ -55,7 +55,15 @@ class GameBoxWidget extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             color: box.color,
           ),
-          child: Center(child: Text(text)),
+          child: Center(
+              child: Text(
+            text,
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              fontWeight: FontWeight.w600,
+              fontSize: gameBoxRect.height * 0.6,
+            ),
+          )),
         ),
       ),
     );
