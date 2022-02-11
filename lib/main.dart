@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portal_puzzle/game_model.dart';
+import 'package:provider/provider.dart';
 
 import 'home_page.dart';
 
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Rubik',
       ),
-      home: const HomePage(),
+      home: ChangeNotifierProvider<GameModel>(
+        create: (_) => GameModel(),
+        child: const HomePage(),
+      ),
     );
   }
 }

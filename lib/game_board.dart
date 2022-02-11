@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portal_puzzle/game_model.dart';
+import 'package:provider/provider.dart';
 
 const gridSize = 3;
 const relativeGapSize = 0;
@@ -175,18 +177,21 @@ class _GameBoardState extends State<GameBoard> {
             });
           },
           onPanEnd: (detail) {
-            setState(() {
-              _snapBoxes();
+            setState(
+              () {
+                _snapBoxes();
 
-              for (GameBox box in boxes) {
-                box.startLoc = box.loc;
-                if (box.loc == box.originalLoc) {
-                  box.color = Colors.amber;
-                } else {
-                  box.color = Colors.red.shade50;
+                for (GameBox box in boxes) {
+                  box.startLoc = box.loc;
+                  if (box.loc == box.originalLoc) {
+                    box.color = Colors.amber;
+                  } else {
+                    box.color = Colors.red.shade50;
+                  }
                 }
-              }
-            });
+              },
+            );
+            context.read<GameModel>().addMove();
           },
           child: Stack(
             alignment: Alignment.center,

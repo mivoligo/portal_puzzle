@@ -23,7 +23,7 @@ class SmallLayout extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: DifficultySelector(),
                 ),
-                const MovesCounter(movesCount: 1337),
+                const MovesCounter(),
                 const SizedBox(height: 12),
                 GameBoard(parentSize: constraints.biggest * 0.8),
                 Padding(

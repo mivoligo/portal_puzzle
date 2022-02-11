@@ -26,7 +26,6 @@ class MediumLayout extends StatelessWidget {
                   ),
                 ),
                 const MovesCounter(
-                  movesCount: 1337,
                   isLarge: true,
                 ),
                 const SizedBox(height: 12),

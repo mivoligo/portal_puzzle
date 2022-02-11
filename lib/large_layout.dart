@@ -35,7 +35,6 @@ class LargeLayout extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   const MovesCounter(
-                    movesCount: 1337,
                     isLarge: true,
                   ),
                   const SizedBox(height: 24),
