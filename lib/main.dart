@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:portal_puzzle/game_board.dart';
 
+import 'home_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -20,32 +22,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+// class HomePage extends StatefulWidget {
+//   const HomePage({Key? key}) : super(key: key);
+//
+//   @override
+//   State<HomePage> createState() => _HomePageState();
+// }
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 100,
-            color: Colors.green,
-          ),
-          Expanded(
-            child: LayoutBuilder(builder: (context, constraints) {
-              return GameBoard(
-                parentSize: constraints.biggest * 0.8,
-              );
-            }),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class _HomePageState extends State<HomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Column(
+//         children: [
+//           Container(
+//             height: 100,
+//             color: Colors.green,
+//           ),
+//           Expanded(
+//             child: LayoutBuilder(builder: (context, constraints) {
+//               return GameBoard(
+//                 parentSize: constraints.biggest * 0.8,
+//               );
+//             }),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
