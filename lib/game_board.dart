@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-const gridSize = 4;
-const relativeGapSize = 1 / 12;
+const gridSize = 3;
+const relativeGapSize = 0;
 
 class GameBox {
   GameBox({
+    required this.originalLoc,
     required this.startLoc,
     required this.loc,
     required this.color,
   });
 
+  Offset originalLoc;
   Offset startLoc;
   Offset loc;
-  final Color color;
+  Color color;
 
   Rect getRect(Size parentSize) {
     final totalBoxWidth = parentSize.shortestSide / gridSize;
@@ -47,7 +49,8 @@ class GameBoxWidget extends StatelessWidget {
       height: gameBoxRect.height,
       child: Padding(
         padding: EdgeInsets.all(gameBoxRect.width * relativeGapSize / 2),
-        child: Container(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 300),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             color: box.color,
@@ -65,6 +68,7 @@ List<GameBox> _generateGameBoxes() {
     for (double x = 0; x < gridSize; x++) {
       result.add(
         GameBox(
+          originalLoc: Offset(x, y),
           startLoc: Offset(x, y),
           loc: Offset(x, y),
           color: Colors.red.withAlpha(50),
@@ -113,33 +117,40 @@ class _GameBoardState extends State<GameBoard> {
                 if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
                   for (GameBox box in tappedRow) {
                     box.loc = box.startLoc +
-                        Offset(dragOffset.dx / parentSize.width * gridSize, 0);
+                        Offset(
+                          dragOffset.dx / parentSize.width * gridSize,
+                          0,
+                        );
                     if (box.loc.dx <= -0.5) {
                       box.loc = Offset(
                         box.startLoc.dx +
                             gridSize +
-                            (dragOffset.dx / parentSize.width * gridSize),
+                            dragOffset.dx / parentSize.width * gridSize,
                         box.loc.dy,
                       );
                     }
                     if (box.loc.dx > gridSize - 0.5) {
                       box.loc = Offset(
-                          box.startLoc.dx -
-                              gridSize +
-                              (dragOffset.dx / parentSize.width * gridSize),
-                          box.loc.dy);
+                        box.startLoc.dx -
+                            gridSize +
+                            dragOffset.dx / parentSize.width * gridSize,
+                        box.loc.dy,
+                      );
                     }
                   }
                 } else {
                   for (GameBox box in tappedColumn) {
                     box.loc = box.startLoc +
-                        Offset(0, dragOffset.dy / parentSize.height * gridSize);
+                        Offset(
+                          0,
+                          dragOffset.dy / parentSize.height * gridSize,
+                        );
                     if (box.loc.dy <= -0.5) {
                       box.loc = Offset(
                         box.loc.dx,
                         box.startLoc.dy +
                             gridSize +
-                            (dragOffset.dy / parentSize.height * gridSize),
+                            dragOffset.dy / parentSize.height * gridSize,
                       );
                     }
                     if (box.loc.dy > gridSize - 0.5) {
@@ -147,7 +158,7 @@ class _GameBoardState extends State<GameBoard> {
                         box.loc.dx,
                         box.startLoc.dy -
                             gridSize +
-                            (dragOffset.dy / parentSize.height * gridSize),
+                            dragOffset.dy / parentSize.height * gridSize,
                       );
                     }
                   }
@@ -161,6 +172,11 @@ class _GameBoardState extends State<GameBoard> {
 
               for (GameBox box in boxes) {
                 box.startLoc = box.loc;
+                if (box.loc == box.originalLoc) {
+                  box.color = Colors.amber;
+                } else {
+                  box.color = Colors.red.shade50;
+                }
               }
             });
           },
