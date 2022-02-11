@@ -16,38 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Rubik',
       ),
       home: const HomePage(),
     );
   }
 }
-
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: [
-//           Container(
-//             height: 100,
-//             color: Colors.green,
-//           ),
-//           Expanded(
-//             child: LayoutBuilder(builder: (context, constraints) {
-//               return GameBoard(
-//                 parentSize: constraints.biggest * 0.8,
-//               );
-//             }),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
