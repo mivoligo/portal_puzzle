@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:portal_puzzle/game_model.dart';
 
 import 'game_board.dart';
 import 'widgets/widgets.dart';
@@ -8,6 +10,24 @@ class LargeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final difficulty = context.select<GameModel, Difficulty>(
+      (model) => model.difficulty,
+    );
+
+    String difficultyString;
+
+    switch (difficulty) {
+      case Difficulty.simple:
+        difficultyString = 'Simple';
+        break;
+      case Difficulty.medium:
+        difficultyString = 'Medium';
+        break;
+      case Difficulty.hard:
+        difficultyString = 'Hard';
+        break;
+    }
+
     return Stack(
       children: [
         const Positioned(
@@ -23,22 +43,22 @@ class LargeLayout extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                     width: 250,
                     child: AppTitle(isLarge: true),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text(
-                    'Difficulty: Medium',
-                    style: TextStyle(fontSize: 24),
+                    'Difficulty: $difficultyString',
+                    style: const TextStyle(fontSize: 24),
                   ),
-                  SizedBox(height: 24),
-                  MovesCounter(
+                  const SizedBox(height: 24),
+                  const MovesCounter(
                     isLarge: true,
                   ),
-                  SizedBox(height: 24),
-                  ShuffleButton(),
+                  const SizedBox(height: 24),
+                  const ShuffleButton(),
                 ],
               ),
             ),
