@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/game_board.dart';
 
 import 'home_page.dart';
 

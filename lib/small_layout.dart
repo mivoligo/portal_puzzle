@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portal_puzzle/app_title.dart';
 import 'package:portal_puzzle/difficulty_selector.dart';
 import 'package:portal_puzzle/game_board.dart';
 
@@ -9,13 +10,18 @@ class SmallLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Small layout'),
-        DifficultySelector(),
+        const AppTitle(),
         Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return GameBoard(parentSize: constraints.biggest);
-            },
+          child: Column(
+            children: [
+              const DifficultySelector(),
+              const SizedBox(height: 12),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return GameBoard(parentSize: constraints.biggest);
+                },
+              ),
+            ],
           ),
         ),
       ],

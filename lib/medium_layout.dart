@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portal_puzzle/app_title.dart';
 
 import 'game_board.dart';
 
@@ -9,7 +10,7 @@ class MediumLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Medium layout'),
+        const AppTitle(),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {

@@ -14,13 +14,13 @@ class HomePage extends StatelessWidget {
         builder: (context, constraints) {
           final layoutWidth = constraints.maxWidth;
           if (layoutWidth < widthSmall) {
-            return SmallLayout();
+            return const SmallLayout();
           } else if (layoutWidth < widthMedium) {
-            return MediumLayout();
+            return const MediumLayout();
           } else if (layoutWidth < widthLarge) {
-            return LargeLayout();
+            return const LargeLayout();
           }
-          return LargeLayout();
+          return const LargeLayout();
         },
       ),
     );

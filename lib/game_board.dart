@@ -50,7 +50,7 @@ class GameBoxWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(gameBoxRect.width * relativeGapSize / 2),
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             color: box.color,
