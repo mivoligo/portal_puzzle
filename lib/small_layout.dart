@@ -3,6 +3,7 @@ import 'package:portal_puzzle/app_title.dart';
 import 'package:portal_puzzle/difficulty_selector.dart';
 import 'package:portal_puzzle/game_board.dart';
 import 'package:portal_puzzle/hero_button.dart';
+import 'package:portal_puzzle/moves_counter.dart';
 
 class SmallLayout extends StatelessWidget {
   const SmallLayout({Key? key}) : super(key: key);
@@ -24,10 +25,7 @@ class SmallLayout extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: DifficultySelector(),
                 ),
-                const Text(
-                  '1337 moves',
-                  style: TextStyle(fontSize: 24),
-                ),
+                const MovesCounter(movesCount: 1337),
                 const SizedBox(height: 12),
                 GameBoard(parentSize: constraints.biggest * 0.8),
                 Padding(

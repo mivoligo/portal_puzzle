@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portal_puzzle/app_title.dart';
+import 'package:portal_puzzle/moves_counter.dart';
 
 import 'difficulty_selector.dart';
 import 'game_board.dart';
@@ -27,9 +28,9 @@ class MediumLayout extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Text(
-                  '133 moves',
-                  style: TextStyle(fontSize: 24),
+                const MovesCounter(
+                  movesCount: 1337,
+                  isLarge: true,
                 ),
                 const SizedBox(height: 12),
                 GameBoard(parentSize: constraints.biggest * 0.6),

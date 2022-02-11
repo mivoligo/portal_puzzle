@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portal_puzzle/app_title.dart';
 import 'package:portal_puzzle/difficulty_selector.dart';
 import 'package:portal_puzzle/hero_button.dart';
+import 'package:portal_puzzle/moves_counter.dart';
 
 import 'game_board.dart';
 
@@ -12,9 +13,6 @@ class LargeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          color: Colors.red,
-        ),
         const Positioned(
           top: 64,
           right: 64,
@@ -39,9 +37,9 @@ class LargeLayout extends StatelessWidget {
                     style: TextStyle(fontSize: 24),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    '0 moves',
-                    style: TextStyle(fontSize: 32),
+                  const MovesCounter(
+                    movesCount: 1337,
+                    isLarge: true,
                   ),
                   const SizedBox(height: 24),
                   HeroButton(
