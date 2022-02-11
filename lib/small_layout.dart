@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/app_title.dart';
-import 'package:portal_puzzle/difficulty_selector.dart';
-import 'package:portal_puzzle/game_board.dart';
-import 'package:portal_puzzle/hero_button.dart';
-import 'package:portal_puzzle/moves_counter.dart';
+
+import 'game_board.dart';
+import 'widgets/widgets.dart';
 
 class SmallLayout extends StatelessWidget {
   const SmallLayout({Key? key}) : super(key: key);

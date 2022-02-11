@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/app_title.dart';
-import 'package:portal_puzzle/moves_counter.dart';
 
-import 'difficulty_selector.dart';
 import 'game_board.dart';
-import 'hero_button.dart';
+import 'widgets/widgets.dart';
 
 class MediumLayout extends StatelessWidget {
   const MediumLayout({Key? key}) : super(key: key);
