@@ -22,9 +22,11 @@ class GameModel extends ChangeNotifier {
   Difficulty get difficulty => _difficulty;
 
   void setDifficulty(Difficulty difficulty) {
-    _difficulty = difficulty;
-    resetGame();
-    notifyListeners();
+    if (_difficulty != difficulty) {
+      _difficulty = difficulty;
+      resetGame();
+      notifyListeners();
+    }
   }
 
   void resetGame() {
