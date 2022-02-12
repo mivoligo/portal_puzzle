@@ -8,37 +8,41 @@ class MediumLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      AppTitle(),
-                      DifficultySelector(),
-                    ],
-                  ),
-                ),
-                const MovesCounter(
-                  isLarge: true,
-                ),
-                const SizedBox(height: 12),
-                GameBoard(parentSize: constraints.biggest * 0.6),
-                const Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: ShuffleButton(),
-                ),
-              ],
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  AppTitle(),
+                  DifficultySelector(),
+                ],
+              ),
             ),
-          ),
-        ],
-      );
-    });
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  MovesCounter(isLarge: true),
+                  ShuffleButton(),
+                ],
+              ),
+            ),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (_, constraints) {
+                  return GameBoard(parentSize: constraints.biggest * 0.8);
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

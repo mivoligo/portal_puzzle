@@ -8,33 +8,34 @@ class SmallLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: AppTitle(),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: DifficultySelector(),
-                ),
-                const MovesCounter(),
-                const SizedBox(height: 12),
-                GameBoard(parentSize: constraints.biggest * 0.8),
-                const Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: ShuffleButton(),
-                ),
-              ],
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(32.0),
+              child: AppTitle(),
             ),
-          ),
-        ],
-      );
-    });
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: DifficultySelector(),
+            ),
+            const MovesCounter(),
+            const SizedBox(height: 12),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (_, constraints) =>
+                    GameBoard(parentSize: constraints.biggest * 0.8),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(32.0),
+              child: ShuffleButton(),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

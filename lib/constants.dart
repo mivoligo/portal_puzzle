@@ -1,4 +1,4 @@
 const appName = 'Portal Puzzle';
-const widthSmall = 576;
-const widthMedium = 1200;
+const widthSmall = 600;
+const widthMedium = 1240;
 const widthLarge = 1440;
