@@ -6,11 +6,9 @@ import '../game_model.dart';
 class MovesCounter extends StatelessWidget {
   const MovesCounter({
     Key? key,
-    // required this.movesCount,
     this.isLarge = false,
   }) : super(key: key);
 
-  // final int movesCount;
   final bool isLarge;
 
   @override
@@ -18,11 +16,17 @@ class MovesCounter extends StatelessWidget {
     final movesCount = context.select<GameModel, int>(
       (model) => model.numOfMoves,
     );
-    return Text(
-      'Moves: $movesCount',
-      style: isLarge
-          ? const TextStyle(fontSize: 32)
-          : const TextStyle(fontSize: 24),
-    );
+    return TweenAnimationBuilder(
+        tween: IntTween(begin: movesCount, end: movesCount),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOutQuint,
+        builder: (_, value, __) {
+          return Text(
+            'Moves: $value',
+            style: isLarge
+                ? const TextStyle(fontSize: 32)
+                : const TextStyle(fontSize: 24),
+          );
+        });
   }
 }
