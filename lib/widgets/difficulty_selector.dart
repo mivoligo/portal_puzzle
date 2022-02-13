@@ -77,34 +77,43 @@ class _DifficultyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double elevation = isSelected ? 0 : 4;
     return GestureDetector(
       onTapDown: (_) => onPressed(),
-      child: Transform.translate(
-        offset: isSelected ? const Offset(0, 4) : const Offset(0, 0),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: surfaceColor,
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0xEE222222),
-                  offset: isSelected ? const Offset(0, 2) : const Offset(0, 6),
-                  blurRadius: isSelected ? 2 : 8,
-                  blurStyle: BlurStyle.outer),
-              BoxShadow(
-                color: sideColor,
-                offset: isSelected ? const Offset(0, 2) : const Offset(0, 6),
+      child: TweenAnimationBuilder(
+        tween: Tween<double>(begin: elevation, end: elevation),
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeOut,
+        builder: (_, double value, child) {
+          return Transform.translate(
+            offset: Offset(0, -value),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: surfaceColor,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                boxShadow: [
+                  BoxShadow(
+                      color: const Color(0xEE222222),
+                      offset: Offset(0, value + 2),
+                      blurRadius: value + 2,
+                      blurStyle: BlurStyle.outer),
+                  BoxShadow(
+                    color: sideColor,
+                    offset: Offset(0, value + 2),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Text(
-            text,
-            style: isSelected
-                ? const TextStyle(
-                    color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
-                : TextStyle(color: textColor, fontWeight: FontWeight.w600),
-          ),
+              child: child,
+            ),
+          );
+        },
+        child: Text(
+          text,
+          style: isSelected
+              ? const TextStyle(
+                  color: Color(0xFFFFFFFF), fontWeight: FontWeight.w600)
+              : TextStyle(color: textColor, fontWeight: FontWeight.w600),
         ),
       ),
     );
