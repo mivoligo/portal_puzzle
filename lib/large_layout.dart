@@ -18,10 +18,10 @@ class LargeLayout extends StatelessWidget {
 
     switch (difficulty) {
       case Difficulty.simple:
-        difficultyString = 'Simple';
+        difficultyString = 'Easy';
         break;
       case Difficulty.medium:
-        difficultyString = 'Medium';
+        difficultyString = 'Normal';
         break;
       case Difficulty.hard:
         difficultyString = 'Hard';
