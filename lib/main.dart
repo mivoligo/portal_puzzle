@@ -19,8 +19,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Rubik',
       ),
-      home: ChangeNotifierProvider<GameModel>(
-        create: (_) => GameModel(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<GameModel>(
+            create: (_) => GameModel(),
+          ),
+          ChangeNotifierProvider<GameBoardModel>(
+            create: (_) => GameBoardModel(),
+          ),
+        ],
         child: const HomePage(),
       ),
     );

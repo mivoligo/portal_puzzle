@@ -3,31 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'models/models.dart';
 
-const gridSize = 3;
-const relativeGapSize = 0;
-
-class GameBox {
-  GameBox({
-    required this.originalLoc,
-    required this.startLoc,
-    required this.loc,
-  });
-
-  Offset originalLoc;
-  Offset startLoc;
-  Offset loc;
-
-  Rect getRect(Size parentSize) {
-    final totalBoxWidth = parentSize.shortestSide / gridSize;
-    return Rect.fromLTWH(
-      loc.dx * totalBoxWidth,
-      loc.dy * totalBoxWidth,
-      totalBoxWidth,
-      totalBoxWidth,
-    );
-  }
-}
-
 class GameBoxWidget extends StatelessWidget {
   const GameBoxWidget({
     Key? key,
@@ -36,54 +11,36 @@ class GameBoxWidget extends StatelessWidget {
     required this.parentSize,
   }) : super(key: key);
 
-  final GameBox box;
+  final GameBoxModel box;
   final String text;
   final Size parentSize;
 
   @override
   Widget build(BuildContext context) {
-    final gameBoxRect = box.getRect(parentSize);
+    final gridSize = context.watch<GameModel>().gridSize;
+    final gameBoxRect = box.getRect(parentSize: parentSize, gridSize: gridSize);
     return Positioned(
       left: gameBoxRect.left,
       top: gameBoxRect.top,
       width: gameBoxRect.width,
       height: gameBoxRect.height,
-      child: Padding(
-        padding: EdgeInsets.all(gameBoxRect.width * relativeGapSize / 2),
-        child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: Colors.orange,
-          ),
-          child: Center(
-              child: Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'Rubik',
-              fontWeight: FontWeight.w600,
-              fontSize: gameBoxRect.height * 0.6,
-            ),
-          )),
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          color: Colors.orange,
         ),
+        child: Center(
+            child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'Rubik',
+            fontWeight: FontWeight.w600,
+            fontSize: gameBoxRect.height * 0.6,
+          ),
+        )),
       ),
     );
   }
-}
-
-List<GameBox> _generateGameBoxes() {
-  final result = <GameBox>[];
-  for (double y = 0; y < gridSize; y++) {
-    for (double x = 0; x < gridSize; x++) {
-      result.add(
-        GameBox(
-          originalLoc: Offset(x, y),
-          startLoc: Offset(x, y),
-          loc: Offset(x, y),
-        ),
-      );
-    }
-  }
-  return result;
 }
 
 class GameBoard extends StatefulWidget {
@@ -96,14 +53,15 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  final boxes = _generateGameBoxes();
-  GameBox? tappedBox;
+  GameBoxModel? tappedBox;
   late Offset tappedLoc;
-  late List<GameBox> tappedRow;
-  late List<GameBox> tappedColumn;
+  late List<GameBoxModel> tappedRow;
+  late List<GameBoxModel> tappedColumn;
 
   @override
   Widget build(BuildContext context) {
+    final gridSize = context.watch<GameModel>().gridSize;
+    final boxes = context.watch<GameBoardModel>().boxes;
     Size parentSize = widget.parentSize;
     return Center(
       child: SizedBox(
@@ -112,58 +70,64 @@ class _GameBoardState extends State<GameBoard> {
         child: GestureDetector(
           onPanDown: (details) {},
           onPanStart: (details) {
-            tappedBox = _getTappedBox(parentSize, details.localPosition);
+            tappedBox = context.read<GameBoardModel>().getTappedBox(
+                  parentSize: parentSize,
+                  globalCoords: details.localPosition,
+                  gridSize: gridSize,
+                );
             tappedLoc = details.localPosition;
-            tappedRow = _getRowMatesForBox(tappedBox!);
-            tappedColumn = _getColumnMatesForBox(tappedBox!);
+            tappedRow =
+                context.read<GameBoardModel>().getRowMatesForBox(tappedBox!);
+            tappedColumn =
+                context.read<GameBoardModel>().getColumnMatesForBox(tappedBox!);
           },
           onPanUpdate: (details) {
             Offset dragOffset = details.localPosition - tappedLoc;
             setState(() {
               if (tappedBox != null) {
                 if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
-                  for (GameBox box in tappedRow) {
-                    box.loc = box.startLoc +
+                  for (GameBoxModel box in tappedRow) {
+                    box.currentLocation = box.startLocation +
                         Offset(
                           dragOffset.dx / parentSize.width * gridSize,
                           0,
                         );
-                    if (box.loc.dx <= -0.5) {
-                      box.loc = Offset(
-                        box.startLoc.dx +
+                    if (box.currentLocation.dx <= -0.5) {
+                      box.currentLocation = Offset(
+                        box.startLocation.dx +
                             gridSize +
                             dragOffset.dx / parentSize.width * gridSize,
-                        box.loc.dy,
+                        box.currentLocation.dy,
                       );
                     }
-                    if (box.loc.dx > gridSize - 0.5) {
-                      box.loc = Offset(
-                        box.startLoc.dx -
+                    if (box.currentLocation.dx > gridSize - 0.5) {
+                      box.currentLocation = Offset(
+                        box.startLocation.dx -
                             gridSize +
                             dragOffset.dx / parentSize.width * gridSize,
-                        box.loc.dy,
+                        box.currentLocation.dy,
                       );
                     }
                   }
                 } else {
-                  for (GameBox box in tappedColumn) {
-                    box.loc = box.startLoc +
+                  for (GameBoxModel box in tappedColumn) {
+                    box.currentLocation = box.startLocation +
                         Offset(
                           0,
                           dragOffset.dy / parentSize.height * gridSize,
                         );
-                    if (box.loc.dy <= -0.5) {
-                      box.loc = Offset(
-                        box.loc.dx,
-                        box.startLoc.dy +
+                    if (box.currentLocation.dy <= -0.5) {
+                      box.currentLocation = Offset(
+                        box.currentLocation.dx,
+                        box.startLocation.dy +
                             gridSize +
                             dragOffset.dy / parentSize.height * gridSize,
                       );
                     }
-                    if (box.loc.dy > gridSize - 0.5) {
-                      box.loc = Offset(
-                        box.loc.dx,
-                        box.startLoc.dy -
+                    if (box.currentLocation.dy > gridSize - 0.5) {
+                      box.currentLocation = Offset(
+                        box.currentLocation.dx,
+                        box.startLocation.dy -
                             gridSize +
                             dragOffset.dy / parentSize.height * gridSize,
                       );
@@ -174,20 +138,8 @@ class _GameBoardState extends State<GameBoard> {
             });
           },
           onPanEnd: (detail) {
-            setState(
-              () {
-                _snapBoxes();
-
-                for (GameBox box in boxes) {
-                  box.startLoc = box.loc;
-                  // if (box.loc == box.originalLoc) {
-                  //   box.color = Colors.amber;
-                  // } else {
-                  //   box.color = Colors.red.shade50;
-                  // }
-                }
-              },
-            );
+            context.read<GameBoardModel>().snapBoxes();
+            context.read<GameBoardModel>().updateGameBoxesLocation();
             context.read<GameModel>().addMove();
           },
           child: Stack(
@@ -196,58 +148,19 @@ class _GameBoardState extends State<GameBoard> {
               Container(
                 color: Colors.lightBlue,
               ),
-              ...boxes
-                  .map(
-                    (box) => GameBoxWidget(
-                      box: box,
-                      text: '${boxes.indexOf(box) + 1}',
-                      parentSize: parentSize,
-                    ),
-                  )
-                  .toList(),
+              ...boxes.map(
+                (box) {
+                  return GameBoxWidget(
+                    box: box,
+                    text: '${boxes.indexOf(box) + 1}',
+                    parentSize: parentSize,
+                  );
+                },
+              ).toList(),
             ],
           ),
         ),
       ),
     );
-  }
-
-  GameBox? _getTappedBox(Size parentSize, Offset globalCoords) {
-    for (GameBox box in boxes) {
-      if (box.getRect(parentSize).contains(globalCoords)) {
-        return box;
-      }
-    }
-    return null;
-  }
-
-  List<GameBox> _getRowMatesForBox(GameBox box) {
-    final rowMates = <GameBox>[];
-    for (GameBox rowMateCandidateBox in boxes) {
-      if (box.loc.dy == rowMateCandidateBox.loc.dy) {
-        rowMates.add(rowMateCandidateBox);
-      }
-    }
-    return rowMates;
-  }
-
-  List<GameBox> _getColumnMatesForBox(GameBox box) {
-    final columnMates = <GameBox>[];
-    for (GameBox columnMateCandidateBox in boxes) {
-      if (box.loc.dx == columnMateCandidateBox.loc.dx) {
-        columnMates.add(columnMateCandidateBox);
-      }
-    }
-    return columnMates;
-  }
-
-  void _snapBoxes() {
-    for (GameBox box in boxes) {
-      Offset translatedLoc = box.loc + const Offset(1, 1);
-      box.loc = Offset(
-        translatedLoc.dx.round() - 1,
-        translatedLoc.dy.round() - 1,
-      );
-    }
   }
 }

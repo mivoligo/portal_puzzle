@@ -20,8 +20,10 @@ class DifficultySelector extends StatelessWidget {
           surfaceColor: const Color(0xFF22C55E),
           sideColor: const Color(0xFF166534),
           textColor: const Color(0xFF14532D),
-          onPressed: () =>
-              context.read<GameModel>().setDifficulty(Difficulty.simple),
+          onPressed: () {
+            context.read<GameModel>().setDifficulty(Difficulty.simple);
+            context.read<GameBoardModel>().generateGameBoxes(gridSize: 2);
+          },
         ),
         const SizedBox(width: 12),
         _DifficultyButton(
@@ -30,8 +32,10 @@ class DifficultySelector extends StatelessWidget {
           surfaceColor: const Color(0xFF3B82F6),
           sideColor: const Color(0xFF1E40AF),
           textColor: const Color(0xFF1E3A8A),
-          onPressed: () =>
-              context.read<GameModel>().setDifficulty(Difficulty.medium),
+          onPressed: () {
+            context.read<GameModel>().setDifficulty(Difficulty.medium);
+            context.read<GameBoardModel>().generateGameBoxes(gridSize: 3);
+          },
         ),
         const SizedBox(width: 12),
         _DifficultyButton(
@@ -40,8 +44,10 @@ class DifficultySelector extends StatelessWidget {
           surfaceColor: const Color(0xFF8B5CF6),
           sideColor: const Color(0xFF5B21B6),
           textColor: const Color(0xFF4C1D95),
-          onPressed: () =>
-              context.read<GameModel>().setDifficulty(Difficulty.hard),
+          onPressed: () {
+            context.read<GameModel>().setDifficulty(Difficulty.hard);
+            context.read<GameBoardModel>().generateGameBoxes(gridSize: 4);
+          },
         ),
       ],
     );
