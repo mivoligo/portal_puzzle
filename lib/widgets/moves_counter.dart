@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../game_model.dart';
+import '../models/models.dart';
 
 class MovesCounter extends StatelessWidget {
   const MovesCounter({

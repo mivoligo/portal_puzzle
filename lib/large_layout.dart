@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:portal_puzzle/game_model.dart';
 
 import 'game_board.dart';
+import 'models/models.dart';
 import 'widgets/widgets.dart';
 
 class LargeLayout extends StatelessWidget {

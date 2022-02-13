@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/game_model.dart';
 import 'package:provider/provider.dart';
+
+import 'models/models.dart';
 
 const gridSize = 3;
 const relativeGapSize = 0;
@@ -10,13 +11,11 @@ class GameBox {
     required this.originalLoc,
     required this.startLoc,
     required this.loc,
-    required this.color,
   });
 
   Offset originalLoc;
   Offset startLoc;
   Offset loc;
-  Color color;
 
   Rect getRect(Size parentSize) {
     final totalBoxWidth = parentSize.shortestSide / gridSize;
@@ -51,11 +50,10 @@ class GameBoxWidget extends StatelessWidget {
       height: gameBoxRect.height,
       child: Padding(
         padding: EdgeInsets.all(gameBoxRect.width * relativeGapSize / 2),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            color: box.color,
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            color: Colors.orange,
           ),
           child: Center(
               child: Text(
@@ -81,7 +79,6 @@ List<GameBox> _generateGameBoxes() {
           originalLoc: Offset(x, y),
           startLoc: Offset(x, y),
           loc: Offset(x, y),
-          color: Colors.red.withAlpha(50),
         ),
       );
     }
@@ -183,11 +180,11 @@ class _GameBoardState extends State<GameBoard> {
 
                 for (GameBox box in boxes) {
                   box.startLoc = box.loc;
-                  if (box.loc == box.originalLoc) {
-                    box.color = Colors.amber;
-                  } else {
-                    box.color = Colors.red.shade50;
-                  }
+                  // if (box.loc == box.originalLoc) {
+                  //   box.color = Colors.amber;
+                  // } else {
+                  //   box.color = Colors.red.shade50;
+                  // }
                 }
               },
             );

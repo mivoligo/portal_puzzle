@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:portal_puzzle/game_model.dart';
+
+import '../models/models.dart';
 
 class DifficultySelector extends StatelessWidget {
   const DifficultySelector({Key? key}) : super(key: key);

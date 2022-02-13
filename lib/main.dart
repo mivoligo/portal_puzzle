@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/game_model.dart';
 import 'package:provider/provider.dart';
 
 import 'home_page.dart';
+import 'models/models.dart';
 
 void main() {
   runApp(const MyApp());

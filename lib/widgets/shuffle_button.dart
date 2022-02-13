@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../game_model.dart';
+import '../models/models.dart';
 import 'widgets.dart';
 
 class ShuffleButton extends StatelessWidget {

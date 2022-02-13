@@ -29,6 +29,17 @@ class GameModel extends ChangeNotifier {
     }
   }
 
+  int get gridSize {
+    switch (_difficulty) {
+      case Difficulty.simple:
+        return 2;
+      case Difficulty.medium:
+        return 3;
+      case Difficulty.hard:
+        return 4;
+    }
+  }
+
   void resetGame() {
     resetNumOfMoves();
   }
