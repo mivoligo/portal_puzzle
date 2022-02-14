@@ -11,6 +11,8 @@ class GameBox {
   Offset startLoc;
   Offset currentLoc;
 
+  bool get isAtSpawn => spawnLoc == currentLoc;
+
   Rect getRect({required double boardSize, required int gridSize}) {
     final boxWidth = boardSize / gridSize;
     return Rect.fromLTWH(

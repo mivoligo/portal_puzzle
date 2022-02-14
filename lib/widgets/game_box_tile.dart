@@ -25,9 +25,9 @@ class GameBoxTile extends StatelessWidget {
       width: gameBoxRect.width,
       height: gameBoxRect.height,
       child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: Colors.orange,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: box.isAtSpawn ? Colors.orange : Colors.blueGrey,
         ),
         child: Center(
           child: Text(
