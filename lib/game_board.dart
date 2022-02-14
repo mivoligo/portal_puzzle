@@ -71,12 +71,12 @@ class _GameBoardState extends State<GameBoard> {
         child: GestureDetector(
           onPanDown: (details) {},
           onPanStart: (details) {
+            tappedLoc = details.localPosition;
             tappedBox = context.read<GameBoardModel>().getTappedBox(
                   boardSize: boardSize,
-                  globalCoords: details.localPosition,
+                  globalCoords: tappedLoc,
                   gridSize: gridSize,
                 );
-            tappedLoc = details.localPosition;
             tappedRow =
                 context.read<GameBoardModel>().getRowMatesForBox(tappedBox!);
             tappedColumn =
@@ -84,53 +84,41 @@ class _GameBoardState extends State<GameBoard> {
           },
           onPanUpdate: (details) {
             Offset dragOffset = details.localPosition - tappedLoc;
+            double translatedX = dragOffset.dx / boardSize * gridSize;
+            double translatedY = dragOffset.dy / boardSize * gridSize;
             setState(() {
               if (tappedBox != null) {
                 if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
                   for (GameBoxModel box in tappedRow) {
-                    box.currentLocation = box.startLocation +
-                        Offset(
-                          dragOffset.dx / boardSize * gridSize,
-                          0,
-                        );
+                    box.currentLocation =
+                        box.startLocation + Offset(translatedX, 0);
                     if (box.currentLocation.dx <= -0.5) {
                       box.currentLocation = Offset(
-                        box.startLocation.dx +
-                            gridSize +
-                            dragOffset.dx / boardSize * gridSize,
+                        box.startLocation.dx + gridSize + translatedX,
                         box.currentLocation.dy,
                       );
                     }
                     if (box.currentLocation.dx > gridSize - 0.5) {
                       box.currentLocation = Offset(
-                        box.startLocation.dx -
-                            gridSize +
-                            dragOffset.dx / boardSize * gridSize,
+                        box.startLocation.dx - gridSize + translatedX,
                         box.currentLocation.dy,
                       );
                     }
                   }
                 } else {
                   for (GameBoxModel box in tappedColumn) {
-                    box.currentLocation = box.startLocation +
-                        Offset(
-                          0,
-                          dragOffset.dy / boardSize * gridSize,
-                        );
+                    box.currentLocation =
+                        box.startLocation + Offset(0, translatedY);
                     if (box.currentLocation.dy <= -0.5) {
                       box.currentLocation = Offset(
                         box.currentLocation.dx,
-                        box.startLocation.dy +
-                            gridSize +
-                            dragOffset.dy / boardSize * gridSize,
+                        box.startLocation.dy + gridSize + translatedY,
                       );
                     }
                     if (box.currentLocation.dy > gridSize - 0.5) {
                       box.currentLocation = Offset(
                         box.currentLocation.dx,
-                        box.startLocation.dy -
-                            gridSize +
-                            dragOffset.dy / boardSize * gridSize,
+                        box.startLocation.dy - gridSize + translatedY,
                       );
                     }
                   }
@@ -140,7 +128,7 @@ class _GameBoardState extends State<GameBoard> {
           },
           onPanEnd: (detail) {
             context.read<GameBoardModel>().snapBoxes();
-            context.read<GameBoardModel>().updateGameBoxesLocation();
+            context.read<GameBoardModel>().updateBoxesLocation();
             context.read<GameModel>().addMove();
           },
           child: Stack(

@@ -32,7 +32,7 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
-  void updateGameBoxesLocation() {
+  void updateBoxesLocation() {
     for (final box in _boxes) {
       box.startLocation = box.currentLocation;
     }
