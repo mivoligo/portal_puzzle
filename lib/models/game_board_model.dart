@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'models.dart';
 
 class GameBoardModel extends ChangeNotifier {
-  final List<GameBoxModel> _boxes = [];
+  final List<GameBox> _boxes = [];
 
-  List<GameBoxModel> get boxes => _boxes;
+  List<GameBox> get boxes => _boxes;
 
   void generateGameBoxes({required int gridSize}) {
     _boxes.clear();
     for (double y = 0; y < gridSize; y++) {
       for (double x = 0; x < gridSize; x++) {
         _boxes.add(
-          GameBoxModel(
-            originalLocation: Offset(x, y),
-            startLocation: Offset(x, y),
-            currentLocation: Offset(x, y),
+          GameBox(
+            spawnLoc: Offset(x, y),
+            startLoc: Offset(x, y),
+            currentLoc: Offset(x, y),
           ),
         );
       }
@@ -23,9 +23,9 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   void snapBoxes() {
-    for (GameBoxModel box in boxes) {
-      Offset translatedLoc = box.currentLocation + const Offset(1, 1);
-      box.currentLocation = Offset(
+    for (GameBox box in boxes) {
+      Offset translatedLoc = box.currentLoc + const Offset(1, 1);
+      box.currentLoc = Offset(
         translatedLoc.dx.round() - 1,
         translatedLoc.dy.round() - 1,
       );
@@ -34,16 +34,16 @@ class GameBoardModel extends ChangeNotifier {
 
   void updateBoxesLocation() {
     for (final box in _boxes) {
-      box.startLocation = box.currentLocation;
+      box.startLoc = box.currentLoc;
     }
   }
 
-  GameBoxModel? getTappedBox({
+  GameBox? getTappedBox({
     required double boardSize,
     required Offset globalCoords,
     required int gridSize,
   }) {
-    for (GameBoxModel box in boxes) {
+    for (GameBox box in boxes) {
       if (box
           .getRect(boardSize: boardSize, gridSize: gridSize)
           .contains(globalCoords)) {
@@ -53,20 +53,20 @@ class GameBoardModel extends ChangeNotifier {
     return null;
   }
 
-  List<GameBoxModel> getRowMatesForBox(GameBoxModel box) {
-    final rowMates = <GameBoxModel>[];
-    for (GameBoxModel rowMateCandidateBox in boxes) {
-      if (box.currentLocation.dy == rowMateCandidateBox.currentLocation.dy) {
+  List<GameBox> getRowMatesForBox(GameBox box) {
+    final rowMates = <GameBox>[];
+    for (GameBox rowMateCandidateBox in boxes) {
+      if (box.currentLoc.dy == rowMateCandidateBox.currentLoc.dy) {
         rowMates.add(rowMateCandidateBox);
       }
     }
     return rowMates;
   }
 
-  List<GameBoxModel> getColumnMatesForBox(GameBoxModel box) {
-    final columnMates = <GameBoxModel>[];
-    for (GameBoxModel columnMateCandidateBox in boxes) {
-      if (box.currentLocation.dx == columnMateCandidateBox.currentLocation.dx) {
+  List<GameBox> getColumnMatesForBox(GameBox box) {
+    final columnMates = <GameBox>[];
+    for (GameBox columnMateCandidateBox in boxes) {
+      if (box.currentLoc.dx == columnMateCandidateBox.currentLoc.dx) {
         columnMates.add(columnMateCandidateBox);
       }
     }

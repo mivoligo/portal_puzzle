@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-class GameBoxModel {
-  GameBoxModel({
-    required this.originalLocation,
-    required this.startLocation,
-    required this.currentLocation,
+class GameBox {
+  GameBox({
+    required this.spawnLoc,
+    required this.startLoc,
+    required this.currentLoc,
   });
 
-  final Offset originalLocation;
-  Offset startLocation;
-  Offset currentLocation;
+  final Offset spawnLoc;
+  Offset startLoc;
+  Offset currentLoc;
 
   Rect getRect({required double boardSize, required int gridSize}) {
-    final totalBoxWidth = boardSize / gridSize;
+    final boxWidth = boardSize / gridSize;
     return Rect.fromLTWH(
-      currentLocation.dx * totalBoxWidth,
-      currentLocation.dy * totalBoxWidth,
-      totalBoxWidth,
-      totalBoxWidth,
+      currentLoc.dx * boxWidth,
+      currentLoc.dy * boxWidth,
+      boxWidth,
+      boxWidth,
     );
   }
 }

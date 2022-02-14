@@ -11,7 +11,7 @@ class GameBoxWidget extends StatelessWidget {
     required this.boardSize,
   }) : super(key: key);
 
-  final GameBoxModel box;
+  final GameBox box;
   final String text;
   final double boardSize;
 
@@ -53,10 +53,10 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  GameBoxModel? tappedBox;
+  GameBox? tappedBox;
   late Offset tappedLoc;
-  late List<GameBoxModel> tappedRow;
-  late List<GameBoxModel> tappedColumn;
+  late List<GameBox> tappedRow;
+  late List<GameBox> tappedColumn;
 
   @override
   Widget build(BuildContext context) {
@@ -89,36 +89,34 @@ class _GameBoardState extends State<GameBoard> {
             setState(() {
               if (tappedBox != null) {
                 if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
-                  for (GameBoxModel box in tappedRow) {
-                    box.currentLocation =
-                        box.startLocation + Offset(translatedX, 0);
-                    if (box.currentLocation.dx <= -0.5) {
-                      box.currentLocation = Offset(
-                        box.startLocation.dx + gridSize + translatedX,
-                        box.currentLocation.dy,
+                  for (GameBox box in tappedRow) {
+                    box.currentLoc = box.startLoc + Offset(translatedX, 0);
+                    if (box.currentLoc.dx <= -0.5) {
+                      box.currentLoc = Offset(
+                        box.startLoc.dx + gridSize + translatedX,
+                        box.currentLoc.dy,
                       );
                     }
-                    if (box.currentLocation.dx > gridSize - 0.5) {
-                      box.currentLocation = Offset(
-                        box.startLocation.dx - gridSize + translatedX,
-                        box.currentLocation.dy,
+                    if (box.currentLoc.dx > gridSize - 0.5) {
+                      box.currentLoc = Offset(
+                        box.startLoc.dx - gridSize + translatedX,
+                        box.currentLoc.dy,
                       );
                     }
                   }
                 } else {
-                  for (GameBoxModel box in tappedColumn) {
-                    box.currentLocation =
-                        box.startLocation + Offset(0, translatedY);
-                    if (box.currentLocation.dy <= -0.5) {
-                      box.currentLocation = Offset(
-                        box.currentLocation.dx,
-                        box.startLocation.dy + gridSize + translatedY,
+                  for (GameBox box in tappedColumn) {
+                    box.currentLoc = box.startLoc + Offset(0, translatedY);
+                    if (box.currentLoc.dy <= -0.5) {
+                      box.currentLoc = Offset(
+                        box.currentLoc.dx,
+                        box.startLoc.dy + gridSize + translatedY,
                       );
                     }
-                    if (box.currentLocation.dy > gridSize - 0.5) {
-                      box.currentLocation = Offset(
-                        box.currentLocation.dx,
-                        box.startLocation.dy - gridSize + translatedY,
+                    if (box.currentLoc.dy > gridSize - 0.5) {
+                      box.currentLoc = Offset(
+                        box.currentLoc.dx,
+                        box.startLoc.dy - gridSize + translatedY,
                       );
                     }
                   }
