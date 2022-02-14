@@ -11,8 +11,8 @@ class GameBoxModel {
   Offset startLocation;
   Offset currentLocation;
 
-  Rect getRect({required Size parentSize, required int gridSize}) {
-    final totalBoxWidth = parentSize.shortestSide / gridSize;
+  Rect getRect({required double boardSize, required int gridSize}) {
+    final totalBoxWidth = boardSize / gridSize;
     return Rect.fromLTWH(
       currentLocation.dx * totalBoxWidth,
       currentLocation.dy * totalBoxWidth,

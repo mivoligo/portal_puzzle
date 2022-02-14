@@ -39,13 +39,13 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   GameBoxModel? getTappedBox({
-    required Size parentSize,
+    required double boardSize,
     required Offset globalCoords,
     required int gridSize,
   }) {
     for (GameBoxModel box in boxes) {
       if (box
-          .getRect(parentSize: parentSize, gridSize: gridSize)
+          .getRect(boardSize: boardSize, gridSize: gridSize)
           .contains(globalCoords)) {
         return box;
       }

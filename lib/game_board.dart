@@ -8,17 +8,17 @@ class GameBoxWidget extends StatelessWidget {
     Key? key,
     required this.box,
     required this.text,
-    required this.parentSize,
+    required this.boardSize,
   }) : super(key: key);
 
   final GameBoxModel box;
   final String text;
-  final Size parentSize;
+  final double boardSize;
 
   @override
   Widget build(BuildContext context) {
     final gridSize = context.watch<GameModel>().gridSize;
-    final gameBoxRect = box.getRect(parentSize: parentSize, gridSize: gridSize);
+    final gameBoxRect = box.getRect(boardSize: boardSize, gridSize: gridSize);
     return Positioned(
       left: gameBoxRect.left,
       top: gameBoxRect.top,
@@ -63,15 +63,16 @@ class _GameBoardState extends State<GameBoard> {
     final gridSize = context.watch<GameModel>().gridSize;
     final boxes = context.watch<GameBoardModel>().boxes;
     Size parentSize = widget.parentSize;
+    double boardSize = parentSize.shortestSide;
     return Center(
       child: SizedBox(
-        width: parentSize.shortestSide,
-        height: parentSize.shortestSide,
+        width: boardSize,
+        height: boardSize,
         child: GestureDetector(
           onPanDown: (details) {},
           onPanStart: (details) {
             tappedBox = context.read<GameBoardModel>().getTappedBox(
-                  parentSize: parentSize,
+                  boardSize: boardSize,
                   globalCoords: details.localPosition,
                   gridSize: gridSize,
                 );
@@ -89,14 +90,14 @@ class _GameBoardState extends State<GameBoard> {
                   for (GameBoxModel box in tappedRow) {
                     box.currentLocation = box.startLocation +
                         Offset(
-                          dragOffset.dx / parentSize.width * gridSize,
+                          dragOffset.dx / boardSize * gridSize,
                           0,
                         );
                     if (box.currentLocation.dx <= -0.5) {
                       box.currentLocation = Offset(
                         box.startLocation.dx +
                             gridSize +
-                            dragOffset.dx / parentSize.width * gridSize,
+                            dragOffset.dx / boardSize * gridSize,
                         box.currentLocation.dy,
                       );
                     }
@@ -104,7 +105,7 @@ class _GameBoardState extends State<GameBoard> {
                       box.currentLocation = Offset(
                         box.startLocation.dx -
                             gridSize +
-                            dragOffset.dx / parentSize.width * gridSize,
+                            dragOffset.dx / boardSize * gridSize,
                         box.currentLocation.dy,
                       );
                     }
@@ -114,14 +115,14 @@ class _GameBoardState extends State<GameBoard> {
                     box.currentLocation = box.startLocation +
                         Offset(
                           0,
-                          dragOffset.dy / parentSize.height * gridSize,
+                          dragOffset.dy / boardSize * gridSize,
                         );
                     if (box.currentLocation.dy <= -0.5) {
                       box.currentLocation = Offset(
                         box.currentLocation.dx,
                         box.startLocation.dy +
                             gridSize +
-                            dragOffset.dy / parentSize.height * gridSize,
+                            dragOffset.dy / boardSize * gridSize,
                       );
                     }
                     if (box.currentLocation.dy > gridSize - 0.5) {
@@ -129,7 +130,7 @@ class _GameBoardState extends State<GameBoard> {
                         box.currentLocation.dx,
                         box.startLocation.dy -
                             gridSize +
-                            dragOffset.dy / parentSize.height * gridSize,
+                            dragOffset.dy / boardSize * gridSize,
                       );
                     }
                   }
@@ -153,7 +154,7 @@ class _GameBoardState extends State<GameBoard> {
                   return GameBoxWidget(
                     box: box,
                     text: '${boxes.indexOf(box) + 1}',
-                    parentSize: parentSize,
+                    boardSize: boardSize,
                   );
                 },
               ).toList(),
