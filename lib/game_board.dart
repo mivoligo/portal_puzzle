@@ -4,26 +4,18 @@ import 'package:provider/provider.dart';
 import 'models/models.dart';
 import 'widgets/widgets.dart';
 
-class GameBoard extends StatefulWidget {
-  const GameBoard({Key? key, required this.parentSize}) : super(key: key);
+class GameBoard extends StatelessWidget {
+  const GameBoard({
+    Key? key,
+    required this.parentSize,
+  }) : super(key: key);
 
   final Size parentSize;
-
-  @override
-  _GameBoardState createState() => _GameBoardState();
-}
-
-class _GameBoardState extends State<GameBoard> {
-  GameBox? tappedBox;
-  late Offset tappedLoc;
-  late List<GameBox> tappedRow;
-  late List<GameBox> tappedColumn;
 
   @override
   Widget build(BuildContext context) {
     final gridSize = context.watch<GameModel>().gridSize;
     final boxes = context.watch<GameBoardModel>().boxes;
-    Size parentSize = widget.parentSize;
     double boardSize = parentSize.shortestSide;
     return Center(
       child: SizedBox(
@@ -31,67 +23,28 @@ class _GameBoardState extends State<GameBoard> {
         height: boardSize,
         child: GestureDetector(
           onHorizontalDragStart: (details) {
-            tappedLoc = details.localPosition;
-            tappedBox = context.read<GameBoardModel>().getTappedBox(
+            context.read<GameBoardModel>().setTappedRow(
                   boardSize: boardSize,
-                  globalCoords: tappedLoc,
                   gridSize: gridSize,
+                  details: details,
                 );
-            tappedRow =
-                context.read<GameBoardModel>().getRowMatesForBox(tappedBox!);
           },
           onVerticalDragStart: (details) {
-            tappedLoc = details.localPosition;
-            tappedBox = context.read<GameBoardModel>().getTappedBox(
+            context.read<GameBoardModel>().setTappedColumn(
                   boardSize: boardSize,
-                  globalCoords: tappedLoc,
                   gridSize: gridSize,
+                  details: details,
                 );
-            tappedColumn =
-                context.read<GameBoardModel>().getColumnMatesForBox(tappedBox!);
           },
           onHorizontalDragUpdate: (details) {
-            Offset dragOffset = details.localPosition - tappedLoc;
-            double translatedX = dragOffset.dx / boardSize * gridSize;
-            setState(() {
-              for (GameBox box in tappedRow) {
-                box.currentLoc = box.startLoc + Offset(translatedX, 0);
-                print(box.currentLoc);
-                if (box.currentLoc.dx <= -0.5) {
-                  box.currentLoc = Offset(
-                    box.startLoc.dx + gridSize + translatedX,
-                    box.currentLoc.dy,
-                  );
-                }
-                if (box.currentLoc.dx > gridSize - 0.5) {
-                  box.currentLoc = Offset(
-                    box.startLoc.dx - gridSize + translatedX,
-                    box.currentLoc.dy,
-                  );
-                }
-              }
-            });
+            context
+                .read<GameBoardModel>()
+                .moveRow(details, gridSize, boardSize);
           },
           onVerticalDragUpdate: (details) {
-            Offset dragOffset = details.localPosition - tappedLoc;
-            double translatedY = dragOffset.dy / boardSize * gridSize;
-            setState(() {
-              for (GameBox box in tappedColumn) {
-                box.currentLoc = box.startLoc + Offset(0, translatedY);
-                if (box.currentLoc.dy <= -0.5) {
-                  box.currentLoc = Offset(
-                    box.currentLoc.dx,
-                    box.startLoc.dy + gridSize + translatedY,
-                  );
-                }
-                if (box.currentLoc.dy > gridSize - 0.5) {
-                  box.currentLoc = Offset(
-                    box.currentLoc.dx,
-                    box.startLoc.dy - gridSize + translatedY,
-                  );
-                }
-              }
-            });
+            context
+                .read<GameBoardModel>()
+                .moveColumn(details, gridSize, boardSize);
           },
           onHorizontalDragEnd: (detail) {
             context.read<GameBoardModel>().snapBoxes();

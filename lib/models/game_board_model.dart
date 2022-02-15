@@ -4,6 +4,9 @@ import 'models.dart';
 
 class GameBoardModel extends ChangeNotifier {
   final List<GameBox> _boxes = [];
+  Offset _tappedLoc = Offset.zero;
+  final List<GameBox> _tappedRow = [];
+  final List<GameBox> _tappedColumn = [];
 
   List<GameBox> get boxes => _boxes;
 
@@ -38,38 +41,93 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
-  GameBox? getTappedBox({
+  void setTappedRow({
     required double boardSize,
-    required Offset globalCoords,
     required int gridSize,
+    required DragStartDetails details,
   }) {
+    GameBox? tappedBox;
+    _tappedLoc = details.localPosition;
+    _tappedRow.clear();
     for (GameBox box in boxes) {
       if (box
           .getRect(boardSize: boardSize, gridSize: gridSize)
-          .contains(globalCoords)) {
-        return box;
+          .contains(details.localPosition)) {
+        tappedBox = box;
       }
     }
-    return null;
+    if (tappedBox != null) {
+      for (GameBox rowMateCandidateBox in boxes) {
+        if (tappedBox.currentLoc.dy == rowMateCandidateBox.currentLoc.dy) {
+          _tappedRow.add(rowMateCandidateBox);
+        }
+      }
+    }
   }
 
-  List<GameBox> getRowMatesForBox(GameBox box) {
-    final rowMates = <GameBox>[];
-    for (GameBox rowMateCandidateBox in boxes) {
-      if (box.currentLoc.dy == rowMateCandidateBox.currentLoc.dy) {
-        rowMates.add(rowMateCandidateBox);
+  void setTappedColumn({
+    required double boardSize,
+    required int gridSize,
+    required DragStartDetails details,
+  }) {
+    GameBox? tappedBox;
+    _tappedLoc = details.localPosition;
+    _tappedColumn.clear();
+    for (GameBox box in boxes) {
+      if (box
+          .getRect(boardSize: boardSize, gridSize: gridSize)
+          .contains(details.localPosition)) {
+        tappedBox = box;
       }
     }
-    return rowMates;
+    if (tappedBox != null) {
+      for (GameBox columnMateCandidateBox in boxes) {
+        if (tappedBox.currentLoc.dx == columnMateCandidateBox.currentLoc.dx) {
+          _tappedColumn.add(columnMateCandidateBox);
+        }
+      }
+    }
   }
 
-  List<GameBox> getColumnMatesForBox(GameBox box) {
-    final columnMates = <GameBox>[];
-    for (GameBox columnMateCandidateBox in boxes) {
-      if (box.currentLoc.dx == columnMateCandidateBox.currentLoc.dx) {
-        columnMates.add(columnMateCandidateBox);
+  void moveRow(DragUpdateDetails details, int gridSize, double boardSize) {
+    Offset dragOffset = details.localPosition - _tappedLoc;
+    double translatedX = dragOffset.dx / boardSize * gridSize;
+    for (GameBox box in _tappedRow) {
+      box.currentLoc = box.startLoc + Offset(translatedX, 0);
+      if (box.currentLoc.dx <= -0.5) {
+        box.currentLoc = Offset(
+          box.startLoc.dx + gridSize + translatedX,
+          box.currentLoc.dy,
+        );
+      }
+      if (box.currentLoc.dx > gridSize - 0.5) {
+        box.currentLoc = Offset(
+          box.startLoc.dx - gridSize + translatedX,
+          box.currentLoc.dy,
+        );
       }
     }
-    return columnMates;
+    notifyListeners();
+  }
+
+  void moveColumn(DragUpdateDetails details, int gridSize, double boardSize) {
+    Offset dragOffset = details.localPosition - _tappedLoc;
+    double translatedY = dragOffset.dy / boardSize * gridSize;
+    for (GameBox box in _tappedColumn) {
+      box.currentLoc = box.startLoc + Offset(0, translatedY);
+      if (box.currentLoc.dy <= -0.5) {
+        box.currentLoc = Offset(
+          box.currentLoc.dx,
+          box.startLoc.dy + gridSize + translatedY,
+        );
+      }
+      if (box.currentLoc.dy > gridSize - 0.5) {
+        box.currentLoc = Offset(
+          box.currentLoc.dx,
+          box.startLoc.dy - gridSize + translatedY,
+        );
+      }
+    }
+    notifyListeners();
   }
 }
