@@ -30,8 +30,7 @@ class _GameBoardState extends State<GameBoard> {
         width: boardSize,
         height: boardSize,
         child: GestureDetector(
-          onPanDown: (details) {},
-          onPanStart: (details) {
+          onHorizontalDragStart: (details) {
             tappedLoc = details.localPosition;
             tappedBox = context.read<GameBoardModel>().getTappedBox(
                   boardSize: boardSize,
@@ -40,52 +39,66 @@ class _GameBoardState extends State<GameBoard> {
                 );
             tappedRow =
                 context.read<GameBoardModel>().getRowMatesForBox(tappedBox!);
+          },
+          onVerticalDragStart: (details) {
+            tappedLoc = details.localPosition;
+            tappedBox = context.read<GameBoardModel>().getTappedBox(
+                  boardSize: boardSize,
+                  globalCoords: tappedLoc,
+                  gridSize: gridSize,
+                );
             tappedColumn =
                 context.read<GameBoardModel>().getColumnMatesForBox(tappedBox!);
           },
-          onPanUpdate: (details) {
+          onHorizontalDragUpdate: (details) {
             Offset dragOffset = details.localPosition - tappedLoc;
             double translatedX = dragOffset.dx / boardSize * gridSize;
-            double translatedY = dragOffset.dy / boardSize * gridSize;
             setState(() {
-              if (tappedBox != null) {
-                if (dragOffset.dx.abs() > dragOffset.dy.abs()) {
-                  for (GameBox box in tappedRow) {
-                    box.currentLoc = box.startLoc + Offset(translatedX, 0);
-                    if (box.currentLoc.dx <= -0.5) {
-                      box.currentLoc = Offset(
-                        box.startLoc.dx + gridSize + translatedX,
-                        box.currentLoc.dy,
-                      );
-                    }
-                    if (box.currentLoc.dx > gridSize - 0.5) {
-                      box.currentLoc = Offset(
-                        box.startLoc.dx - gridSize + translatedX,
-                        box.currentLoc.dy,
-                      );
-                    }
-                  }
-                } else {
-                  for (GameBox box in tappedColumn) {
-                    box.currentLoc = box.startLoc + Offset(0, translatedY);
-                    if (box.currentLoc.dy <= -0.5) {
-                      box.currentLoc = Offset(
-                        box.currentLoc.dx,
-                        box.startLoc.dy + gridSize + translatedY,
-                      );
-                    }
-                    if (box.currentLoc.dy > gridSize - 0.5) {
-                      box.currentLoc = Offset(
-                        box.currentLoc.dx,
-                        box.startLoc.dy - gridSize + translatedY,
-                      );
-                    }
-                  }
+              for (GameBox box in tappedRow) {
+                box.currentLoc = box.startLoc + Offset(translatedX, 0);
+                print(box.currentLoc);
+                if (box.currentLoc.dx <= -0.5) {
+                  box.currentLoc = Offset(
+                    box.startLoc.dx + gridSize + translatedX,
+                    box.currentLoc.dy,
+                  );
+                }
+                if (box.currentLoc.dx > gridSize - 0.5) {
+                  box.currentLoc = Offset(
+                    box.startLoc.dx - gridSize + translatedX,
+                    box.currentLoc.dy,
+                  );
                 }
               }
             });
           },
-          onPanEnd: (detail) {
+          onVerticalDragUpdate: (details) {
+            Offset dragOffset = details.localPosition - tappedLoc;
+            double translatedY = dragOffset.dy / boardSize * gridSize;
+            setState(() {
+              for (GameBox box in tappedColumn) {
+                box.currentLoc = box.startLoc + Offset(0, translatedY);
+                if (box.currentLoc.dy <= -0.5) {
+                  box.currentLoc = Offset(
+                    box.currentLoc.dx,
+                    box.startLoc.dy + gridSize + translatedY,
+                  );
+                }
+                if (box.currentLoc.dy > gridSize - 0.5) {
+                  box.currentLoc = Offset(
+                    box.currentLoc.dx,
+                    box.startLoc.dy - gridSize + translatedY,
+                  );
+                }
+              }
+            });
+          },
+          onHorizontalDragEnd: (detail) {
+            context.read<GameBoardModel>().snapBoxes();
+            context.read<GameBoardModel>().updateBoxesLocation();
+            context.read<GameModel>().addMove();
+          },
+          onVerticalDragEnd: (detail) {
             context.read<GameBoardModel>().snapBoxes();
             context.read<GameBoardModel>().updateBoxesLocation();
             context.read<GameModel>().addMove();
