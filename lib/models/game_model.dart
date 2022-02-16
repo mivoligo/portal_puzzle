@@ -17,7 +17,7 @@ class GameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Difficulty _difficulty = Difficulty.simple;
+  Difficulty _difficulty = Difficulty.medium;
 
   Difficulty get difficulty => _difficulty;
 
