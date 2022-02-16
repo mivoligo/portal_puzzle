@@ -89,7 +89,7 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
-  void moveRow(DragUpdateDetails details, int gridSize, double boardSize) {
+  void dragRow(DragUpdateDetails details, int gridSize, double boardSize) {
     Offset dragOffset = details.localPosition - _tappedLoc;
     double translatedX = dragOffset.dx / boardSize * gridSize;
     for (GameBox box in _tappedRow) {
@@ -110,7 +110,7 @@ class GameBoardModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void moveColumn(DragUpdateDetails details, int gridSize, double boardSize) {
+  void dragColumn(DragUpdateDetails details, int gridSize, double boardSize) {
     Offset dragOffset = details.localPosition - _tappedLoc;
     double translatedY = dragOffset.dy / boardSize * gridSize;
     for (GameBox box in _tappedColumn) {

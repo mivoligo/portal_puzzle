@@ -39,12 +39,12 @@ class GameBoard extends StatelessWidget {
           onHorizontalDragUpdate: (details) {
             context
                 .read<GameBoardModel>()
-                .moveRow(details, gridSize, boardSize);
+                .dragRow(details, gridSize, boardSize);
           },
           onVerticalDragUpdate: (details) {
             context
                 .read<GameBoardModel>()
-                .moveColumn(details, gridSize, boardSize);
+                .dragColumn(details, gridSize, boardSize);
           },
           onHorizontalDragEnd: (detail) {
             context.read<GameBoardModel>().snapBoxes();
