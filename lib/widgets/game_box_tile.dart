@@ -22,20 +22,30 @@ class GameBoxTile extends StatelessWidget {
     return Positioned(
       left: gameBoxRect.left,
       top: gameBoxRect.top,
-      width: gameBoxRect.width,
-      height: gameBoxRect.height,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          color: box.isAtSpawn ? Colors.orange : Colors.blueGrey,
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'Rubik',
-              fontWeight: FontWeight.w600,
-              fontSize: gameBoxRect.height * 0.6,
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.decelerate,
+        scale: box.currentLoc.dx < -0.1 ||
+                box.currentLoc.dx > gridSize - 0.9 ||
+                box.currentLoc.dy < -0.1 ||
+                box.currentLoc.dy > gridSize - 0.9
+            ? 0.8
+            : 1,
+        child: Container(
+          width: gameBoxRect.width,
+          height: gameBoxRect.height,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            color: box.isAtSpawn ? Colors.orange : Colors.blueGrey,
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'Rubik',
+                fontWeight: FontWeight.w600,
+                fontSize: gameBoxRect.height * 0.6,
+              ),
             ),
           ),
         ),
