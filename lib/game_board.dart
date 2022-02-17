@@ -95,6 +95,7 @@ class _GameBoardState extends State<GameBoard> {
             alignment: FractionalOffset.center,
             child: Stack(
               alignment: Alignment.center,
+              clipBehavior: Clip.antiAlias,
               children: [
                 Container(
                   color: Colors.lightBlue,
