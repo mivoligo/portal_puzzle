@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:portal_puzzle/constants.dart' as k;
 
 enum Difficulty { simple, medium, hard }
 
@@ -37,6 +38,17 @@ class GameModel extends ChangeNotifier {
         return 3;
       case Difficulty.hard:
         return 4;
+    }
+  }
+
+  Color get boardColor {
+    switch (_difficulty) {
+      case Difficulty.simple:
+        return k.green;
+      case Difficulty.medium:
+        return k.darkBlue;
+      case Difficulty.hard:
+        return k.darkPurple;
     }
   }
 

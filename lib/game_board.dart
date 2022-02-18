@@ -26,14 +26,15 @@ class _GameBoardState extends State<GameBoard> {
     final gridSize = context.watch<GameModel>().gridSize;
     final boxes = context.watch<GameBoardModel>().boxes;
     double boardSize = widget.parentSize.shortestSide;
+    final boardColor = context.watch<GameModel>().boardColor;
 
     double percentX = (localX / boardSize) * 100;
     double percentY = (localY / boardSize) * 100;
 
     return Center(
       child: SizedBox(
-        width: boardSize,
-        height: boardSize,
+        width: boardSize * 1.1,
+        height: boardSize * 1.1,
         child: GestureDetector(
           onHorizontalDragStart: (details) {
             setState(() {
@@ -93,23 +94,41 @@ class _GameBoardState extends State<GameBoard> {
               ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
               ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
             alignment: FractionalOffset.center,
-            child: Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.antiAlias,
-              children: [
-                Container(
-                  color: Colors.lightBlue,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              padding: EdgeInsets.all(boardSize * 0.05),
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  colors: [
+                    boardColor,
+                    const Color(0xFFF44336),
+                  ],
+                  center:
+                      FractionalOffset(localX / boardSize, localY / boardSize),
+                  radius: gridSize / 2,
                 ),
-                ...boxes.map(
-                  (box) {
-                    return GameBoxTile(
-                      box: box,
-                      text: '${boxes.indexOf(box) + 1}',
-                      boardSize: boardSize,
-                    );
-                  },
-                ).toList(),
-              ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(boardSize * 0.05),
+                ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.antiAlias,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(color: Color(0x22FFFFFF)),
+                  ),
+                  ...boxes.map(
+                    (box) {
+                      return GameBoxTile(
+                        box: box,
+                        text: '${boxes.indexOf(box) + 1}',
+                        boardSize: boardSize,
+                      );
+                    },
+                  ).toList(),
+                ],
+              ),
             ),
           ),
         ),

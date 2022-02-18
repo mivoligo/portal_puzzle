@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portal_puzzle/constants.dart' as k;
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
@@ -17,9 +18,9 @@ class DifficultySelector extends StatelessWidget {
         _DifficultyButton(
           text: 'Easy',
           isSelected: difficulty == Difficulty.simple,
-          surfaceColor: const Color(0xFF22C55E),
-          sideColor: const Color(0xFF059669),
-          textColor: const Color(0xFF14532D),
+          surfaceColor: k.lightGreen,
+          sideColor: k.green,
+          textColor: k.darkGreen,
           onPressed: () {
             context.read<GameModel>().setDifficulty(Difficulty.simple);
             context.read<GameBoardModel>().generateGameBoxes(gridSize: 2);
@@ -29,9 +30,9 @@ class DifficultySelector extends StatelessWidget {
         _DifficultyButton(
           text: 'Normal',
           isSelected: difficulty == Difficulty.medium,
-          surfaceColor: const Color(0xFF3B82F6),
-          sideColor: const Color(0xFF1D4ED8),
-          textColor: const Color(0xFF1E3A8A),
+          surfaceColor: k.lightBlue,
+          sideColor: k.blue,
+          textColor: k.darkBlue,
           onPressed: () {
             context.read<GameModel>().setDifficulty(Difficulty.medium);
             context.read<GameBoardModel>().generateGameBoxes(gridSize: 3);
@@ -41,9 +42,9 @@ class DifficultySelector extends StatelessWidget {
         _DifficultyButton(
           text: 'Hard',
           isSelected: difficulty == Difficulty.hard,
-          surfaceColor: const Color(0xFF8B5CF6),
-          sideColor: const Color(0xFF6D28D9),
-          textColor: const Color(0xFF4C1D95),
+          surfaceColor: k.lightPurple,
+          sideColor: k.purple,
+          textColor: k.darkPurple,
           onPressed: () {
             context.read<GameModel>().setDifficulty(Difficulty.hard);
             context.read<GameBoardModel>().generateGameBoxes(gridSize: 4);
