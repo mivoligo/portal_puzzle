@@ -78,7 +78,8 @@ class _GameBoardState extends State<GameBoard> {
             });
             context.read<GameBoardModel>().snapBoxes();
             context.read<GameBoardModel>().updateBoxesLocation();
-            context.read<GameModel>().addMove();
+            final boxesChanged = context.read<GameBoardModel>().boxesChanged;
+            context.read<GameModel>().addMove(shouldAdd: boxesChanged);
             context.read<GameBoardModel>().puzzleSolved;
           },
           onVerticalDragEnd: (detail) {
@@ -87,7 +88,8 @@ class _GameBoardState extends State<GameBoard> {
             });
             context.read<GameBoardModel>().snapBoxes();
             context.read<GameBoardModel>().updateBoxesLocation();
-            context.read<GameModel>().addMove();
+            final boxesChanged = context.read<GameBoardModel>().boxesChanged;
+            context.read<GameModel>().addMove(shouldAdd: boxesChanged);
             context.read<GameBoardModel>().puzzleSolved;
           },
           child: Transform(

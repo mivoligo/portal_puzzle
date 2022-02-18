@@ -10,6 +10,10 @@ class GameBoardModel extends ChangeNotifier {
 
   List<GameBox> get boxes => _boxes;
 
+  bool get puzzleSolved => !_boxes.any((box) => !box.isAtSpawn);
+
+  bool boxesChanged = false;
+
   void generateGameBoxes({required int gridSize}) {
     _boxes.clear();
     for (double y = 0; y < gridSize; y++) {
@@ -25,8 +29,6 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
-  bool get puzzleSolved => !_boxes.any((box) => !box.isAtSpawn);
-
   void snapBoxes() {
     for (GameBox box in boxes) {
       Offset translatedLoc = box.currentLoc + const Offset(1, 1);
@@ -38,8 +40,12 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   void updateBoxesLocation() {
+    boxesChanged = false;
     for (final box in _boxes) {
-      box.startLoc = box.currentLoc;
+      if (box.startLoc != box.currentLoc) {
+        box.startLoc = box.currentLoc;
+        boxesChanged = true;
+      }
     }
   }
 

@@ -8,8 +8,10 @@ class GameModel extends ChangeNotifier {
 
   int get numOfMoves => _numOfMoves;
 
-  void addMove() {
-    _numOfMoves++;
+  void addMove({required bool shouldAdd}) {
+    if (shouldAdd) {
+      _numOfMoves++;
+    }
     notifyListeners();
   }
 
