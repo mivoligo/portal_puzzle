@@ -25,6 +25,8 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
+  bool get puzzleSolved => !_boxes.any((box) => !box.isAtSpawn);
+
   void snapBoxes() {
     for (GameBox box in boxes) {
       Offset translatedLoc = box.currentLoc + const Offset(1, 1);

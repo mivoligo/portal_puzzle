@@ -79,6 +79,7 @@ class _GameBoardState extends State<GameBoard> {
             context.read<GameBoardModel>().snapBoxes();
             context.read<GameBoardModel>().updateBoxesLocation();
             context.read<GameModel>().addMove();
+            context.read<GameBoardModel>().puzzleSolved;
           },
           onVerticalDragEnd: (detail) {
             setState(() {
@@ -87,6 +88,7 @@ class _GameBoardState extends State<GameBoard> {
             context.read<GameBoardModel>().snapBoxes();
             context.read<GameBoardModel>().updateBoxesLocation();
             context.read<GameModel>().addMove();
+            context.read<GameBoardModel>().puzzleSolved;
           },
           child: Transform(
             transform: Matrix4.identity()
