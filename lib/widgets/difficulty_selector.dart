@@ -5,7 +5,16 @@ import 'package:provider/provider.dart';
 import '../models/models.dart';
 
 class DifficultySelector extends StatelessWidget {
-  const DifficultySelector({Key? key}) : super(key: key);
+  const DifficultySelector({
+    Key? key,
+    required this.onEasy,
+    required this.onNormal,
+    required this.onHard,
+  }) : super(key: key);
+
+  final VoidCallback onEasy;
+  final VoidCallback onNormal;
+  final VoidCallback onHard;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +31,9 @@ class DifficultySelector extends StatelessWidget {
           sideColor: k.green,
           textColor: k.darkGreen,
           onPressed: () {
-            context.read<GameModel>().setDifficulty(Difficulty.simple);
-            context.read<GameBoardModel>().generateGameBoxes(gridSize: 2);
+            onEasy();
+            // context.read<GameModel>().setDifficulty(Difficulty.simple);
+            // context.read<GameBoardModel>().generateGameBoxes(gridSize: 2);
           },
         ),
         const SizedBox(width: 12),
@@ -34,8 +44,9 @@ class DifficultySelector extends StatelessWidget {
           sideColor: k.blue,
           textColor: k.darkBlue,
           onPressed: () {
-            context.read<GameModel>().setDifficulty(Difficulty.medium);
-            context.read<GameBoardModel>().generateGameBoxes(gridSize: 3);
+            onNormal();
+            // context.read<GameModel>().setDifficulty(Difficulty.medium);
+            // context.read<GameBoardModel>().generateGameBoxes(gridSize: 3);
           },
         ),
         const SizedBox(width: 12),
@@ -46,8 +57,9 @@ class DifficultySelector extends StatelessWidget {
           sideColor: k.purple,
           textColor: k.darkPurple,
           onPressed: () {
-            context.read<GameModel>().setDifficulty(Difficulty.hard);
-            context.read<GameBoardModel>().generateGameBoxes(gridSize: 4);
+            onHard();
+            // context.read<GameModel>().setDifficulty(Difficulty.hard);
+            // context.read<GameBoardModel>().generateGameBoxes(gridSize: 4);
           },
         ),
       ],
@@ -64,7 +76,6 @@ class _DifficultyButton extends StatelessWidget {
     required this.sideColor,
     required this.textColor,
     required this.onPressed,
-    this.isPressed = false,
   }) : super(key: key);
 
   final bool isSelected;
@@ -73,8 +84,6 @@ class _DifficultyButton extends StatelessWidget {
   final Color sideColor;
   final Color textColor;
   final VoidCallback onPressed;
-
-  final bool isPressed;
 
   @override
   Widget build(BuildContext context) {

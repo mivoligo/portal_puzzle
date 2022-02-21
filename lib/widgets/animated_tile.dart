@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/models/models.dart';
-import 'package:portal_puzzle/widgets/widgets.dart';
 
-class AnimatedTile extends StatelessWidget {
-  const AnimatedTile({
+class AnimatedTile extends AnimatedWidget {
+  AnimatedTile({
     Key? key,
-    required this.box,
-    required this.text,
-    required this.boardSize,
-  }) : super(key: key);
+    required this.child,
+    required int index,
+    required Animation<double> animation,
+  })  : scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Interval(
+              0.05 * index,
+              0.2 + 0.05 * index,
+              curve: Curves.bounceInOut,
+            ),
+          ),
+        ),
+        super(key: key, listenable: animation);
 
-  final GameBox box;
-  final String text;
-  final double boardSize;
+  final Widget child;
+  final Animation<double> scaleAnimation;
 
   @override
   Widget build(BuildContext context) {
-    return GameBoxTile(
-      box: box,
-      text: text,
-      boardSize: boardSize,
+    return Transform.scale(
+      scale: scaleAnimation.value * 2 + 1,
+      child: child,
     );
   }
 }

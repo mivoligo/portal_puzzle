@@ -8,9 +8,11 @@ class GameBoard extends StatefulWidget {
   const GameBoard({
     Key? key,
     required this.parentSize,
+    required this.animationController,
   }) : super(key: key);
 
   final Size parentSize;
+  final Animation<double> animationController;
 
   @override
   State<GameBoard> createState() => _GameBoardState();
@@ -124,10 +126,20 @@ class _GameBoardState extends State<GameBoard> {
                   ),
                   ...boxes.map(
                     (box) {
-                      return AnimatedTile(
-                        box: box,
-                        text: '${boxes.indexOf(box) + 1}',
-                        boardSize: boardSize,
+                      final gameBoxRect =
+                          box.getRect(boardSize: boardSize, gridSize: gridSize);
+                      return Positioned(
+                        left: gameBoxRect.left,
+                        top: gameBoxRect.top,
+                        child: AnimatedTile(
+                          index: boxes.indexOf(box),
+                          child: GameBoxTile(
+                            box: box,
+                            text: '${boxes.indexOf(box) + 1}',
+                            boardSize: boardSize,
+                          ),
+                          animation: widget.animationController,
+                        ),
                       );
                     },
                   ).toList(),

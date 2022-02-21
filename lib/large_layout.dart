@@ -5,8 +5,40 @@ import 'game_board.dart';
 import 'models/models.dart';
 import 'widgets/widgets.dart';
 
-class LargeLayout extends StatelessWidget {
+class LargeLayout extends StatefulWidget {
   const LargeLayout({Key? key}) : super(key: key);
+
+  @override
+  State<LargeLayout> createState() => _LargeLayoutState();
+}
+
+class _LargeLayoutState extends State<LargeLayout>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1000),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  void playAnimation({
+    required Difficulty difficulty,
+    required int gridSize,
+  }) {
+    animationController.forward().whenComplete(() {
+      context.read<GameModel>().setDifficulty(difficulty);
+      context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
+    }).whenComplete(() => animationController.reverse());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +62,23 @@ class LargeLayout extends StatelessWidget {
 
     return Stack(
       children: [
-        const Positioned(
+        Positioned(
           top: 64,
           right: 64,
-          child: DifficultySelector(),
+          child: DifficultySelector(
+            onEasy: () => playAnimation(
+              gridSize: 2,
+              difficulty: Difficulty.simple,
+            ),
+            onNormal: () => playAnimation(
+              gridSize: 3,
+              difficulty: Difficulty.medium,
+            ),
+            onHard: () => playAnimation(
+              gridSize: 4,
+              difficulty: Difficulty.hard,
+            ),
+          ),
         ),
         Align(
           alignment: Alignment.centerLeft,
@@ -66,7 +111,10 @@ class LargeLayout extends StatelessWidget {
         ),
         LayoutBuilder(
           builder: (context, constraints) {
-            return GameBoard(parentSize: constraints.biggest * 0.6);
+            return GameBoard(
+              animationController: animationController,
+              parentSize: constraints.biggest * 0.6,
+            );
           },
         ),
       ],
