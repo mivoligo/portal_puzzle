@@ -124,7 +124,7 @@ class _GameBoardState extends State<GameBoard> {
                   ),
                   ...boxes.map(
                     (box) {
-                      return GameBoxTile(
+                      return AnimatedTile(
                         box: box,
                         text: '${boxes.indexOf(box) + 1}',
                         boardSize: boardSize,
