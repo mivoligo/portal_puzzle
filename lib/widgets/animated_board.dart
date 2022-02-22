@@ -11,9 +11,9 @@ class AnimatedBoard extends AnimatedWidget {
           CurvedAnimation(
             parent: animation,
             curve: const Interval(
-              0.7,
+              0.5,
               1,
-              curve: Curves.decelerate,
+              curve: Curves.easeInOut,
             ),
           ),
         ),
@@ -26,9 +26,9 @@ class AnimatedBoard extends AnimatedWidget {
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.001)
-        ..rotateY(_animation.value * pi * 1.2),
-      alignment: Alignment.center,
+        ..setEntry(3, 2, 0.00002)
+        ..rotateY(_animation.value * pi * 0.6),
+      alignment: FractionalOffset.center,
       child: child,
     );
   }

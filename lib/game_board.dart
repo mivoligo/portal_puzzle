@@ -103,6 +103,7 @@ class _GameBoardState extends State<GameBoard> {
             child: AnimatedBoard(
               animation: widget.animationController,
               child: AnimatedContainer(
+                clipBehavior: Clip.antiAlias,
                 duration: const Duration(milliseconds: 500),
                 padding: EdgeInsets.all(boardSize * 0.05),
                 decoration: BoxDecoration(
@@ -112,7 +113,9 @@ class _GameBoardState extends State<GameBoard> {
                       const Color(0xFFF44336),
                     ],
                     center: FractionalOffset(
-                        localX / boardSize, localY / boardSize),
+                      localX / boardSize,
+                      localY / boardSize,
+                    ),
                     radius: gridSize / 2,
                   ),
                   borderRadius: BorderRadius.all(
@@ -128,16 +131,21 @@ class _GameBoardState extends State<GameBoard> {
                     ),
                     ...boxes.map(
                       (box) {
+                        final index = boxes.indexOf(box);
                         final gameBoxRect = box.getRect(
-                            boardSize: boardSize, gridSize: gridSize);
+                          boardSize: boardSize,
+                          gridSize: gridSize,
+                        );
                         return Positioned(
                           left: gameBoxRect.left,
                           top: gameBoxRect.top,
                           child: AnimatedTile(
-                            index: boxes.indexOf(box),
+                            gridSize: gridSize,
+                            dx: box.currentLoc.dx,
+                            dy: box.currentLoc.dy,
                             child: GameBoxTile(
                               box: box,
-                              text: '${boxes.indexOf(box) + 1}',
+                              text: '${index + 1}',
                               boardSize: boardSize,
                             ),
                             animation: widget.animationController,

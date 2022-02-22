@@ -4,14 +4,19 @@ class AnimatedTile extends StatelessWidget {
   AnimatedTile({
     Key? key,
     required this.child,
-    required int index,
-    required Animation<double> animation,
-  })  : _scaleAnimation = Tween<double>(begin: 1.0, end: 4.0).animate(
+    required int gridSize,
+    required double dx,
+    required double dy,
+    required Animation animation,
+  })  : _slideAnimation = Tween<Offset>(
+          begin: const Offset(0, 0),
+          end: Offset(-gridSize.toDouble(), 0),
+        ).animate(
           CurvedAnimation(
-            parent: animation,
+            parent: animation as Animation<double>,
             curve: Interval(
-              0.05 * index,
-              0.2 + 0.05 * index,
+              (dx / gridSize + dy * 0.05) * 0.7,
+              ((dx + 1) / gridSize + dy * 0.05) * 0.7,
               curve: Curves.easeIn,
             ),
           ),
@@ -20,22 +25,22 @@ class AnimatedTile extends StatelessWidget {
           CurvedAnimation(
             parent: animation,
             curve: Interval(
-              0.05 * index,
-              0.2 + 0.05 * index,
-              curve: Curves.easeInOut,
+              (dx / gridSize + dy * 0.05) * 0.7,
+              ((dx + 1) / gridSize + dy * 0.05) * 0.7,
+              curve: Curves.easeIn,
             ),
           ),
         ),
         super(key: key);
 
   final Widget child;
-  final Animation<double> _scaleAnimation;
+  final Animation<Offset> _slideAnimation;
   final Animation<double> _opacityAnimation;
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
+    return SlideTransition(
+      position: _slideAnimation,
       child: FadeTransition(
         opacity: _opacityAnimation,
         child: child,
