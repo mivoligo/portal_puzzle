@@ -23,19 +23,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = context.watch<GameModel>().backgroundColor;
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final layoutWidth = constraints.maxWidth;
-          if (layoutWidth < widthSmall) {
-            return const SmallLayout();
-          } else if (layoutWidth < widthMedium) {
-            return const MediumLayout();
-          } else if (layoutWidth < widthLarge) {
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 1000),
+        color: backgroundColor,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final layoutWidth = constraints.maxWidth;
+            if (layoutWidth < widthSmall) {
+              return const SmallLayout();
+            } else if (layoutWidth < widthMedium) {
+              return const MediumLayout();
+            } else if (layoutWidth < widthLarge) {
+              return const LargeLayout();
+            }
             return const LargeLayout();
-          }
-          return const LargeLayout();
-        },
+          },
+        ),
       ),
     );
   }

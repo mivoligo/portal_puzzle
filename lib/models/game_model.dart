@@ -54,6 +54,17 @@ class GameModel extends ChangeNotifier {
     }
   }
 
+  Color get backgroundColor {
+    switch (_difficulty) {
+      case Difficulty.simple:
+        return k.veryLightGreen;
+      case Difficulty.medium:
+        return k.veryLightBlue;
+      case Difficulty.hard:
+        return k.veryLightPurple;
+    }
+  }
+
   void resetGame() {
     resetNumOfMoves();
   }
