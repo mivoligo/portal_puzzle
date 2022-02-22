@@ -31,13 +31,13 @@ class _HeroButtonState extends State<HeroButton> {
 
   @override
   Widget build(BuildContext context) {
-    double elevation = isPressed
+    double elevation = isPressed || widget.isSelected
         ? 0
         : widget.isSmall
             ? 4
             : 6;
     return GestureDetector(
-      onTap: widget.onPressed,
+      onTap: widget.isSelected ? null : widget.onPressed,
       onTapDown: (_) => setState(() {
         isPressed = true;
       }),
