@@ -1,3 +1,4 @@
+export 'animated_board.dart';
 export 'animated_tile.dart';
 export 'app_title.dart';
 export 'difficulty_selector.dart';

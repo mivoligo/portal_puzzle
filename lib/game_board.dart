@@ -100,50 +100,53 @@ class _GameBoardState extends State<GameBoard> {
               ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
               ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
             alignment: FractionalOffset.center,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              padding: EdgeInsets.all(boardSize * 0.05),
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  colors: [
-                    boardColor,
-                    const Color(0xFFF44336),
-                  ],
-                  center:
-                      FractionalOffset(localX / boardSize, localY / boardSize),
-                  radius: gridSize / 2,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(boardSize * 0.05),
-                ),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                clipBehavior: Clip.antiAlias,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(color: Color(0x22FFFFFF)),
+            child: AnimatedBoard(
+              animation: widget.animationController,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                padding: EdgeInsets.all(boardSize * 0.05),
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      boardColor,
+                      const Color(0xFFF44336),
+                    ],
+                    center: FractionalOffset(
+                        localX / boardSize, localY / boardSize),
+                    radius: gridSize / 2,
                   ),
-                  ...boxes.map(
-                    (box) {
-                      final gameBoxRect =
-                          box.getRect(boardSize: boardSize, gridSize: gridSize);
-                      return Positioned(
-                        left: gameBoxRect.left,
-                        top: gameBoxRect.top,
-                        child: AnimatedTile(
-                          index: boxes.indexOf(box),
-                          child: GameBoxTile(
-                            box: box,
-                            text: '${boxes.indexOf(box) + 1}',
-                            boardSize: boardSize,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(boardSize * 0.05),
+                  ),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.antiAlias,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(color: Color(0x22FFFFFF)),
+                    ),
+                    ...boxes.map(
+                      (box) {
+                        final gameBoxRect = box.getRect(
+                            boardSize: boardSize, gridSize: gridSize);
+                        return Positioned(
+                          left: gameBoxRect.left,
+                          top: gameBoxRect.top,
+                          child: AnimatedTile(
+                            index: boxes.indexOf(box),
+                            child: GameBoxTile(
+                              box: box,
+                              text: '${boxes.indexOf(box) + 1}',
+                              boardSize: boardSize,
+                            ),
+                            animation: widget.animationController,
                           ),
-                          animation: widget.animationController,
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ],
+                        );
+                      },
+                    ).toList(),
+                  ],
+                ),
               ),
             ),
           ),
