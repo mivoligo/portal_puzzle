@@ -49,10 +49,10 @@ class _LargeLayoutState extends State<LargeLayout>
     String difficultyString;
 
     switch (difficulty) {
-      case Difficulty.simple:
+      case Difficulty.easy:
         difficultyString = 'Easy';
         break;
-      case Difficulty.medium:
+      case Difficulty.normal:
         difficultyString = 'Normal';
         break;
       case Difficulty.hard:
@@ -68,11 +68,11 @@ class _LargeLayoutState extends State<LargeLayout>
           child: DifficultySelector(
             onEasy: () => playAnimation(
               gridSize: 2,
-              difficulty: Difficulty.simple,
+              difficulty: Difficulty.easy,
             ),
             onNormal: () => playAnimation(
               gridSize: 3,
-              difficulty: Difficulty.medium,
+              difficulty: Difficulty.normal,
             ),
             onHard: () => playAnimation(
               gridSize: 4,

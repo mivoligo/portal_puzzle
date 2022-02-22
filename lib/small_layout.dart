@@ -56,11 +56,11 @@ class _SmallLayoutState extends State<SmallLayout>
               child: DifficultySelector(
                 onEasy: () => playAnimation(
                   gridSize: 2,
-                  difficulty: Difficulty.simple,
+                  difficulty: Difficulty.easy,
                 ),
                 onNormal: () => playAnimation(
                   gridSize: 3,
-                  difficulty: Difficulty.medium,
+                  difficulty: Difficulty.normal,
                 ),
                 onHard: () => playAnimation(
                   gridSize: 4,

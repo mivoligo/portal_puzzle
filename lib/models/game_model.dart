@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portal_puzzle/constants.dart' as k;
 
-enum Difficulty { simple, medium, hard }
+enum Difficulty { easy, normal, hard }
 
 class GameModel extends ChangeNotifier {
   int _numOfMoves = 0;
@@ -20,7 +20,7 @@ class GameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Difficulty _difficulty = Difficulty.medium;
+  Difficulty _difficulty = Difficulty.normal;
 
   Difficulty get difficulty => _difficulty;
 
@@ -34,9 +34,9 @@ class GameModel extends ChangeNotifier {
 
   int get gridSize {
     switch (_difficulty) {
-      case Difficulty.simple:
+      case Difficulty.easy:
         return 2;
-      case Difficulty.medium:
+      case Difficulty.normal:
         return 3;
       case Difficulty.hard:
         return 4;
@@ -45,9 +45,9 @@ class GameModel extends ChangeNotifier {
 
   Color get boardColor {
     switch (_difficulty) {
-      case Difficulty.simple:
+      case Difficulty.easy:
         return k.green;
-      case Difficulty.medium:
+      case Difficulty.normal:
         return k.darkBlue;
       case Difficulty.hard:
         return k.darkPurple;
@@ -56,9 +56,9 @@ class GameModel extends ChangeNotifier {
 
   Color get backgroundColor {
     switch (_difficulty) {
-      case Difficulty.simple:
+      case Difficulty.easy:
         return k.veryLightGreen;
-      case Difficulty.medium:
+      case Difficulty.normal:
         return k.veryLightBlue;
       case Difficulty.hard:
         return k.veryLightPurple;
