@@ -13,3 +13,6 @@ const darkBlue = Color(0xFF1E3A8A);
 const lightPurple = Color(0xFF8B5CF6);
 const purple = Color(0xFF6D28D9);
 const darkPurple = Color(0xFF4C1D95);
+const lightRed = Color(0xFFEF4444);
+const red = Color(0xFF991B1B);
+const darkRed = Color(0xFF7F1D1D);
