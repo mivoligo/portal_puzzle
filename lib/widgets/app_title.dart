@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/constants.dart';
+
+import '../constants.dart';
 
 class AppTitle extends StatelessWidget {
   const AppTitle({

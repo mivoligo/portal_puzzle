@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/constants.dart';
-import 'package:portal_puzzle/large_layout.dart';
-import 'package:portal_puzzle/medium_layout.dart';
-import 'package:portal_puzzle/models/models.dart';
-import 'package:portal_puzzle/result_page.dart';
-import 'package:portal_puzzle/small_layout.dart';
 import 'package:provider/provider.dart';
+
+import 'constants.dart';
+import 'large_layout.dart';
+import 'medium_layout.dart';
+import 'models/models.dart';
+import 'result_page.dart';
+import 'small_layout.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

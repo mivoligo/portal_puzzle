@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/constants.dart' as k;
+
+import '../constants.dart' as k;
 
 enum Status { initial, shuffling, playable, finished }
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/constants.dart' as k;
-import 'package:portal_puzzle/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart' as k;
 import '../models/models.dart';
+import 'widgets.dart';
 
 class DifficultySelector extends StatelessWidget {
   const DifficultySelector({

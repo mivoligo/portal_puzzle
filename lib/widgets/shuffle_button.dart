@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portal_puzzle/constants.dart' as k;
-
 import 'package:provider/provider.dart';
 
+import '../constants.dart' as k;
 import '../models/models.dart';
 import 'widgets.dart';
 
