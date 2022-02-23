@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:portal_puzzle/constants.dart' as k;
 
+enum Status { initial, shuffling, playable, finished }
+
 enum Difficulty { easy, normal, hard }
 
 class GameModel extends ChangeNotifier {
+  Status _status = Status.initial;
+
+  Status get status => _status;
+
   int _numOfMoves = 0;
 
   int get numOfMoves => _numOfMoves;
@@ -11,14 +17,11 @@ class GameModel extends ChangeNotifier {
   void addMove({required bool shouldAdd}) {
     if (shouldAdd) {
       _numOfMoves++;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
-  void resetNumOfMoves() {
-    _numOfMoves = 0;
-    notifyListeners();
-  }
+  void _resetNumOfMoves() => _numOfMoves = 0;
 
   Difficulty _difficulty = Difficulty.normal;
 
@@ -66,6 +69,14 @@ class GameModel extends ChangeNotifier {
   }
 
   void resetGame() {
-    resetNumOfMoves();
+    _resetNumOfMoves();
+    _status = Status.initial;
+    notifyListeners();
+  }
+
+  void shuffle() {
+    _resetNumOfMoves();
+    _status = Status.playable;
+    notifyListeners();
   }
 }

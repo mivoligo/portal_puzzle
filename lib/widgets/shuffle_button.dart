@@ -18,7 +18,7 @@ class ShuffleButton extends StatelessWidget {
       textColor: k.darkRed,
       iconData: Icons.refresh,
       isSmall: false,
-      onPressed: context.read<GameModel>().resetGame,
+      onPressed: context.read<GameModel>().shuffle,
     );
   }
 }

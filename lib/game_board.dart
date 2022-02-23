@@ -25,6 +25,7 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final status = context.watch<GameModel>().status;
     final gridSize = context.watch<GameModel>().gridSize;
     final boxes = context.watch<GameBoardModel>().boxes;
     double boardSize = widget.parentSize.shortestSide;
@@ -38,26 +39,30 @@ class _GameBoardState extends State<GameBoard> {
         width: boardSize * 1.1,
         height: boardSize * 1.1,
         child: GestureDetector(
-          onHorizontalDragStart: (details) {
-            setState(() {
-              defaultPosition = false;
-            });
-            context.read<GameBoardModel>().setTappedRow(
-                  boardSize: boardSize,
-                  gridSize: gridSize,
-                  details: details,
-                );
-          },
-          onVerticalDragStart: (details) {
-            setState(() {
-              defaultPosition = false;
-            });
-            context.read<GameBoardModel>().setTappedColumn(
-                  boardSize: boardSize,
-                  gridSize: gridSize,
-                  details: details,
-                );
-          },
+          onHorizontalDragStart: status == Status.playable
+              ? (details) {
+                  setState(() {
+                    defaultPosition = false;
+                  });
+                  context.read<GameBoardModel>().setTappedRow(
+                        boardSize: boardSize,
+                        gridSize: gridSize,
+                        details: details,
+                      );
+                }
+              : null,
+          onVerticalDragStart: status == Status.playable
+              ? (details) {
+                  setState(() {
+                    defaultPosition = false;
+                  });
+                  context.read<GameBoardModel>().setTappedColumn(
+                        boardSize: boardSize,
+                        gridSize: gridSize,
+                        details: details,
+                      );
+                }
+              : null,
           onHorizontalDragUpdate: (details) {
             setState(() {
               updatePanning(details, boardSize);
