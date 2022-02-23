@@ -79,4 +79,9 @@ class GameModel extends ChangeNotifier {
     _status = Status.playable;
     notifyListeners();
   }
+
+  void markSolved() {
+    _status = Status.finished;
+    notifyListeners();
+  }
 }

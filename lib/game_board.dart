@@ -63,42 +63,56 @@ class _GameBoardState extends State<GameBoard> {
                       );
                 }
               : null,
-          onHorizontalDragUpdate: (details) {
-            setState(() {
-              updatePanning(details, boardSize);
-            });
-            context
-                .read<GameBoardModel>()
-                .dragRow(details, gridSize, boardSize);
-          },
-          onVerticalDragUpdate: (details) {
-            setState(() {
-              updatePanning(details, boardSize);
-            });
-            context
-                .read<GameBoardModel>()
-                .dragColumn(details, gridSize, boardSize);
-          },
-          onHorizontalDragEnd: (detail) {
-            setState(() {
-              defaultPosition = true;
-            });
-            context.read<GameBoardModel>().snapBoxes();
-            context.read<GameBoardModel>().updateBoxesLocation();
-            final boxesChanged = context.read<GameBoardModel>().boxesChanged;
-            context.read<GameModel>().addMove(shouldAdd: boxesChanged);
-            context.read<GameBoardModel>().puzzleSolved;
-          },
-          onVerticalDragEnd: (detail) {
-            setState(() {
-              defaultPosition = true;
-            });
-            context.read<GameBoardModel>().snapBoxes();
-            context.read<GameBoardModel>().updateBoxesLocation();
-            final boxesChanged = context.read<GameBoardModel>().boxesChanged;
-            context.read<GameModel>().addMove(shouldAdd: boxesChanged);
-            context.read<GameBoardModel>().puzzleSolved;
-          },
+          onHorizontalDragUpdate: status == Status.playable
+              ? (details) {
+                  setState(() {
+                    updatePanning(details, boardSize);
+                  });
+                  context
+                      .read<GameBoardModel>()
+                      .dragRow(details, gridSize, boardSize);
+                }
+              : null,
+          onVerticalDragUpdate: status == Status.playable
+              ? (details) {
+                  setState(() {
+                    updatePanning(details, boardSize);
+                  });
+                  context
+                      .read<GameBoardModel>()
+                      .dragColumn(details, gridSize, boardSize);
+                }
+              : null,
+          onHorizontalDragEnd: status == Status.playable
+              ? (detail) {
+                  setState(() {
+                    defaultPosition = true;
+                  });
+                  context.read<GameBoardModel>().snapBoxes();
+                  context.read<GameBoardModel>().updateBoxesLocation();
+                  final boxesChanged =
+                      context.read<GameBoardModel>().boxesChanged;
+                  context.read<GameModel>().addMove(shouldAdd: boxesChanged);
+                  if (context.read<GameBoardModel>().puzzleSolved) {
+                    context.read<GameModel>().markSolved();
+                  }
+                }
+              : null,
+          onVerticalDragEnd: status == Status.playable
+              ? (detail) {
+                  setState(() {
+                    defaultPosition = true;
+                  });
+                  context.read<GameBoardModel>().snapBoxes();
+                  context.read<GameBoardModel>().updateBoxesLocation();
+                  final boxesChanged =
+                      context.read<GameBoardModel>().boxesChanged;
+                  context.read<GameModel>().addMove(shouldAdd: boxesChanged);
+                  if (context.read<GameBoardModel>().puzzleSolved) {
+                    context.read<GameModel>().markSolved();
+                  }
+                }
+              : null,
           child: Transform(
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
