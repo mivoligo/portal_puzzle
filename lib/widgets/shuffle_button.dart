@@ -11,14 +11,18 @@ class ShuffleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HeroButton(
-      label: 'Shuffle',
-      surfaceColor: k.lightRed,
-      sideColor: k.red,
-      textColor: k.darkRed,
-      iconData: Icons.refresh,
-      isSmall: false,
-      onPressed: context.read<GameModel>().shuffle,
+    final status = context.select<GameModel, Status>((model) => model.status);
+    return SizedBox(
+      width: 140,
+      child: HeroButton(
+        label: status == Status.initial ? 'Start!' : 'Shuffle',
+        surfaceColor: k.lightRed,
+        sideColor: k.red,
+        textColor: k.darkRed,
+        iconData: status == Status.initial ? Icons.play_arrow : Icons.refresh,
+        isSmall: false,
+        onPressed: context.read<GameModel>().shuffle,
+      ),
     );
   }
 }
