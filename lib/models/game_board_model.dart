@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'models.dart';
 
 class GameBoardModel extends ChangeNotifier {
+  final _random = Random();
   final List<GameBox> _boxes = [];
   Offset _tappedLoc = Offset.zero;
   final List<GameBox> _tappedRow = [];
@@ -149,20 +152,21 @@ class GameBoardModel extends ChangeNotifier {
         _tappedRow.add(box);
       }
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx - 0.5, rowIndex);
       if (box.currentLoc.dx <= -0.5) {
         box.currentLoc = Offset(gridSize - 0.5, rowIndex);
       }
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx - 0.5, rowIndex);
       if (box.currentLoc.dx <= -0.5) {
         box.currentLoc = Offset(gridSize - 0.5, rowIndex);
       }
     }
+    await Future.delayed(const Duration(milliseconds: 60));
 
     updateBoxesLocation();
 
@@ -179,20 +183,21 @@ class GameBoardModel extends ChangeNotifier {
         _tappedColumn.add(box);
       }
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedColumn) {
       box.currentLoc = Offset(columnIndex, box.currentLoc.dy - 0.5);
       if (box.currentLoc.dy <= -0.5) {
         box.currentLoc = Offset(columnIndex, gridSize - 0.5);
       }
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedColumn) {
       box.currentLoc = Offset(columnIndex, box.currentLoc.dy - 0.5);
       if (box.currentLoc.dy <= -0.5) {
         box.currentLoc = Offset(columnIndex, gridSize - 0.5);
       }
     }
+    await Future.delayed(const Duration(milliseconds: 60));
 
     updateBoxesLocation();
 
@@ -200,10 +205,13 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   Future<void> shuffle(int gridSize) async {
-    for (var i = 0; i < gridSize; i++) {
-      await _moveRow(rowIndex: i.toDouble(), gridSize: gridSize);
-      await _moveRow(rowIndex: i.toDouble(), gridSize: gridSize);
-      await _moveColumn(columnIndex: i.toDouble(), gridSize: gridSize);
+    for (var i = 0; i <= gridSize; i++) {
+      final randomRow = _random.nextInt(gridSize).toDouble();
+      final randomColumn = _random.nextInt(gridSize).toDouble();
+
+      await _moveRow(rowIndex: randomRow, gridSize: gridSize);
+      await _moveColumn(columnIndex: randomColumn, gridSize: gridSize);
+      await Future.delayed(const Duration(milliseconds: 60));
     }
   }
 }
