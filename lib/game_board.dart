@@ -155,7 +155,10 @@ class _GameBoardState extends State<GameBoard> {
                           boardSize: boardSize,
                           gridSize: gridSize,
                         );
-                        return Positioned(
+                        return AnimatedPositioned(
+                          duration: status == Status.playable
+                              ? Duration.zero
+                              : const Duration(milliseconds: 200),
                           left: gameBoxRect.left,
                           top: gameBoxRect.top,
                           child: AnimatedTile(

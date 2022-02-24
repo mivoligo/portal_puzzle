@@ -42,6 +42,8 @@ class _SmallLayoutState extends State<SmallLayout>
 
   @override
   Widget build(BuildContext context) {
+    final gridSize = context.select<GameModel, int>((model) => model.gridSize);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -80,7 +82,9 @@ class _SmallLayoutState extends State<SmallLayout>
             ),
             Padding(
               padding: const EdgeInsets.all(32.0),
-              child: ShuffleButton(onPressed: () async {}),
+              child: ShuffleButton(onPressed: () async {
+                await context.read<GameBoardModel>().shuffle(gridSize);
+              }),
             ),
           ],
         ),

@@ -45,6 +45,7 @@ class _LargeLayoutState extends State<LargeLayout>
     final difficulty = context.select<GameModel, Difficulty>(
       (model) => model.difficulty,
     );
+    final gridSize = context.select<GameModel, int>((model) => model.gridSize);
 
     String difficultyString;
 
@@ -104,7 +105,9 @@ class _LargeLayoutState extends State<LargeLayout>
                   ),
                   const SizedBox(height: 24),
                   ShuffleButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      await context.read<GameBoardModel>().shuffle(gridSize);
+                    },
                   ),
                 ],
               ),

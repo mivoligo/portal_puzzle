@@ -42,6 +42,7 @@ class _MediumLayoutState extends State<MediumLayout>
 
   @override
   Widget build(BuildContext context) {
+    final gridSize = context.select<GameModel, int>((model) => model.gridSize);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -76,7 +77,9 @@ class _MediumLayoutState extends State<MediumLayout>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const MovesCounter(isLarge: true),
-                  ShuffleButton(onPressed: () async {}),
+                  ShuffleButton(onPressed: () async {
+                    await context.read<GameBoardModel>().shuffle(gridSize);
+                  }),
                 ],
               ),
             ),

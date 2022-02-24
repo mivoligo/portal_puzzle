@@ -200,9 +200,10 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   Future<void> shuffle(int gridSize) async {
-    final rowIndex = 0.0;
-    final columnIndex = 1.0;
-    await _moveRow(rowIndex: rowIndex, gridSize: gridSize);
-    await _moveColumn(columnIndex: columnIndex, gridSize: gridSize);
+    for (var i = 0; i < gridSize; i++) {
+      await _moveRow(rowIndex: i.toDouble(), gridSize: gridSize);
+      await _moveRow(rowIndex: i.toDouble(), gridSize: gridSize);
+      await _moveColumn(columnIndex: i.toDouble(), gridSize: gridSize);
+    }
   }
 }
