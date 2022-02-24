@@ -20,11 +20,6 @@ class _SmallLayoutState extends State<SmallLayout>
   );
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     animationController.dispose();
     super.dispose();

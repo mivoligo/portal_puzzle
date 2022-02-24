@@ -20,11 +20,6 @@ class _MediumLayoutState extends State<MediumLayout>
   );
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     animationController.dispose();
     super.dispose();

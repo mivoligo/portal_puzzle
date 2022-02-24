@@ -20,11 +20,6 @@ class _LargeLayoutState extends State<LargeLayout>
   );
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     animationController.dispose();
     super.dispose();
