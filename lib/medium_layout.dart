@@ -74,9 +74,9 @@ class _MediumLayoutState extends State<MediumLayout>
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  MovesCounter(isLarge: true),
-                  ShuffleButton(),
+                children: [
+                  const MovesCounter(isLarge: true),
+                  ShuffleButton(onPressed: () async {}),
                 ],
               ),
             ),

@@ -103,7 +103,9 @@ class _LargeLayoutState extends State<LargeLayout>
                     isLarge: true,
                   ),
                   const SizedBox(height: 24),
-                  const ShuffleButton(),
+                  ShuffleButton(
+                    onPressed: () async {},
+                  ),
                 ],
               ),
             ),

@@ -78,9 +78,9 @@ class _SmallLayoutState extends State<SmallLayout>
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(32.0),
-              child: ShuffleButton(),
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: ShuffleButton(onPressed: () async {}),
             ),
           ],
         ),

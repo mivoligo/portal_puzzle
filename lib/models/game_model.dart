@@ -77,6 +77,11 @@ class GameModel extends ChangeNotifier {
 
   void shuffle() {
     _resetNumOfMoves();
+    _status = Status.shuffling;
+    notifyListeners();
+  }
+
+  void markPlayable() {
     _status = Status.playable;
     notifyListeners();
   }

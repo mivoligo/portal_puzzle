@@ -86,7 +86,9 @@ class _HeroButtonState extends State<HeroButton> {
             if (widget.iconData != null)
               Icon(
                 widget.iconData,
-                color: widget.textColor,
+                color: widget.isSelected
+                    ? const Color(0xFFFFFFFF)
+                    : widget.textColor,
               ),
             if (widget.iconData != null) const SizedBox(width: 12),
             Text(
