@@ -34,7 +34,7 @@ class GameBoxTile extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(boardSize * 0.01)),
           color: const Color(0xAA94A3B8),
-          border: Border.all(color: const Color(0xFF64748B)),
+          border: Border.all(color: const Color(0xAACBD5E1)),
         ),
         child: Center(
           child: Text(
@@ -42,7 +42,14 @@ class GameBoxTile extends StatelessWidget {
             style: TextStyle(
               color: box.isAtSpawn
                   ? const Color(0xFFF1F5F9)
-                  : const Color(0xAAF1F5F9),
+                  : const Color(0xFFCBD5E1),
+              shadows: const [
+                Shadow(
+                  color: Color(0x44222222),
+                  offset: Offset(0, 2),
+                  blurRadius: 2,
+                )
+              ],
               fontFamily: 'Rubik',
               fontWeight: FontWeight.w600,
               fontSize: gameBoxRect.height * 0.6,
