@@ -103,43 +103,50 @@ class GameBoardModel extends ChangeNotifier {
   void dragRow(DragUpdateDetails details, int gridSize, double boardSize) {
     Offset dragOffset = details.localPosition - _tappedLoc;
     double translatedX = dragOffset.dx / boardSize * gridSize;
-    for (GameBox box in _tappedRow) {
-      box.currentLoc = box.startLoc + Offset(translatedX, 0);
-      if (box.currentLoc.dx <= -0.5) {
-        box.currentLoc = Offset(
-          box.startLoc.dx + gridSize + translatedX,
-          box.currentLoc.dy,
-        );
+
+    if (details.localPosition.dx >= 0 &&
+        details.localPosition.dx <= boardSize) {
+      for (GameBox box in _tappedRow) {
+        box.currentLoc = box.startLoc + Offset(translatedX, 0);
+        if (box.currentLoc.dx <= -0.5) {
+          box.currentLoc = Offset(
+            box.startLoc.dx + gridSize + translatedX,
+            box.currentLoc.dy,
+          );
+        }
+        if (box.currentLoc.dx > gridSize - 0.5) {
+          box.currentLoc = Offset(
+            box.startLoc.dx - gridSize + translatedX,
+            box.currentLoc.dy,
+          );
+        }
       }
-      if (box.currentLoc.dx > gridSize - 0.5) {
-        box.currentLoc = Offset(
-          box.startLoc.dx - gridSize + translatedX,
-          box.currentLoc.dy,
-        );
-      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void dragColumn(DragUpdateDetails details, int gridSize, double boardSize) {
     Offset dragOffset = details.localPosition - _tappedLoc;
     double translatedY = dragOffset.dy / boardSize * gridSize;
-    for (GameBox box in _tappedColumn) {
-      box.currentLoc = box.startLoc + Offset(0, translatedY);
-      if (box.currentLoc.dy <= -0.5) {
-        box.currentLoc = Offset(
-          box.currentLoc.dx,
-          box.startLoc.dy + gridSize + translatedY,
-        );
+    if (details.localPosition.dy >= 0 &&
+        details.localPosition.dy <= boardSize) {
+      for (GameBox box in _tappedColumn) {
+        box.currentLoc = box.startLoc + Offset(0, translatedY);
+        if (box.currentLoc.dy <= -0.5) {
+          box.currentLoc = Offset(
+            box.currentLoc.dx,
+            box.startLoc.dy + gridSize + translatedY,
+          );
+        }
+        if (box.currentLoc.dy > gridSize - 0.5) {
+          box.currentLoc = Offset(
+            box.currentLoc.dx,
+            box.startLoc.dy - gridSize + translatedY,
+          );
+        }
       }
-      if (box.currentLoc.dy > gridSize - 0.5) {
-        box.currentLoc = Offset(
-          box.currentLoc.dx,
-          box.startLoc.dy - gridSize + translatedY,
-        );
-      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> _moveRow({
