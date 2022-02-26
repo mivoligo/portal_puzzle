@@ -58,7 +58,11 @@ class _HeroButtonState extends State<HeroButton> {
               padding: widget.isSmall
                   ? const EdgeInsets.symmetric(horizontal: 16, vertical: 12)
                   : const EdgeInsets.all(16),
-              child: child,
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 100),
+                curve: Curves.easeInOut,
+                child: child,
+              ),
               decoration: BoxDecoration(
                 color: widget.surfaceColor,
                 borderRadius: widget.isSmall

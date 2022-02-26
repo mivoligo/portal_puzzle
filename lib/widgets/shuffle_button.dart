@@ -36,22 +36,19 @@ class ShuffleButton extends StatelessWidget {
       }
     }
 
-    return SizedBox(
-      width: 150,
-      child: HeroButton(
-        label: label(),
-        surfaceColor: k.lightRed,
-        sideColor: k.red,
-        textColor: k.darkRed,
-        iconData: iconData(),
-        isSmall: false,
-        isSelected: status == Status.shuffling,
-        onPressed: () async {
-          context.read<GameModel>().shuffle();
-          await onPressed();
-          context.read<GameModel>().markPlayable();
-        },
-      ),
+    return HeroButton(
+      label: label(),
+      surfaceColor: k.lightRed,
+      sideColor: k.red,
+      textColor: k.darkRed,
+      iconData: iconData(),
+      isSmall: false,
+      isSelected: status == Status.shuffling,
+      onPressed: () async {
+        context.read<GameModel>().shuffle();
+        await onPressed();
+        context.read<GameModel>().markPlayable();
+      },
     );
   }
 }
