@@ -36,156 +36,161 @@ class _GameBoardState extends State<GameBoard> {
     double percentY = (localY / boardSize) * 100;
 
     return Center(
-      child: SizedBox(
-        width: boardSize * 1.1,
-        height: boardSize * 1.1,
-        child: Transform(
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.001)
-            ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
-            ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
-          alignment: FractionalOffset.center,
-          child: AnimatedBoard(
-            animation: widget.animationController,
-            child: AnimatedContainer(
-              clipBehavior: Clip.antiAlias,
-              duration: const Duration(milliseconds: 500),
-              padding: EdgeInsets.all(boardSize * 0.05),
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  colors: [
-                    boardColor,
-                    k.lightRed,
-                  ],
-                  center: FractionalOffset(
-                    localX / boardSize,
-                    localY / boardSize,
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 200),
+        scale: status == Status.playable ? 1 : 0.8,
+        curve: Curves.decelerate,
+        child: SizedBox(
+          width: boardSize * 1.1,
+          height: boardSize * 1.1,
+          child: Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
+              ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
+            alignment: FractionalOffset.center,
+            child: AnimatedBoard(
+              animation: widget.animationController,
+              child: AnimatedContainer(
+                clipBehavior: Clip.antiAlias,
+                duration: const Duration(milliseconds: 500),
+                padding: EdgeInsets.all(boardSize * 0.05),
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      boardColor,
+                      k.lightRed,
+                    ],
+                    center: FractionalOffset(
+                      localX / boardSize,
+                      localY / boardSize,
+                    ),
+                    radius: gridSize / 2,
                   ),
-                  radius: gridSize / 2,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(boardSize * 0.05),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(boardSize * 0.05),
-                ),
-              ),
-              child: GestureDetector(
-                onHorizontalDragStart: status == Status.playable
-                    ? (details) {
-                        setState(() {
-                          defaultPosition = false;
-                        });
-                        context.read<GameBoardModel>().setTappedRow(
-                              boardSize: boardSize,
-                              gridSize: gridSize,
-                              details: details,
-                            );
-                      }
-                    : null,
-                onVerticalDragStart: status == Status.playable
-                    ? (details) {
-                        setState(() {
-                          defaultPosition = false;
-                        });
-                        context.read<GameBoardModel>().setTappedColumn(
-                              boardSize: boardSize,
-                              gridSize: gridSize,
-                              details: details,
-                            );
-                      }
-                    : null,
-                onHorizontalDragUpdate: status == Status.playable
-                    ? (details) {
-                        setState(() {
-                          updatePanning(details, boardSize);
-                        });
-                        context
-                            .read<GameBoardModel>()
-                            .dragRow(details, gridSize, boardSize);
-                      }
-                    : null,
-                onVerticalDragUpdate: status == Status.playable
-                    ? (details) {
-                        setState(() {
-                          updatePanning(details, boardSize);
-                        });
-                        context
-                            .read<GameBoardModel>()
-                            .dragColumn(details, gridSize, boardSize);
-                      }
-                    : null,
-                onHorizontalDragEnd: status == Status.playable
-                    ? (detail) {
-                        setState(() {
-                          defaultPosition = true;
-                        });
-                        context.read<GameBoardModel>().snapBoxes();
-                        context.read<GameBoardModel>().updateBoxesLocation();
-                        final boxesChanged =
-                            context.read<GameBoardModel>().boxesChanged;
-                        context
-                            .read<GameModel>()
-                            .addMove(shouldAdd: boxesChanged);
-                        if (context.read<GameBoardModel>().puzzleSolved) {
-                          context.read<GameModel>().markSolved();
+                child: GestureDetector(
+                  onHorizontalDragStart: status == Status.playable
+                      ? (details) {
+                          setState(() {
+                            defaultPosition = false;
+                          });
+                          context.read<GameBoardModel>().setTappedRow(
+                                boardSize: boardSize,
+                                gridSize: gridSize,
+                                details: details,
+                              );
                         }
-                      }
-                    : null,
-                onVerticalDragEnd: status == Status.playable
-                    ? (detail) {
-                        setState(() {
-                          defaultPosition = true;
-                        });
-                        context.read<GameBoardModel>().snapBoxes();
-                        context.read<GameBoardModel>().updateBoxesLocation();
-                        final boxesChanged =
-                            context.read<GameBoardModel>().boxesChanged;
-                        context
-                            .read<GameModel>()
-                            .addMove(shouldAdd: boxesChanged);
-                        if (context.read<GameBoardModel>().puzzleSolved) {
-                          context.read<GameModel>().markSolved();
+                      : null,
+                  onVerticalDragStart: status == Status.playable
+                      ? (details) {
+                          setState(() {
+                            defaultPosition = false;
+                          });
+                          context.read<GameBoardModel>().setTappedColumn(
+                                boardSize: boardSize,
+                                gridSize: gridSize,
+                                details: details,
+                              );
                         }
-                      }
-                    : null,
-                child: Stack(
-                  alignment: Alignment.center,
-                  clipBehavior: Clip.antiAlias,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0x22FFFFFF),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(boardSize * 0.01),
+                      : null,
+                  onHorizontalDragUpdate: status == Status.playable
+                      ? (details) {
+                          setState(() {
+                            updatePanning(details, boardSize);
+                          });
+                          context
+                              .read<GameBoardModel>()
+                              .dragRow(details, gridSize, boardSize);
+                        }
+                      : null,
+                  onVerticalDragUpdate: status == Status.playable
+                      ? (details) {
+                          setState(() {
+                            updatePanning(details, boardSize);
+                          });
+                          context
+                              .read<GameBoardModel>()
+                              .dragColumn(details, gridSize, boardSize);
+                        }
+                      : null,
+                  onHorizontalDragEnd: status == Status.playable
+                      ? (detail) {
+                          setState(() {
+                            defaultPosition = true;
+                          });
+                          context.read<GameBoardModel>().snapBoxes();
+                          context.read<GameBoardModel>().updateBoxesLocation();
+                          final boxesChanged =
+                              context.read<GameBoardModel>().boxesChanged;
+                          context
+                              .read<GameModel>()
+                              .addMove(shouldAdd: boxesChanged);
+                          if (context.read<GameBoardModel>().puzzleSolved) {
+                            context.read<GameModel>().markSolved();
+                          }
+                        }
+                      : null,
+                  onVerticalDragEnd: status == Status.playable
+                      ? (detail) {
+                          setState(() {
+                            defaultPosition = true;
+                          });
+                          context.read<GameBoardModel>().snapBoxes();
+                          context.read<GameBoardModel>().updateBoxesLocation();
+                          final boxesChanged =
+                              context.read<GameBoardModel>().boxesChanged;
+                          context
+                              .read<GameModel>()
+                              .addMove(shouldAdd: boxesChanged);
+                          if (context.read<GameBoardModel>().puzzleSolved) {
+                            context.read<GameModel>().markSolved();
+                          }
+                        }
+                      : null,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    clipBehavior: Clip.antiAlias,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0x22FFFFFF),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(boardSize * 0.01),
+                          ),
                         ),
                       ),
-                    ),
-                    ...boxes.map(
-                      (box) {
-                        final index = boxes.indexOf(box);
-                        final gameBoxRect = box.getRect(
-                          boardSize: boardSize,
-                          gridSize: gridSize,
-                        );
-                        return AnimatedPositioned(
-                          duration: status == Status.playable
-                              ? Duration.zero
-                              : const Duration(milliseconds: 150),
-                          left: gameBoxRect.left,
-                          top: gameBoxRect.top,
-                          child: AnimatedTile(
+                      ...boxes.map(
+                        (box) {
+                          final index = boxes.indexOf(box);
+                          final gameBoxRect = box.getRect(
+                            boardSize: boardSize,
                             gridSize: gridSize,
-                            dx: box.currentLoc.dx,
-                            dy: box.currentLoc.dy,
-                            child: GameBoxTile(
-                              box: box,
-                              text: '${index + 1}',
-                              boardSize: boardSize,
+                          );
+                          return AnimatedPositioned(
+                            duration: status == Status.playable
+                                ? Duration.zero
+                                : const Duration(milliseconds: 150),
+                            left: gameBoxRect.left,
+                            top: gameBoxRect.top,
+                            child: AnimatedTile(
+                              gridSize: gridSize,
+                              dx: box.currentLoc.dx,
+                              dy: box.currentLoc.dy,
+                              child: GameBoxTile(
+                                box: box,
+                                text: '${index + 1}',
+                                boardSize: boardSize,
+                              ),
+                              animation: widget.animationController,
                             ),
-                            animation: widget.animationController,
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ],
+                          );
+                        },
+                      ).toList(),
+                    ],
+                  ),
                 ),
               ),
             ),
