@@ -12,7 +12,7 @@ class GameBoard extends StatefulWidget {
     required this.animationController,
   }) : super(key: key);
 
-  final Size parentSize;
+  final double parentSize;
   final Animation<double> animationController;
 
   @override
@@ -29,7 +29,7 @@ class _GameBoardState extends State<GameBoard> {
     final status = context.watch<GameModel>().status;
     final gridSize = context.watch<GameModel>().gridSize;
     final boxes = context.watch<GameBoardModel>().boxes;
-    double boardSize = widget.parentSize.shortestSide;
+    double boardSize = widget.parentSize;
     final boardColor = context.watch<GameModel>().boardColor;
 
     double percentX = (localX / boardSize) * 100;

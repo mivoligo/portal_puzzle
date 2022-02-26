@@ -83,7 +83,7 @@ class _MediumLayoutState extends State<MediumLayout>
                 builder: (_, constraints) {
                   return GameBoard(
                     animationController: animationController,
-                    parentSize: constraints.biggest * 0.8,
+                    parentSize: constraints.biggest.shortestSide * 0.8,
                   );
                 },
               ),

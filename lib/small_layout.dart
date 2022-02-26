@@ -71,7 +71,7 @@ class _SmallLayoutState extends State<SmallLayout>
               child: LayoutBuilder(
                 builder: (_, constraints) => GameBoard(
                   animationController: animationController,
-                  parentSize: constraints.biggest * 0.8,
+                  parentSize: constraints.biggest.shortestSide * 0.8,
                 ),
               ),
             ),

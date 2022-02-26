@@ -113,7 +113,7 @@ class _LargeLayoutState extends State<LargeLayout>
           builder: (context, constraints) {
             return GameBoard(
               animationController: animationController,
-              parentSize: constraints.biggest * 0.6,
+              parentSize: constraints.biggest.shortestSide * 0.6,
             );
           },
         ),
