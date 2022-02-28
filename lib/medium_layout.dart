@@ -38,9 +38,12 @@ class _MediumLayoutState extends State<MediumLayout>
   @override
   Widget build(BuildContext context) {
     final gridSize = context.select<GameModel, int>((model) => model.gridSize);
+    final status = context.select<GameModel, Status>((model) => model.status);
     return Stack(
       alignment: Alignment.center,
       children: [
+        if (status == Status.initial)
+          const Positioned(top: 124, right: 80, child: Bubbles()),
         Column(
           children: [
             Padding(

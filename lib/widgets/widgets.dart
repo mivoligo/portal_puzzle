@@ -1,6 +1,7 @@
 export 'animated_board.dart';
 export 'animated_tile.dart';
 export 'app_title.dart';
+export 'bubbles.dart';
 export 'difficulty_selector.dart';
 export 'game_box_tile.dart';
 export 'hero_button.dart';

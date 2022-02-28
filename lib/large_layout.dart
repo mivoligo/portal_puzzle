@@ -41,6 +41,7 @@ class _LargeLayoutState extends State<LargeLayout>
       (model) => model.difficulty,
     );
     final gridSize = context.select<GameModel, int>((model) => model.gridSize);
+    final status = context.select<GameModel, Status>((model) => model.status);
 
     String difficultyString;
 
@@ -76,8 +77,10 @@ class _LargeLayoutState extends State<LargeLayout>
             ),
           ),
         ),
+        if (status == Status.initial)
+          const Positioned(left: 124, top: 360, child: Bubbles()),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.topLeft,
           child: Padding(
             padding: const EdgeInsets.all(64.0),
             child: SingleChildScrollView(

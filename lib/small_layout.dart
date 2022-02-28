@@ -38,10 +38,13 @@ class _SmallLayoutState extends State<SmallLayout>
   @override
   Widget build(BuildContext context) {
     final gridSize = context.select<GameModel, int>((model) => model.gridSize);
+    final status = context.select<GameModel, Status>((model) => model.status);
 
     return Stack(
       alignment: Alignment.center,
       children: [
+        if (status == Status.initial)
+          const Positioned(bottom: 64, child: Bubbles()),
         Column(
           children: [
             const Padding(
