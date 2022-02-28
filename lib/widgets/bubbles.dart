@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -12,24 +11,31 @@ class Bubbles extends StatefulWidget {
   State<Bubbles> createState() => _BubblesState();
 }
 
-class _BubblesState extends State<Bubbles> {
-  late Timer timer;
+class _BubblesState extends State<Bubbles> with SingleTickerProviderStateMixin {
+  static final random = Random();
 
-  final bubbles = List<Bubble>.generate(10, (index) => Bubble());
+  final bubbles = List<Bubble>.generate(18, (index) => Bubble(random));
+
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 1000 ~/ 60), (timer) {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(hours: 1),
+    )..forward();
+
+    _controller.addListener(() {
       setState(() {
         for (final bubble in {...bubbles}) {
           bubble.position += Offset(bubble.dx, bubble.dy);
-          if (bubble.position.dx < -80 ||
-              bubble.position.dx > 80 ||
-              bubble.position.dy < -50 ||
-              bubble.position.dy > 50) {
+          if (bubble.position.dx < -90 ||
+              bubble.position.dx > 90 ||
+              bubble.position.dy < -60 ||
+              bubble.position.dy > 60) {
             bubbles.remove(bubble);
-            bubbles.add(Bubble());
+            bubbles.add(Bubble(random));
           }
         }
       });
@@ -38,7 +44,8 @@ class _BubblesState extends State<Bubbles> {
 
   @override
   void dispose() {
-    timer.cancel();
+    _controller.dispose();
+
     super.dispose();
   }
 
@@ -58,10 +65,15 @@ class BubblePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final bubble in bubbles) {
+      final opacity = 1.0 -
+          min(
+            bubble.position.dx.abs() / 90,
+            bubble.position.dy.abs() / 60,
+          );
       canvas.drawCircle(
         bubble.position,
         bubble.radius,
-        Paint()..color = lightRedAA,
+        Paint()..color = lightRed.withOpacity(opacity),
       );
     }
   }
@@ -73,14 +85,13 @@ class BubblePainter extends CustomPainter {
 }
 
 class Bubble {
-  Bubble() {
+  Bubble(Random random) {
     radius = random.nextDouble() * 8 + 2;
     position = Offset.zero;
     dx = random.nextDouble() * (1 + 1) - 1;
     dy = random.nextDouble() * (0.5 + 0.5) - 0.5;
   }
 
-  final random = Random();
   late double radius;
   late double dx;
   late double dy;
