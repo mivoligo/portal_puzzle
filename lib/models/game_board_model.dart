@@ -212,13 +212,15 @@ class GameBoardModel extends ChangeNotifier {
   }
 
   Future<void> shuffle(int gridSize) async {
-    for (var i = 0; i <= gridSize; i++) {
-      final randomRow = _random.nextInt(gridSize).toDouble();
-      final randomColumn = _random.nextInt(gridSize).toDouble();
+    do {
+      for (var i = 0; i <= gridSize; i++) {
+        final randomRow = _random.nextInt(gridSize).toDouble();
+        final randomColumn = _random.nextInt(gridSize).toDouble();
 
-      await _moveRow(rowIndex: randomRow, gridSize: gridSize);
-      await _moveColumn(columnIndex: randomColumn, gridSize: gridSize);
-      await Future.delayed(const Duration(milliseconds: 60));
-    }
+        await _moveRow(rowIndex: randomRow, gridSize: gridSize);
+        await _moveColumn(columnIndex: randomColumn, gridSize: gridSize);
+        await Future.delayed(const Duration(milliseconds: 60));
+      }
+    } while (puzzleSolved); // prevent shuffling to the solution :)
   }
 }
