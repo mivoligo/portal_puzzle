@@ -28,7 +28,7 @@ class _BubblesState extends State<Bubbles> with SingleTickerProviderStateMixin {
 
     _controller.addListener(() {
       setState(() {
-        for (final bubble in {...bubbles}) {
+        for (final bubble in [...bubbles]) {
           bubble.position += Offset(bubble.dx, bubble.dy);
           if (bubble.position.dx < -90 ||
               bubble.position.dx > 90 ||
