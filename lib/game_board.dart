@@ -51,7 +51,26 @@ class _GameBoardState extends State<GameBoard> {
             alignment: FractionalOffset.center,
             child: AnimatedBoard(
               animation: widget.animationController,
-              child: AnimatedContainer(
+              back: Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      boardColor,
+                      k.lightRed,
+                    ],
+                    center: FractionalOffset(
+                      localX / boardSize,
+                      localY / boardSize,
+                    ),
+                    radius: gridSize / 2,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(boardSize * 0.05),
+                  ),
+                ),
+                child: Image.asset('assets/images/gift.png'),
+              ),
+              front: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,
                 duration: const Duration(milliseconds: 500),
                 padding: EdgeInsets.all(boardSize * 0.05),

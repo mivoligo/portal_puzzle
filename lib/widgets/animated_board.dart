@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class AnimatedBoard extends AnimatedWidget {
   AnimatedBoard({
     Key? key,
-    required this.child,
+    required this.front,
+    required this.back,
     required Animation<double> animation,
   })  : _animation = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
@@ -19,17 +20,20 @@ class AnimatedBoard extends AnimatedWidget {
         ),
         super(key: key, listenable: animation);
 
-  final Widget child;
+  final Widget front;
+  final Widget back;
+
+  // final Widget secondChild;
   final Animation<double> _animation;
 
   @override
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.00002)
+        ..setEntry(3, 2, 0.0002)
         ..rotateY(_animation.value * pi * 0.6),
       alignment: FractionalOffset.center,
-      child: child,
+      child: _animation.value < 0.85 ? front : back,
     );
   }
 }
