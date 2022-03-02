@@ -25,7 +25,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.watch<GameModel>().backgroundColor;
+    final backgroundColor =
+        context.select<GameModel, Color>((model) => model.backgroundColor);
     final status = context.select<GameModel, Status>((model) => model.status);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
