@@ -36,23 +36,29 @@ class MediumLayout extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const AppTitle(),
-                  DifficultySelector(
-                    onEasy: onEasy,
-                    onNormal: onNormal,
-                    onHard: onHard,
-                  ),
+                  if (status != Status.finished)
+                    DifficultySelector(
+                      onEasy: onEasy,
+                      onNormal: onNormal,
+                      onHard: onHard,
+                    ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: (status == Status.finished)
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.spaceBetween,
                 children: [
-                  const MovesCounter(isLarge: true),
-                  ShuffleButton(onPressed: () async {
-                    await context.read<GameBoardModel>().shuffle(gridSize);
-                  }),
+                  if (status != Status.finished)
+                    const MovesCounter(isLarge: true),
+                  if (status != Status.finished)
+                    ShuffleButton(onPressed: () async {
+                      await context.read<GameBoardModel>().shuffle(gridSize);
+                    }),
+                  if (status == Status.finished) const TryAgainButton(),
                 ],
               ),
             ),
