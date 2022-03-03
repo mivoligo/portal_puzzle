@@ -43,15 +43,16 @@ class LargeLayout extends StatelessWidget {
 
     return Stack(
       children: [
-        Positioned(
-          top: 64,
-          right: 64,
-          child: DifficultySelector(
-            onEasy: onEasy,
-            onNormal: onNormal,
-            onHard: onHard,
+        if (status != Status.finished)
+          Positioned(
+            top: 64,
+            right: 64,
+            child: DifficultySelector(
+              onEasy: onEasy,
+              onNormal: onNormal,
+              onHard: onHard,
+            ),
           ),
-        ),
         if (status == Status.initial)
           const Positioned(left: 124, top: 360, child: Bubbles()),
         Align(
@@ -68,20 +69,25 @@ class LargeLayout extends StatelessWidget {
                     child: AppTitle(isLarge: true),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    'Difficulty: $difficultyString',
-                    style: const TextStyle(fontSize: 24),
-                  ),
+                  if (status != Status.finished)
+                    Text(
+                      'Difficulty: $difficultyString',
+                      style: const TextStyle(fontSize: 24),
+                    ),
                   const SizedBox(height: 24),
-                  const MovesCounter(
-                    isLarge: true,
-                  ),
+                  if (status != Status.finished)
+                    const MovesCounter(
+                      isLarge: true,
+                    ),
                   const SizedBox(height: 24),
-                  ShuffleButton(
-                    onPressed: () async {
-                      await context.read<GameBoardModel>().shuffle(gridSize);
-                    },
-                  ),
+                  if (status != Status.finished)
+                    ShuffleButton(
+                      onPressed: () async {
+                        await context.read<GameBoardModel>().shuffle(gridSize);
+                      },
+                    ),
+                  if (status == Status.finished) const SizedBox(height: 64),
+                  if (status == Status.finished) const TryAgainButton(),
                 ],
               ),
             ),

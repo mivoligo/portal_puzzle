@@ -11,7 +11,9 @@ class TryAgainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HeroButton(
-      label: 'Try Again',
+      isSmall: false,
+      label: 'Play Again',
+      iconData: Icons.play_arrow,
       onPressed: context.read<GameModel>().resetGame,
       surfaceColor: lightRed,
       sideColor: red,
