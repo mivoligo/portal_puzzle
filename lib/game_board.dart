@@ -196,7 +196,7 @@ class _GameBoardState extends State<GameBoard> {
                             gridSize: gridSize,
                           );
                           return AnimatedPositioned(
-                            duration: status == Status.playable
+                            duration: status != Status.shuffling
                                 ? Duration.zero
                                 : const Duration(milliseconds: 150),
                             left: gameBoxRect.left,
