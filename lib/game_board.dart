@@ -69,7 +69,13 @@ class _GameBoardState extends State<GameBoard> {
                     Radius.circular(boardSize * 0.05),
                   ),
                 ),
-                child: Image.asset('assets/images/gift.png'),
+                child: FractionallySizedBox(
+                    widthFactor: 0.4,
+                    heightFactor: 0.42,
+                    child: Image.asset(
+                      'assets/images/gift.png',
+                      fit: BoxFit.cover,
+                    )),
               ),
               front: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,
