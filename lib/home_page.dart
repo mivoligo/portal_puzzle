@@ -15,12 +15,34 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1000),
+  );
+
   @override
   void initState() {
     super.initState();
     final gridSize = context.read<GameModel>().gridSize;
     context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  Future<void> playAnimation({
+    required Difficulty difficulty,
+    required int gridSize,
+  }) async {
+    animationController.forward().whenComplete(() {
+      context.read<GameModel>().setDifficulty(difficulty);
+      context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
+    }).whenComplete(() => animationController.reverse());
   }
 
   @override
@@ -43,13 +65,54 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, constraints) {
                     final layoutWidth = constraints.maxWidth;
                     if (layoutWidth < widthSmall) {
-                      return const SmallLayout();
+                      return SmallLayout(
+                        difficultyAnimation: animationController,
+                        onEasy: () => playAnimation(
+                          gridSize: 2,
+                          difficulty: Difficulty.easy,
+                        ),
+                        onNormal: () => playAnimation(
+                          gridSize: 3,
+                          difficulty: Difficulty.normal,
+                        ),
+                        onHard: () => playAnimation(
+                          gridSize: 4,
+                          difficulty: Difficulty.hard,
+                        ),
+                      );
                     } else if (layoutWidth < widthMedium) {
-                      return const MediumLayout();
-                    } else if (layoutWidth < widthLarge) {
-                      return const LargeLayout();
+                      return MediumLayout(
+                        difficultyAnimation: animationController,
+                        onEasy: () => playAnimation(
+                          gridSize: 2,
+                          difficulty: Difficulty.easy,
+                        ),
+                        onNormal: () => playAnimation(
+                          gridSize: 3,
+                          difficulty: Difficulty.normal,
+                        ),
+                        onHard: () => playAnimation(
+                          gridSize: 4,
+                          difficulty: Difficulty.hard,
+                        ),
+                      );
+                    } else {
+                      return LargeLayout(
+                        difficultyAnimation: animationController,
+                        onEasy: () => playAnimation(
+                          gridSize: 2,
+                          difficulty: Difficulty.easy,
+                        ),
+                        onNormal: () => playAnimation(
+                          gridSize: 3,
+                          difficulty: Difficulty.normal,
+                        ),
+                        onHard: () => playAnimation(
+                          gridSize: 4,
+                          difficulty: Difficulty.hard,
+                        ),
+                      );
                     }
-                    return const LargeLayout();
                   },
                 ),
               ),

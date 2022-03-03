@@ -5,35 +5,19 @@ import 'game_board.dart';
 import 'models/models.dart';
 import 'widgets/widgets.dart';
 
-class LargeLayout extends StatefulWidget {
-  const LargeLayout({Key? key}) : super(key: key);
+class LargeLayout extends StatelessWidget {
+  const LargeLayout({
+    Key? key,
+    required this.difficultyAnimation,
+    required this.onEasy,
+    required this.onNormal,
+    required this.onHard,
+  }) : super(key: key);
 
-  @override
-  State<LargeLayout> createState() => _LargeLayoutState();
-}
-
-class _LargeLayoutState extends State<LargeLayout>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController animationController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1000),
-  );
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  void playAnimation({
-    required Difficulty difficulty,
-    required int gridSize,
-  }) {
-    animationController.forward().whenComplete(() {
-      context.read<GameModel>().setDifficulty(difficulty);
-      context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
-    }).whenComplete(() => animationController.reverse());
-  }
+  final AnimationController difficultyAnimation;
+  final VoidCallback onEasy;
+  final VoidCallback onNormal;
+  final VoidCallback onHard;
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +47,9 @@ class _LargeLayoutState extends State<LargeLayout>
           top: 64,
           right: 64,
           child: DifficultySelector(
-            onEasy: () => playAnimation(
-              gridSize: 2,
-              difficulty: Difficulty.easy,
-            ),
-            onNormal: () => playAnimation(
-              gridSize: 3,
-              difficulty: Difficulty.normal,
-            ),
-            onHard: () => playAnimation(
-              gridSize: 4,
-              difficulty: Difficulty.hard,
-            ),
+            onEasy: onEasy,
+            onNormal: onNormal,
+            onHard: onHard,
           ),
         ),
         if (status == Status.initial)
@@ -115,7 +90,7 @@ class _LargeLayoutState extends State<LargeLayout>
         LayoutBuilder(
           builder: (context, constraints) {
             return GameBoard(
-              animationController: animationController,
+              animationController: difficultyAnimation,
               parentSize: constraints.biggest.shortestSide * 0.6,
             );
           },
