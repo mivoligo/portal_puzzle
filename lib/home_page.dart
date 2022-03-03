@@ -5,7 +5,6 @@ import 'constants.dart';
 import 'large_layout.dart';
 import 'medium_layout.dart';
 import 'models/models.dart';
-import 'result_page.dart';
 import 'small_layout.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,11 +14,17 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController animationController = AnimationController(
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late final AnimationController difficultyAnimationController =
+      AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1000),
+  );
+
+  late final AnimationController finishAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 100),
   );
 
   @override
@@ -31,92 +36,84 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
-    animationController.dispose();
+    difficultyAnimationController.dispose();
+    finishAnimationController.dispose();
     super.dispose();
   }
 
-  Future<void> playAnimation({
+  Future<void> changeDifficulty({
     required Difficulty difficulty,
     required int gridSize,
   }) async {
-    animationController.forward().whenComplete(() {
+    difficultyAnimationController.forward().whenComplete(() {
       context.read<GameModel>().setDifficulty(difficulty);
       context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
-    }).whenComplete(() => animationController.reverse());
+    }).whenComplete(() => difficultyAnimationController.reverse());
   }
 
   @override
   Widget build(BuildContext context) {
     final backgroundColor =
         context.select<GameModel, Color>((model) => model.backgroundColor);
-    final status = context.select<GameModel, Status>((model) => model.status);
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(scale: animation, child: child);
-      },
-      child: status == Status.finished
-          ? const ResultPage()
-          : Scaffold(
-              body: AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                color: backgroundColor,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final layoutWidth = constraints.maxWidth;
-                    if (layoutWidth < widthSmall) {
-                      return SmallLayout(
-                        difficultyAnimation: animationController,
-                        onEasy: () => playAnimation(
-                          gridSize: 2,
-                          difficulty: Difficulty.easy,
-                        ),
-                        onNormal: () => playAnimation(
-                          gridSize: 3,
-                          difficulty: Difficulty.normal,
-                        ),
-                        onHard: () => playAnimation(
-                          gridSize: 4,
-                          difficulty: Difficulty.hard,
-                        ),
-                      );
-                    } else if (layoutWidth < widthMedium) {
-                      return MediumLayout(
-                        difficultyAnimation: animationController,
-                        onEasy: () => playAnimation(
-                          gridSize: 2,
-                          difficulty: Difficulty.easy,
-                        ),
-                        onNormal: () => playAnimation(
-                          gridSize: 3,
-                          difficulty: Difficulty.normal,
-                        ),
-                        onHard: () => playAnimation(
-                          gridSize: 4,
-                          difficulty: Difficulty.hard,
-                        ),
-                      );
-                    } else {
-                      return LargeLayout(
-                        difficultyAnimation: animationController,
-                        onEasy: () => playAnimation(
-                          gridSize: 2,
-                          difficulty: Difficulty.easy,
-                        ),
-                        onNormal: () => playAnimation(
-                          gridSize: 3,
-                          difficulty: Difficulty.normal,
-                        ),
-                        onHard: () => playAnimation(
-                          gridSize: 4,
-                          difficulty: Difficulty.hard,
-                        ),
-                      );
-                    }
-                  },
+    return Scaffold(
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 1000),
+        color: backgroundColor,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final layoutWidth = constraints.maxWidth;
+            if (layoutWidth < widthSmall) {
+              return SmallLayout(
+                difficultyAnimation: difficultyAnimationController,
+                onEasy: () => changeDifficulty(
+                  gridSize: 2,
+                  difficulty: Difficulty.easy,
                 ),
-              ),
-            ),
+                onNormal: () => changeDifficulty(
+                  gridSize: 3,
+                  difficulty: Difficulty.normal,
+                ),
+                onHard: () => changeDifficulty(
+                  gridSize: 4,
+                  difficulty: Difficulty.hard,
+                ),
+              );
+            } else if (layoutWidth < widthMedium) {
+              return MediumLayout(
+                difficultyAnimation: difficultyAnimationController,
+                onEasy: () => changeDifficulty(
+                  gridSize: 2,
+                  difficulty: Difficulty.easy,
+                ),
+                onNormal: () => changeDifficulty(
+                  gridSize: 3,
+                  difficulty: Difficulty.normal,
+                ),
+                onHard: () => changeDifficulty(
+                  gridSize: 4,
+                  difficulty: Difficulty.hard,
+                ),
+              );
+            } else {
+              return LargeLayout(
+                difficultyAnimation: difficultyAnimationController,
+                onEasy: () => changeDifficulty(
+                  gridSize: 2,
+                  difficulty: Difficulty.easy,
+                ),
+                onNormal: () => changeDifficulty(
+                  gridSize: 3,
+                  difficulty: Difficulty.normal,
+                ),
+                onHard: () => changeDifficulty(
+                  gridSize: 4,
+                  difficulty: Difficulty.hard,
+                ),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
