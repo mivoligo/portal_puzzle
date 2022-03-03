@@ -8,13 +8,13 @@ import 'widgets/widgets.dart';
 class LargeLayout extends StatelessWidget {
   const LargeLayout({
     Key? key,
-    required this.difficultyAnimation,
+    required this.animationController,
     required this.onEasy,
     required this.onNormal,
     required this.onHard,
   }) : super(key: key);
 
-  final AnimationController difficultyAnimation;
+  final AnimationController animationController;
   final VoidCallback onEasy;
   final VoidCallback onNormal;
   final VoidCallback onHard;
@@ -90,7 +90,7 @@ class LargeLayout extends StatelessWidget {
         LayoutBuilder(
           builder: (context, constraints) {
             return GameBoard(
-              animationController: difficultyAnimation,
+              animationController: animationController,
               parentSize: constraints.biggest.shortestSide * 0.6,
             );
           },

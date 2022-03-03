@@ -38,7 +38,7 @@ class _GameBoardState extends State<GameBoard> {
     return Center(
       child: AnimatedScale(
         duration: const Duration(milliseconds: 200),
-        scale: status == Status.playable ? 1 : 0.8,
+        scale: status == Status.playable || status == Status.finished ? 1 : 0.8,
         curve: Curves.decelerate,
         child: SizedBox(
           width: boardSize * 1.1,
@@ -50,6 +50,7 @@ class _GameBoardState extends State<GameBoard> {
               ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
             alignment: FractionalOffset.center,
             child: AnimatedBoard(
+              finished: status == Status.finished,
               animation: widget.animationController,
               back: Container(
                 decoration: BoxDecoration(

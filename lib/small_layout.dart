@@ -35,15 +35,16 @@ class SmallLayout extends StatelessWidget {
               padding: EdgeInsets.all(32.0),
               child: AppTitle(),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: DifficultySelector(
-                onEasy: onEasy,
-                onNormal: onNormal,
-                onHard: onHard,
+            if (status != Status.finished)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: DifficultySelector(
+                  onEasy: onEasy,
+                  onNormal: onNormal,
+                  onHard: onHard,
+                ),
               ),
-            ),
-            const MovesCounter(),
+            if (status != Status.finished) const MovesCounter(),
             const SizedBox(height: 12),
             Expanded(
               child: LayoutBuilder(
@@ -55,9 +56,11 @@ class SmallLayout extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(32.0),
-              child: ShuffleButton(onPressed: () async {
-                await context.read<GameBoardModel>().shuffle(gridSize);
-              }),
+              child: (status == Status.finished)
+                  ? const TryAgainButton()
+                  : ShuffleButton(onPressed: () async {
+                      await context.read<GameBoardModel>().shuffle(gridSize);
+                    }),
             ),
           ],
         ),

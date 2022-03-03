@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 class AnimatedBoard extends AnimatedWidget {
   AnimatedBoard({
     Key? key,
+    required this.finished,
     required this.front,
     required this.back,
     required Animation<double> animation,
-  })  : _animation = Tween<double>(begin: 0, end: 1).animate(
+  })  : _difficultyAnimation = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: animation,
             curve: const Interval(
@@ -18,22 +19,37 @@ class AnimatedBoard extends AnimatedWidget {
             ),
           ),
         ),
+        _finishAnimation = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Curves.elasticOut,
+          ),
+        ),
         super(key: key, listenable: animation);
 
+  final bool finished;
   final Widget front;
   final Widget back;
 
-  // final Widget secondChild;
-  final Animation<double> _animation;
+  final Animation<double> _difficultyAnimation;
+  final Animation<double> _finishAnimation;
 
   @override
   Widget build(BuildContext context) {
-    return Transform(
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.0002)
-        ..rotateY(_animation.value * pi * 0.6),
-      alignment: FractionalOffset.center,
-      child: _animation.value < 0.85 ? front : back,
-    );
+    return finished
+        ? Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.0002)
+              ..rotateY(_finishAnimation.value * pi),
+            alignment: FractionalOffset.center,
+            child: _finishAnimation.value < 0.5 ? front : back,
+          )
+        : Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.0002)
+              ..rotateY(_difficultyAnimation.value * pi * 0.6),
+            alignment: FractionalOffset.center,
+            child: _difficultyAnimation.value < 0.85 ? front : back,
+          );
   }
 }
