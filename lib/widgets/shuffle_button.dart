@@ -16,8 +16,9 @@ class ShuffleButton extends StatelessWidget {
     String label() {
       switch (status) {
         case Status.initial:
+          return 'Start';
         case Status.finished:
-          return 'Start!';
+          return 'Play Again';
         case Status.shuffling:
           return 'Shuffling';
         case Status.playable:
@@ -44,11 +45,13 @@ class ShuffleButton extends StatelessWidget {
       iconData: iconData(),
       isSmall: false,
       isSelected: status == Status.shuffling,
-      onPressed: () async {
-        context.read<GameModel>().shuffle();
-        await onPressed();
-        context.read<GameModel>().markPlayable();
-      },
+      onPressed: status == Status.finished
+          ? context.read<GameModel>().resetGame
+          : () async {
+              context.read<GameModel>().shuffle();
+              await onPressed();
+              context.read<GameModel>().markPlayable();
+            },
     );
   }
 }

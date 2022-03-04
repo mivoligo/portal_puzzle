@@ -75,21 +75,15 @@ class LargeLayout extends StatelessWidget {
                       ),
                     const SizedBox(height: 24),
                     if (status != Status.finished)
-                      const MovesCounter(
-                        isLarge: true,
-                      ),
+                      const MovesCounter(isLarge: true),
                     if (status == Status.finished) const SolvedMessage(),
                     const SizedBox(height: 24),
-                    if (status != Status.finished)
-                      ShuffleButton(
-                        onPressed: () async {
-                          await context
-                              .read<GameBoardModel>()
-                              .shuffle(gridSize);
-                        },
-                      ),
-                    if (status == Status.finished) const SizedBox(height: 8),
-                    if (status == Status.finished) const TryAgainButton(),
+                    if (status == Status.finished) const SizedBox(height: 10),
+                    ShuffleButton(
+                      onPressed: () async {
+                        await context.read<GameBoardModel>().shuffle(gridSize);
+                      },
+                    ),
                   ],
                 ),
               ),
