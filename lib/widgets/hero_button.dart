@@ -103,6 +103,7 @@ class _HeroButtonState extends State<HeroButton> {
                     : widget.textColor,
                 fontSize: widget.isSmall ? 14 : 18,
                 fontWeight: FontWeight.w600,
+                letterSpacing: 1,
               ),
             ),
           ],
