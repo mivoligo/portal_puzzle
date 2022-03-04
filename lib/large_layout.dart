@@ -60,35 +60,38 @@ class LargeLayout extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(64.0),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    width: 250,
-                    child: AppTitle(isLarge: true),
-                  ),
-                  const SizedBox(height: 24),
-                  if (status != Status.finished)
-                    Text(
-                      'Difficulty: $difficultyString',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  const SizedBox(height: 24),
-                  if (status != Status.finished)
-                    const MovesCounter(
-                      isLarge: true,
-                    ),
-                  const SizedBox(height: 24),
-                  if (status != Status.finished)
-                    ShuffleButton(
-                      onPressed: () async {
-                        await context.read<GameBoardModel>().shuffle(gridSize);
-                      },
-                    ),
-                  if (status == Status.finished) const SizedBox(height: 64),
-                  if (status == Status.finished) const TryAgainButton(),
-                ],
+              child: SizedBox(
+                width: 250,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AppTitle(isLarge: true),
+                    const SizedBox(height: 24),
+                    if (status != Status.finished)
+                      Text(
+                        'Difficulty: $difficultyString',
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                    const SizedBox(height: 24),
+                    if (status != Status.finished)
+                      const MovesCounter(
+                        isLarge: true,
+                      ),
+                    if (status == Status.finished) const SolvedMessage(),
+                    const SizedBox(height: 24),
+                    if (status != Status.finished)
+                      ShuffleButton(
+                        onPressed: () async {
+                          await context
+                              .read<GameBoardModel>()
+                              .shuffle(gridSize);
+                        },
+                      ),
+                    if (status == Status.finished) const SizedBox(height: 8),
+                    if (status == Status.finished) const TryAgainButton(),
+                  ],
+                ),
               ),
             ),
           ),

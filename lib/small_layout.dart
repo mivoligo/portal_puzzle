@@ -45,6 +45,11 @@ class SmallLayout extends StatelessWidget {
                 ),
               ),
             if (status != Status.finished) const MovesCounter(),
+            if (status == Status.finished)
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: SolvedMessage(),
+              ),
             const SizedBox(height: 12),
             Expanded(
               child: LayoutBuilder(

@@ -7,4 +7,5 @@ export 'game_box_tile.dart';
 export 'hero_button.dart';
 export 'moves_counter.dart';
 export 'shuffle_button.dart';
+export 'solved_message.dart';
 export 'try_again_button.dart';

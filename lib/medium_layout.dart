@@ -48,12 +48,11 @@ class MediumLayout extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                mainAxisAlignment: (status == Status.finished)
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (status != Status.finished)
                     const MovesCounter(isLarge: true),
+                  if (status == Status.finished) const SolvedMessage(),
                   if (status != Status.finished)
                     ShuffleButton(onPressed: () async {
                       await context.read<GameBoardModel>().shuffle(gridSize);
