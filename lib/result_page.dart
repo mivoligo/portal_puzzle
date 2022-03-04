@@ -33,7 +33,7 @@ class ResultPage extends StatelessWidget {
               style: const TextStyle(fontSize: 32),
             ),
             const SizedBox(height: 24),
-            HeroButton(
+            FancyButton(
               label: 'Play again',
               iconData: Icons.play_arrow,
               onPressed: context.read<GameModel>().resetGame,

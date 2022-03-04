@@ -5,8 +5,8 @@ import '../constants.dart' as k;
 import '../models/models.dart';
 import 'widgets.dart';
 
-class ShuffleButton extends StatelessWidget {
-  const ShuffleButton({Key? key, required this.onPressed}) : super(key: key);
+class StartButton extends StatelessWidget {
+  const StartButton({Key? key, required this.onPressed}) : super(key: key);
 
   final Future<void> Function() onPressed;
 
@@ -37,7 +37,7 @@ class ShuffleButton extends StatelessWidget {
       }
     }
 
-    return HeroButton(
+    return FancyButton(
       label: label(),
       surfaceColor: k.lightRed,
       sideColor: k.red,

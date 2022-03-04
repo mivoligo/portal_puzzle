@@ -61,7 +61,7 @@ class SmallLayout extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(32.0),
-              child: ShuffleButton(onPressed: () async {
+              child: StartButton(onPressed: () async {
                 await context.read<GameBoardModel>().shuffle(gridSize);
               }),
             ),

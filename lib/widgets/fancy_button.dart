@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HeroButton extends StatefulWidget {
-  const HeroButton({
+class FancyButton extends StatefulWidget {
+  const FancyButton({
     Key? key,
     required this.label,
     required this.onPressed,
@@ -23,10 +23,10 @@ class HeroButton extends StatefulWidget {
   final VoidCallback? onPressed;
 
   @override
-  State<HeroButton> createState() => _HeroButtonState();
+  State<FancyButton> createState() => _FancyButtonState();
 }
 
-class _HeroButtonState extends State<HeroButton> {
+class _FancyButtonState extends State<FancyButton> {
   bool isPressed = false;
 
   @override

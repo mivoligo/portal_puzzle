@@ -53,7 +53,7 @@ class MediumLayout extends StatelessWidget {
                   if (status != Status.finished)
                     const MovesCounter(isLarge: true),
                   if (status == Status.finished) const SolvedMessage(),
-                  ShuffleButton(onPressed: () async {
+                  StartButton(onPressed: () async {
                     await context.read<GameBoardModel>().shuffle(gridSize);
                   }),
                 ],

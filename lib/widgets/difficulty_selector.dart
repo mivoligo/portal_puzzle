@@ -25,7 +25,7 @@ class DifficultySelector extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        HeroButton(
+        FancyButton(
           label: 'Easy',
           isSelected: difficulty == Difficulty.easy,
           surfaceColor: k.lightGreen,
@@ -34,7 +34,7 @@ class DifficultySelector extends StatelessWidget {
           onPressed: onEasy,
         ),
         const SizedBox(width: 12),
-        HeroButton(
+        FancyButton(
           label: 'Normal',
           isSelected: difficulty == Difficulty.normal,
           surfaceColor: k.lightBlue,
@@ -43,7 +43,7 @@ class DifficultySelector extends StatelessWidget {
           onPressed: onNormal,
         ),
         const SizedBox(width: 12),
-        HeroButton(
+        FancyButton(
           label: 'Hard',
           isSelected: difficulty == Difficulty.hard,
           surfaceColor: k.lightPurple,
