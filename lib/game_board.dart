@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'constants.dart' as k;
 import 'models/models.dart';
-import 'widgets/board_back.dart';
 import 'widgets/widgets.dart';
 
 class GameBoard extends StatefulWidget {
@@ -70,7 +69,9 @@ class _GameBoardState extends State<GameBoard> {
                     Radius.circular(boardSize * 0.05),
                   ),
                 ),
-                child: BoardBack(),
+                child: status == Status.finished
+                    ? const AnimatedBoardBack()
+                    : const BoardBack(),
               ),
               front: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,

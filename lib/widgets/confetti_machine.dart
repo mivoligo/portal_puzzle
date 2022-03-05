@@ -38,17 +38,55 @@ class ConfettiMachine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConfettiWidget(
-      confettiController: confettiController,
-      blastDirectionality: BlastDirectionality.explosive,
-      colors: const [
-        Colors.green,
-        Colors.blue,
-        Colors.pink,
-        Colors.orange,
-        Colors.purple
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ConfettiWidget(
+          confettiController: confettiController,
+          blastDirection: -pi * 0.3,
+          // blastDirectionality: BlastDirectionality.explosive,
+          // minBlastForce: 30,
+          maxBlastForce: 30,
+          colors: const [
+            Colors.green,
+            Colors.blue,
+            Colors.pink,
+            Colors.orange,
+            Colors.purple
+          ],
+          createParticlePath: (_) => drawStar(const Size(50, 50)),
+        ),
+        ConfettiWidget(
+          confettiController: confettiController,
+          blastDirection: -pi * 0.5,
+          // blastDirectionality: BlastDirectionality.explosive,
+          // minBlastForce: 30,
+          maxBlastForce: 30,
+          colors: const [
+            Colors.green,
+            Colors.blue,
+            Colors.pink,
+            Colors.orange,
+            Colors.purple
+          ],
+          createParticlePath: (_) => drawStar(const Size(50, 50)),
+        ),
+        ConfettiWidget(
+          confettiController: confettiController,
+          blastDirection: -pi * 0.7,
+          // blastDirectionality: BlastDirectionality.explosive,
+          // minBlastForce: 30,
+          maxBlastForce: 30,
+          colors: const [
+            Colors.green,
+            Colors.blue,
+            Colors.pink,
+            Colors.orange,
+            Colors.purple
+          ],
+          createParticlePath: (_) => drawStar(const Size(50, 50)),
+        ),
       ],
-      createParticlePath: (_) => drawStar(Size(20, 20)),
     );
   }
 }
