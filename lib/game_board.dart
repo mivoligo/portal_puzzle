@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'constants.dart' as k;
 import 'models/models.dart';
+import 'widgets/board_back.dart';
 import 'widgets/widgets.dart';
 
 class GameBoard extends StatefulWidget {
@@ -69,13 +70,7 @@ class _GameBoardState extends State<GameBoard> {
                     Radius.circular(boardSize * 0.05),
                   ),
                 ),
-                child: FractionallySizedBox(
-                    widthFactor: 0.4,
-                    heightFactor: 0.42,
-                    child: Image.asset(
-                      'assets/images/gift.png',
-                      fit: BoxFit.cover,
-                    )),
+                child: BoardBack(),
               ),
               front: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,
