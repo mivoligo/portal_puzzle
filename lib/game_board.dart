@@ -26,11 +26,12 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final status = context.watch<GameModel>().status;
-    final gridSize = context.watch<GameModel>().gridSize;
+    final status = context.select<GameModel, Status>((model) => model.status);
+    final gridSize = context.select<GameModel, int>((model) => model.gridSize);
     final boxes = context.watch<GameBoardModel>().boxes;
     double boardSize = widget.parentSize;
-    final boardColor = context.watch<GameModel>().boardColor;
+    final boardColor =
+        context.select<GameModel, Color>((model) => model.boardColor);
 
     double percentX = (localX / boardSize) * 100;
     double percentY = (localY / boardSize) * 100;
@@ -69,9 +70,7 @@ class _GameBoardState extends State<GameBoard> {
                     Radius.circular(boardSize * 0.05),
                   ),
                 ),
-                child: status == Status.finished
-                    ? const AnimatedBoardBack()
-                    : const BoardBack(),
+                child: const AnimatedBoardBack(),
               ),
               front: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,

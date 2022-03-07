@@ -1,6 +1,8 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/models.dart';
 import 'widgets.dart';
 
 class AnimatedBoardBack extends StatefulWidget {
@@ -30,15 +32,19 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
 
   @override
   Widget build(BuildContext context) {
+    final status = context.select<GameModel, Status>((model) => model.status);
+
     return GestureDetector(
-      onTap: () => setState(() {
-        tapped = !tapped;
-        if (tapped) {
-          _confettiController.play();
-        } else {
-          _confettiController.stop();
-        }
-      }),
+      onTap: status == Status.finished
+          ? () => setState(() {
+                tapped = !tapped;
+                if (tapped) {
+                  _confettiController.play();
+                } else {
+                  _confettiController.stop();
+                }
+              })
+          : null,
       child: FractionallySizedBox(
         widthFactor: 0.4,
         heightFactor: 0.4,
