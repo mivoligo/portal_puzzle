@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,20 +21,16 @@ class AnimatedBoardBack extends StatefulWidget {
 }
 
 class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
-  bool tapped = false;
-  late ConfettiController _confettiController;
-
-  @override
-  void initState() {
-    super.initState();
-    _confettiController = ConfettiController(
-      duration: const Duration(seconds: 5),
-    );
-  }
+  bool opened = false;
+  late Timer timer;
+  late final ConfettiController confettiController = ConfettiController(
+    duration: const Duration(seconds: 5),
+  );
 
   @override
   void dispose() {
-    _confettiController.dispose();
+    confettiController.dispose();
+    timer.cancel();
     super.dispose();
   }
 
@@ -54,11 +52,18 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
       child: GestureDetector(
         onTap: status == Status.finished
             ? () => setState(() {
-                  tapped = !tapped;
-                  if (tapped) {
-                    _confettiController.play();
+                  opened = !opened;
+                  if (opened) {
+                    confettiController.play();
+                    timer = Timer(
+                      const Duration(seconds: 4),
+                      () => setState(() {
+                        opened = false;
+                      }),
+                    );
                   } else {
-                    _confettiController.stop();
+                    confettiController.stop();
+                    timer.cancel();
                   }
                 })
             : null,
@@ -69,9 +74,9 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
             fit: StackFit.expand,
             children: [
               AnimatedSlide(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 1000),
                 curve: Curves.elasticOut,
-                offset: tapped ? const Offset(0, 0.2) : Offset.zero,
+                offset: opened ? const Offset(0, 0.2) : Offset.zero,
                 child: Image.asset(
                   'assets/images/box-base.png',
                   fit: BoxFit.cover,
@@ -80,7 +85,7 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
               AnimatedSlide(
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeInOut,
-                offset: tapped ? const Offset(0, -5) : Offset.zero,
+                offset: opened ? const Offset(0, -5) : Offset.zero,
                 child: Image.asset(
                   'assets/images/box-top.png',
                   fit: BoxFit.cover,
@@ -89,7 +94,8 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
               Align(
                 alignment: const FractionalOffset(0.4, 0.3),
                 child: ConfettiMachine(
-                  confettiController: _confettiController,
+                  confettiController: confettiController,
+                  starSize: widget.boardSize * 0.1,
                 ),
               )
             ],

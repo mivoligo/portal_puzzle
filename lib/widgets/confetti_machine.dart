@@ -7,9 +7,11 @@ class ConfettiMachine extends StatelessWidget {
   const ConfettiMachine({
     Key? key,
     required this.confettiController,
+    required this.starSize,
   }) : super(key: key);
 
   final ConfettiController confettiController;
+  final double starSize;
 
   /// A custom Path to paint stars.
   Path drawStar(Size size) {
@@ -44,8 +46,6 @@ class ConfettiMachine extends StatelessWidget {
         ConfettiWidget(
           confettiController: confettiController,
           blastDirection: -pi * 0.5,
-          // blastDirectionality: BlastDirectionality.explosive,
-          // minBlastForce: 30,
           maxBlastForce: 30,
           colors: const [
             Colors.green,
@@ -54,7 +54,7 @@ class ConfettiMachine extends StatelessWidget {
             Colors.orange,
             Colors.purple
           ],
-          createParticlePath: (_) => drawStar(const Size(50, 50)),
+          createParticlePath: (_) => drawStar(Size(starSize, starSize)),
         ),
       ],
     );
