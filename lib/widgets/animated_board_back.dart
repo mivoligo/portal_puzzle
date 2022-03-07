@@ -11,13 +11,14 @@ class AnimatedBoardBack extends StatefulWidget {
 }
 
 class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
+  bool tapped = false;
   late ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
     _confettiController = ConfettiController(
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 5),
     );
   }
 
@@ -31,7 +32,12 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => setState(() {
-        _confettiController.play();
+        tapped = !tapped;
+        if (tapped) {
+          _confettiController.play();
+        } else {
+          _confettiController.stop();
+        }
       }),
       child: FractionallySizedBox(
         widthFactor: 0.4,
@@ -39,16 +45,26 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              'assets/images/box-base.png',
-              fit: BoxFit.cover,
+            AnimatedSlide(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.elasticOut,
+              offset: tapped ? const Offset(0, 0.2) : Offset.zero,
+              child: Image.asset(
+                'assets/images/box-base.png',
+                fit: BoxFit.cover,
+              ),
             ),
-            // Image.asset(
-            //   'assets/images/box-top.png',
-            //   fit: BoxFit.cover,
-            // ),
+            AnimatedSlide(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              offset: tapped ? const Offset(0, -5) : Offset.zero,
+              child: Image.asset(
+                'assets/images/box-top.png',
+                fit: BoxFit.cover,
+              ),
+            ),
             Align(
-              alignment: const FractionalOffset(0.5, 0.2),
+              alignment: const FractionalOffset(0.4, 0.3),
               child: ConfettiMachine(
                 confettiController: _confettiController,
               ),
