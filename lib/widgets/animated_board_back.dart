@@ -22,7 +22,7 @@ class AnimatedBoardBack extends StatefulWidget {
 
 class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
   bool opened = false;
-  late Timer timer;
+  Timer? timer;
   late final ConfettiController confettiController = ConfettiController(
     duration: const Duration(seconds: 5),
   );
@@ -30,7 +30,7 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
   @override
   void dispose() {
     confettiController.dispose();
-    timer.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -63,7 +63,7 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
                     );
                   } else {
                     confettiController.stop();
-                    timer.cancel();
+                    timer?.cancel();
                   }
                 })
             : null,
