@@ -76,7 +76,9 @@ class _GameBoardState extends State<GameBoard> {
                     gradient: RadialGradient(
                       colors: [boardColor, k.lightRed],
                       center: FractionalOffset(
-                          localX / boardSize, localY / boardSize),
+                        localX / boardSize,
+                        localY / boardSize,
+                      ),
                       radius: gridSize / 2,
                     ),
                     borderRadius: BorderRadius.all(
@@ -166,46 +168,12 @@ class _GameBoardState extends State<GameBoard> {
                             }
                           }
                         : null,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.antiAlias,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0x22FFFFFF),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(boardSize * 0.01),
-                            ),
-                          ),
-                        ),
-                        ...boxes.map(
-                          (box) {
-                            final index = boxes.indexOf(box);
-                            final gameBoxRect = box.getRect(
-                              boardSize: boardSize,
-                              gridSize: gridSize,
-                            );
-                            return AnimatedPositioned(
-                              duration: status != Status.shuffling
-                                  ? Duration.zero
-                                  : const Duration(milliseconds: 150),
-                              left: gameBoxRect.left,
-                              top: gameBoxRect.top,
-                              child: AnimatedTile(
-                                gridSize: gridSize,
-                                dx: box.currentLoc.dx,
-                                dy: box.currentLoc.dy,
-                                child: GameBoxTile(
-                                  box: box,
-                                  text: '${index + 1}',
-                                  boardSize: boardSize,
-                                ),
-                                animation: widget.animationController,
-                              ),
-                            );
-                          },
-                        ).toList(),
-                      ],
+                    child: PlayArea(
+                      boardSize: boardSize,
+                      boxes: boxes,
+                      gridSize: gridSize,
+                      status: status,
+                      animationController: widget.animationController,
                     ),
                   ),
                 ),
