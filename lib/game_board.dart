@@ -44,17 +44,17 @@ class _GameBoardState extends State<GameBoard> {
         child: SizedBox(
           width: boardSize * 1.1,
           height: boardSize * 1.1,
-          child: Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
-              ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
-            alignment: FractionalOffset.center,
-            child: AnimatedBoard(
-              finished: status == Status.finished,
-              animation: widget.animationController,
-              back: AnimatedBoardBack(boardSize: boardSize),
-              front: AnimatedContainer(
+          child: AnimatedBoard(
+            finished: status == Status.finished,
+            animation: widget.animationController,
+            back: AnimatedBoardBack(boardSize: boardSize),
+            front: Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateX(defaultPosition ? 0 : (0.1 * (percentY / 50) - 0.1))
+                ..rotateY(defaultPosition ? 0 : (-0.1 * (percentX / 50) + 0.1)),
+              alignment: FractionalOffset.center,
+              child: AnimatedContainer(
                 clipBehavior: Clip.antiAlias,
                 duration: const Duration(milliseconds: 500),
                 padding: EdgeInsets.all(boardSize * 0.05),

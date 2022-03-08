@@ -39,14 +39,14 @@ class AnimatedBoard extends AnimatedWidget {
     return finished
         ? Transform(
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.0002)
+              ..setEntry(3, 2, 0.001)
               ..rotateY(_finishAnimation.value * pi),
             alignment: FractionalOffset.center,
             child: _finishAnimation.value < 0.5 ? front : back,
           )
         : Transform(
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.0002)
+              ..setEntry(3, 2, 0.001)
               ..rotateY(_difficultyAnimation.value * pi * 0.6),
             alignment: FractionalOffset.center,
             child: _difficultyAnimation.value < 0.85 ? front : back,
