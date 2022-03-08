@@ -24,7 +24,7 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
   bool opened = false;
   Timer? timer;
   late final ConfettiController confettiController = ConfettiController(
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 4),
   );
 
   @override
