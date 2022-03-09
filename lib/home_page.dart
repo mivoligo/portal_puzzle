@@ -60,11 +60,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }).whenComplete(() => difficultyAnimationController.reverse());
   }
 
+  Future<void> start(int gridSize) async {
+    context.read<GameModel>().shuffle();
+    await context.read<GameBoardModel>().shuffle(gridSize);
+    context.read<GameModel>().markPlayable();
+  }
+
   void handleKeyDown(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       final key = event.physicalKey;
       if (key == PhysicalKeyboardKey.keyS) {
-        print('S');
+        if (!(status == Status.finished || status == Status.shuffling)) {
+          final gridSize = context.read<GameModel>().gridSize;
+          start(gridSize);
+        }
+      } else if (key == PhysicalKeyboardKey.keyP) {
+        if (status == Status.finished) {
+          context.read<GameModel>().resetGame();
+        }
       } else if (key == PhysicalKeyboardKey.keyE) {
         changeDifficulty(difficulty: Difficulty.easy, gridSize: 2);
       } else if (key == PhysicalKeyboardKey.keyN) {
