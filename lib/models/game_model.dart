@@ -54,7 +54,7 @@ class GameModel extends ChangeNotifier {
       case Difficulty.normal:
         return k.darkBlue;
       case Difficulty.hard:
-        return k.darkPurple;
+        return k.darkViolet;
     }
   }
 
@@ -65,7 +65,7 @@ class GameModel extends ChangeNotifier {
       case Difficulty.normal:
         return k.veryLightBlue;
       case Difficulty.hard:
-        return k.veryLightPurple;
+        return k.veryLightViolet;
     }
   }
 

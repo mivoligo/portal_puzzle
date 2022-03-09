@@ -39,9 +39,9 @@ class StartButton extends StatelessWidget {
 
     return FancyButton(
       label: label(),
-      surfaceColor: k.lightRed,
-      sideColor: k.red,
-      textColor: k.darkRed,
+      surfaceColor: k.lightRose,
+      sideColor: k.rose,
+      textColor: k.darkRose,
       iconData: iconData(),
       isSmall: false,
       isSelected: status == Status.shuffling,

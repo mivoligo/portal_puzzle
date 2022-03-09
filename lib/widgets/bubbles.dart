@@ -73,7 +73,7 @@ class BubblePainter extends CustomPainter {
       canvas.drawCircle(
         bubble.position,
         bubble.radius,
-        Paint()..color = lightRed.withOpacity(opacity),
+        Paint()..color = lightRose.withOpacity(opacity),
       );
     }
   }

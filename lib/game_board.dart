@@ -75,7 +75,7 @@ class _GameBoardState extends State<GameBoard> {
                   padding: EdgeInsets.all(boardSize * 0.05),
                   decoration: BoxDecoration(
                     gradient: RadialGradient(
-                      colors: [boardColor, k.lightRed],
+                      colors: [boardColor, k.lightRose],
                       center: FractionalOffset(
                         localX / boardSize,
                         localY / boardSize,

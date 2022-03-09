@@ -46,9 +46,9 @@ class DifficultySelector extends StatelessWidget {
         FancyButton(
           label: 'Hard',
           isSelected: difficulty == Difficulty.hard,
-          surfaceColor: k.lightPurple,
-          sideColor: k.purple,
-          textColor: k.darkPurple,
+          surfaceColor: k.lightViolet,
+          sideColor: k.violet,
+          textColor: k.darkViolet,
           onPressed: onHard,
         ),
       ],

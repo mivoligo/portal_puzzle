@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../models/models.dart';
 
 class SolvedMessage extends StatelessWidget {
@@ -18,8 +19,11 @@ class SolvedMessage extends StatelessWidget {
       builder: (_, value, __) {
         return Text(
           'Congrats! Solved in $value moves.',
-          style: const TextStyle(fontSize: 24),
-          // textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 24,
+            color: darkViolet,
+            fontWeight: FontWeight.w600,
+          ),
         );
       },
     );

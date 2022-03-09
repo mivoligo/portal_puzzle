@@ -42,8 +42,8 @@ class _AnimatedBoardBackState extends State<AnimatedBoardBack> {
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          colors: const [k.purple, k.lightRed],
-          radius: gridSize / 2,
+          colors: const [k.lightRose, k.violet],
+          radius: gridSize / 3,
         ),
         borderRadius: BorderRadius.all(
           Radius.circular(widget.boardSize * 0.05),
