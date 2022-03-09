@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,6 +87,7 @@ class _GameBoardState extends State<GameBoard> {
                     ),
                   ),
                   child: GestureDetector(
+                    dragStartBehavior: DragStartBehavior.down,
                     onHorizontalDragStart: status == Status.playable
                         ? (details) {
                             setState(() {
