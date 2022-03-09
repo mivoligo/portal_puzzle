@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    RawKeyboard.instance.addListener(handleKeyDown);
     status = context.read<GameModel>().status;
     final gridSize = context.read<GameModel>().gridSize;
     context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
@@ -40,6 +42,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     difficultyAnimationController.dispose();
     finishAnimationController.dispose();
+    RawKeyboard.instance.removeListener(handleKeyDown);
     super.dispose();
   }
 
@@ -55,6 +58,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       context.read<GameModel>().setDifficulty(difficulty);
       context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
     }).whenComplete(() => difficultyAnimationController.reverse());
+  }
+
+  void handleKeyDown(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final key = event.physicalKey;
+      if (key == PhysicalKeyboardKey.keyS) {
+        print('S');
+      } else if (key == PhysicalKeyboardKey.keyE) {
+        changeDifficulty(difficulty: Difficulty.easy, gridSize: 2);
+      } else if (key == PhysicalKeyboardKey.keyN) {
+        changeDifficulty(difficulty: Difficulty.normal, gridSize: 3);
+      } else if (key == PhysicalKeyboardKey.keyH) {
+        changeDifficulty(difficulty: Difficulty.hard, gridSize: 4);
+      } else if (key == PhysicalKeyboardKey.digit1) {
+        print('1');
+      } else if (key == PhysicalKeyboardKey.digit2) {
+        print('2');
+      } else if (key == PhysicalKeyboardKey.digit3) {
+        print('3');
+      } else if (key == PhysicalKeyboardKey.digit4) {
+        print('4');
+      } else if (key == PhysicalKeyboardKey.arrowUp) {
+        print('up');
+      } else if (key == PhysicalKeyboardKey.arrowLeft) {
+        print('left');
+      } else if (key == PhysicalKeyboardKey.arrowRight) {
+        print('right');
+      } else if (key == PhysicalKeyboardKey.arrowDown) {
+        print('down');
+      } else {
+        print(event);
+      }
+    }
   }
 
   @override
