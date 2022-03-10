@@ -85,24 +85,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       } else if (key == PhysicalKeyboardKey.keyH) {
         changeDifficulty(difficulty: Difficulty.hard, gridSize: 4);
       } else if (key == PhysicalKeyboardKey.digit1) {
-        print('1');
+        if (status == Status.playable) {
+          context.read<GameBoardModel>().selectRow(rowIndex: 0);
+        }
       } else if (key == PhysicalKeyboardKey.digit2) {
-        print('2');
+        if (status == Status.playable) {
+          context.read<GameBoardModel>().selectRow(rowIndex: 1);
+        }
       } else if (key == PhysicalKeyboardKey.digit3) {
         final gridSize = context.read<GameModel>().gridSize;
         if (gridSize > 2) {
-          print('3');
+          if (status == Status.playable) {
+            context.read<GameBoardModel>().selectRow(rowIndex: 2);
+          }
         }
       } else if (key == PhysicalKeyboardKey.digit4) {
         final gridSize = context.read<GameModel>().gridSize;
         if (gridSize > 3) {
-          print('4');
+          if (status == Status.playable) {
+            context.read<GameBoardModel>().selectRow(rowIndex: 3);
+          }
         }
       } else if (key == PhysicalKeyboardKey.arrowUp) {
         print('up');
       } else if (key == PhysicalKeyboardKey.arrowLeft) {
+        if (status == Status.playable) {
+          final gridSize = context.read<GameModel>().gridSize;
+          context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
+        }
         print('left');
       } else if (key == PhysicalKeyboardKey.arrowRight) {
+        if (status == Status.playable) {
+          final gridSize = context.read<GameModel>().gridSize;
+          context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
+        }
         print('right');
       } else if (key == PhysicalKeyboardKey.arrowDown) {
         print('down');

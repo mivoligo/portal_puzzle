@@ -149,6 +149,72 @@ class GameBoardModel extends ChangeNotifier {
     }
   }
 
+  double _selectedIndex = -1;
+
+  double get selectedIndex => _selectedIndex;
+
+  set selectedIndex(double value) {
+    _selectedIndex = value;
+    notifyListeners();
+  }
+
+  void selectRow({required double rowIndex}) {
+    _tappedRow.clear();
+    selectedIndex = rowIndex;
+    for (final box in _boxes) {
+      if (box.currentLoc.dy == rowIndex) {
+        _tappedRow.add(box);
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> moveRowLeft({
+    required int gridSize,
+  }) async {
+    for (final box in _tappedRow) {
+      box.currentLoc = Offset(box.currentLoc.dx - 0.5, _selectedIndex);
+      if (box.currentLoc.dx <= -0.5) {
+        box.currentLoc = Offset(gridSize - 0.5, _selectedIndex);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+    for (final box in _tappedRow) {
+      box.currentLoc = Offset(box.currentLoc.dx - 0.5, _selectedIndex);
+      if (box.currentLoc.dx <= -0.5) {
+        box.currentLoc = Offset(gridSize - 0.5, _selectedIndex);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+
+    updateBoxesLocation();
+
+    notifyListeners();
+  }
+
+  Future<void> moveRowRight({
+    required int gridSize,
+  }) async {
+    for (final box in _tappedRow) {
+      box.currentLoc = Offset(box.currentLoc.dx + 0.5, _selectedIndex);
+      if (box.currentLoc.dx >= gridSize - 0.5) {
+        box.currentLoc = Offset(-0.5, _selectedIndex);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+    for (final box in _tappedRow) {
+      box.currentLoc = Offset(box.currentLoc.dx + 0.5, _selectedIndex);
+      if (box.currentLoc.dx >= gridSize - 0.5) {
+        box.currentLoc = Offset(-0.5, _selectedIndex);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+
+    updateBoxesLocation();
+
+    notifyListeners();
+  }
+
   Future<void> _moveRow({
     required double rowIndex,
     required int gridSize,
