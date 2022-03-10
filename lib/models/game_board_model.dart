@@ -191,6 +191,8 @@ class GameBoardModel extends ChangeNotifier {
 
     updateBoxesLocation();
 
+    selectRowAndColumn(index: _selectedIndex);
+
     notifyListeners();
   }
 
@@ -211,6 +213,8 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
 
     updateBoxesLocation();
+
+    selectRowAndColumn(index: _selectedIndex);
 
     notifyListeners();
   }
@@ -233,6 +237,8 @@ class GameBoardModel extends ChangeNotifier {
 
     updateBoxesLocation();
 
+    selectRowAndColumn(index: _selectedIndex);
+
     notifyListeners();
   }
 
@@ -253,6 +259,8 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
 
     updateBoxesLocation();
+
+    selectRowAndColumn(index: _selectedIndex);
 
     notifyListeners();
   }
