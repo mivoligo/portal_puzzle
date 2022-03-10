@@ -89,9 +89,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       } else if (key == PhysicalKeyboardKey.digit2) {
         print('2');
       } else if (key == PhysicalKeyboardKey.digit3) {
-        print('3');
+        final gridSize = context.read<GameModel>().gridSize;
+        if (gridSize > 2) {
+          print('3');
+        }
       } else if (key == PhysicalKeyboardKey.digit4) {
-        print('4');
+        final gridSize = context.read<GameModel>().gridSize;
+        if (gridSize > 3) {
+          print('4');
+        }
       } else if (key == PhysicalKeyboardKey.arrowUp) {
         print('up');
       } else if (key == PhysicalKeyboardKey.arrowLeft) {
