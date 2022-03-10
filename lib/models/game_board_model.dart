@@ -158,20 +158,22 @@ class GameBoardModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectRow({required double rowIndex}) {
+  void selectRowAndColumn({required double index}) {
     _tappedRow.clear();
-    selectedIndex = rowIndex;
+    _tappedColumn.clear();
+    selectedIndex = index;
     for (final box in _boxes) {
-      if (box.currentLoc.dy == rowIndex) {
+      if (box.currentLoc.dy == index) {
         _tappedRow.add(box);
+      }
+      if (box.currentLoc.dx == index) {
+        _tappedColumn.add(box);
       }
     }
     notifyListeners();
   }
 
-  Future<void> moveRowLeft({
-    required int gridSize,
-  }) async {
+  Future<void> moveRowLeft({required int gridSize}) async {
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx - 0.5, _selectedIndex);
       if (box.currentLoc.dx <= -0.5) {
@@ -192,9 +194,7 @@ class GameBoardModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> moveRowRight({
-    required int gridSize,
-  }) async {
+  Future<void> moveRowRight({required int gridSize}) async {
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx + 0.5, _selectedIndex);
       if (box.currentLoc.dx >= gridSize - 0.5) {
@@ -206,6 +206,48 @@ class GameBoardModel extends ChangeNotifier {
       box.currentLoc = Offset(box.currentLoc.dx + 0.5, _selectedIndex);
       if (box.currentLoc.dx >= gridSize - 0.5) {
         box.currentLoc = Offset(-0.5, _selectedIndex);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+
+    updateBoxesLocation();
+
+    notifyListeners();
+  }
+
+  Future<void> moveColumnUp({required int gridSize}) async {
+    for (final box in _tappedColumn) {
+      box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy - 0.5);
+      if (box.currentLoc.dy <= -0.5) {
+        box.currentLoc = Offset(_selectedIndex, gridSize - 0.5);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+    for (final box in _tappedColumn) {
+      box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy - 0.5);
+      if (box.currentLoc.dy <= -0.5) {
+        box.currentLoc = Offset(_selectedIndex, gridSize - 0.5);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+
+    updateBoxesLocation();
+
+    notifyListeners();
+  }
+
+  Future<void> moveColumnDown({required int gridSize}) async {
+    for (final box in _tappedColumn) {
+      box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy + 0.5);
+      if (box.currentLoc.dy >= gridSize - 0.5) {
+        box.currentLoc = Offset(_selectedIndex, -0.5);
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 60));
+    for (final box in _tappedColumn) {
+      box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy + 0.5);
+      if (box.currentLoc.dy >= gridSize - 0.5) {
+        box.currentLoc = Offset(_selectedIndex, -0.5);
       }
     }
     await Future.delayed(const Duration(milliseconds: 60));
