@@ -110,21 +110,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
           context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
+          context.read<GameModel>().addMove(shouldAdd: true);
         }
       } else if (key == PhysicalKeyboardKey.arrowRight) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
           context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
+          context.read<GameModel>().addMove(shouldAdd: true);
         }
       } else if (key == PhysicalKeyboardKey.arrowUp) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
           context.read<GameBoardModel>().moveColumnUp(gridSize: gridSize);
+          context.read<GameModel>().addMove(shouldAdd: true);
         }
       } else if (key == PhysicalKeyboardKey.arrowDown) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
           context.read<GameBoardModel>().moveColumnDown(gridSize: gridSize);
+          context.read<GameModel>().addMove(shouldAdd: true);
         }
       } else {
         print(event);
