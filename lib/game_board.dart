@@ -93,6 +93,7 @@ class _GameBoardState extends State<GameBoard> {
                             setState(() {
                               defaultPosition = false;
                             });
+                            context.read<GameModel>().useKeyboard = false;
                             context.read<GameBoardModel>().setTappedRow(
                                   boardSize: boardSize,
                                   gridSize: gridSize,
@@ -105,6 +106,7 @@ class _GameBoardState extends State<GameBoard> {
                             setState(() {
                               defaultPosition = false;
                             });
+                            context.read<GameModel>().useKeyboard = false;
                             context.read<GameBoardModel>().setTappedColumn(
                                   boardSize: boardSize,
                                   gridSize: gridSize,

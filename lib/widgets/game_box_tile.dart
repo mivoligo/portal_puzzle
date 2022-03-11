@@ -18,6 +18,7 @@ class GameBoxTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final useKeyboard = context.watch<GameModel>().useKeyboard;
     final gridSize = context.watch<GameModel>().gridSize;
     final tappedRow = context.watch<GameBoardModel>().tappedRow;
     final tappedColumn = context.watch<GameBoardModel>().tappedColumn;
@@ -36,7 +37,8 @@ class GameBoxTile extends StatelessWidget {
         height: gameBoxRect.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(boardSize * 0.01)),
-          color: tappedRow.contains(box) || tappedColumn.contains(box)
+          color: useKeyboard &&
+                  (tappedRow.contains(box) || tappedColumn.contains(box))
               ? lightRose.withOpacity(0.5)
               : const Color(0xAA94A3B8),
           border: Border.all(color: const Color(0xAACBD5E1)),

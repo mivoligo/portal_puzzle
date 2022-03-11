@@ -93,16 +93,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         changeDifficulty(difficulty: Difficulty.hard, gridSize: 4);
       } else if (key == PhysicalKeyboardKey.digit1) {
         if (status == Status.playable) {
+          context.read<GameModel>().useKeyboard = true;
           context.read<GameBoardModel>().selectRowAndColumn(index: 0);
         }
       } else if (key == PhysicalKeyboardKey.digit2) {
         if (status == Status.playable) {
+          context.read<GameModel>().useKeyboard = true;
           context.read<GameBoardModel>().selectRowAndColumn(index: 1);
         }
       } else if (key == PhysicalKeyboardKey.digit3) {
         final gridSize = context.read<GameModel>().gridSize;
         if (gridSize > 2) {
           if (status == Status.playable) {
+            context.read<GameModel>().useKeyboard = true;
             context.read<GameBoardModel>().selectRowAndColumn(index: 2);
           }
         }
@@ -110,11 +113,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         final gridSize = context.read<GameModel>().gridSize;
         if (gridSize > 3) {
           if (status == Status.playable) {
+            context.read<GameModel>().useKeyboard = true;
             context.read<GameBoardModel>().selectRowAndColumn(index: 3);
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowLeft) {
-        if (status == Status.playable) {
+        if (status == Status.playable &&
+            context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
           await context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
@@ -123,7 +128,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowRight) {
-        if (status == Status.playable) {
+        if (status == Status.playable &&
+            context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
           await context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
@@ -132,7 +138,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowUp) {
-        if (status == Status.playable) {
+        if (status == Status.playable &&
+            context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
           await context.read<GameBoardModel>().moveColumnUp(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
@@ -141,7 +148,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowDown) {
-        if (status == Status.playable) {
+        if (status == Status.playable &&
+            context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
           await context
               .read<GameBoardModel>()

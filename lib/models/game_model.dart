@@ -71,12 +71,14 @@ class GameModel extends ChangeNotifier {
 
   void resetGame() {
     _resetNumOfMoves();
+    _useKeyboard = false;
     _status = Status.initial;
     notifyListeners();
   }
 
   void shuffle() {
     _resetNumOfMoves();
+    _useKeyboard = false;
     _status = Status.shuffling;
     notifyListeners();
   }
@@ -88,6 +90,15 @@ class GameModel extends ChangeNotifier {
 
   void markSolved() {
     _status = Status.finished;
+    notifyListeners();
+  }
+
+  bool _useKeyboard = false;
+
+  bool get useKeyboard => _useKeyboard;
+
+  set useKeyboard(bool value) {
+    _useKeyboard = value;
     notifyListeners();
   }
 }
