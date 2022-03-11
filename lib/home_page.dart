@@ -159,8 +159,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else if (!visibleShortcuts &&
-          (key == PhysicalKeyboardKey.space || key == PhysicalKeyboardKey.f1)) {
+      } else if (!visibleShortcuts && key == PhysicalKeyboardKey.space) {
         visibleShortcuts = true;
         await showDialog(
             context: context,
@@ -277,7 +276,7 @@ class _ShortcutsDialog extends StatelessWidget {
           padding: EdgeInsets.all(8.0),
           child: Text('Gameplay'),
         ),
-        _Shortcut(shortcut: 'P', altShortcut: '↵', label: 'Play (Shuffle)'),
+        _Shortcut(shortcut: 'P', altShortcut: 'Enter', label: 'Play (Shuffle)'),
         SizedBox(height: 12),
         _Shortcut(shortcut: '1', label: 'Select first row, column'),
         _Shortcut(shortcut: '2', label: 'Select second row, column'),
@@ -285,24 +284,25 @@ class _ShortcutsDialog extends StatelessWidget {
         _Shortcut(shortcut: '4', label: 'Select fourth row, column'),
         SizedBox(height: 12),
         _Shortcut(
-            shortcut: '↑', altShortcut: 'W', label: 'Move selected column up'),
+            shortcut: 'Up', altShortcut: 'W', label: 'Move selected column up'),
         _Shortcut(
-            shortcut: '↓',
+            shortcut: 'Down',
             altShortcut: 'S',
             label: 'Move selected column down'),
         _Shortcut(
-            shortcut: '←', altShortcut: 'A', label: 'Move selected row left'),
+            shortcut: 'Left',
+            altShortcut: 'A',
+            label: 'Move selected row left'),
         _Shortcut(
-            shortcut: '→', altShortcut: 'D', label: 'Move selected row right'),
+            shortcut: 'Right',
+            altShortcut: 'D',
+            label: 'Move selected row right'),
         SizedBox(height: 12),
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Text('General'),
         ),
-        _Shortcut(
-            shortcut: 'F1',
-            altShortcut: 'Space',
-            label: 'Show this window again'),
+        _Shortcut(shortcut: 'Space', label: 'Show this window again'),
         _Shortcut(shortcut: 'Esc', label: 'Close this window'),
       ],
     );
