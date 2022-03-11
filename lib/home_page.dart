@@ -54,10 +54,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     required Difficulty difficulty,
     required int gridSize,
   }) async {
-    difficultyAnimationController.forward().whenComplete(() {
-      context.read<GameModel>().setDifficulty(difficulty);
-      context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
-    }).whenComplete(() => difficultyAnimationController.reverse());
+    final currentDifficulty = context.read<GameModel>().difficulty;
+    if (difficulty != currentDifficulty) {
+      difficultyAnimationController.forward().whenComplete(() {
+        context.read<GameModel>().setDifficulty(difficulty);
+        context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
+      }).whenComplete(() => difficultyAnimationController.reverse());
+    }
   }
 
   Future<void> start(int gridSize) async {
