@@ -181,11 +181,9 @@ class GameBoardModel extends ChangeNotifier {
       }
     }
     await Future.delayed(const Duration(milliseconds: 60));
+
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx - 0.5, _selectedIndex);
-      if (box.currentLoc.dx <= -0.5) {
-        box.currentLoc = Offset(gridSize - 0.5, _selectedIndex);
-      }
     }
     await Future.delayed(const Duration(milliseconds: 60));
 
@@ -204,11 +202,11 @@ class GameBoardModel extends ChangeNotifier {
       }
     }
     await Future.delayed(const Duration(milliseconds: 60));
+
+    selectRowAndColumn(index: _selectedIndex);
+
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx + 0.5, _selectedIndex);
-      if (box.currentLoc.dx >= gridSize - 0.5) {
-        box.currentLoc = Offset(-0.5, _selectedIndex);
-      }
     }
     await Future.delayed(const Duration(milliseconds: 60));
 
@@ -229,9 +227,6 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedColumn) {
       box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy - 0.5);
-      if (box.currentLoc.dy <= -0.5) {
-        box.currentLoc = Offset(_selectedIndex, gridSize - 0.5);
-      }
     }
     await Future.delayed(const Duration(milliseconds: 60));
 
@@ -252,10 +247,8 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedColumn) {
       box.currentLoc = Offset(_selectedIndex, box.currentLoc.dy + 0.5);
-      if (box.currentLoc.dy >= gridSize - 0.5) {
-        box.currentLoc = Offset(_selectedIndex, -0.5);
-      }
     }
+
     await Future.delayed(const Duration(milliseconds: 60));
 
     updateBoxesLocation();
@@ -285,9 +278,6 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedRow) {
       box.currentLoc = Offset(box.currentLoc.dx - 0.5, rowIndex);
-      if (box.currentLoc.dx <= -0.5) {
-        box.currentLoc = Offset(gridSize - 0.5, rowIndex);
-      }
     }
     await Future.delayed(const Duration(milliseconds: 60));
 
@@ -316,9 +306,6 @@ class GameBoardModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 60));
     for (final box in _tappedColumn) {
       box.currentLoc = Offset(columnIndex, box.currentLoc.dy - 0.5);
-      if (box.currentLoc.dy <= -0.5) {
-        box.currentLoc = Offset(columnIndex, gridSize - 0.5);
-      }
     }
     await Future.delayed(const Duration(milliseconds: 60));
 

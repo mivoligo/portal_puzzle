@@ -64,9 +64,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     context.read<GameModel>().shuffle();
     await context.read<GameBoardModel>().shuffle(gridSize);
     context.read<GameModel>().markPlayable();
+    var boxes = context.read<GameBoardModel>().boxes;
+    for (var box in boxes) {
+      print(box.currentLoc);
+    }
   }
 
-  void handleKeyDown(RawKeyEvent event) {
+  Future<void> handleKeyDown(RawKeyEvent event) async {
     if (event is RawKeyDownEvent) {
       final key = event.physicalKey;
       if (key == PhysicalKeyboardKey.keyS) {
@@ -109,26 +113,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       } else if (key == PhysicalKeyboardKey.arrowLeft) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
-          context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
+          await context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
+          if (context.read<GameBoardModel>().puzzleSolved) {
+            context.read<GameModel>().markSolved();
+          }
         }
       } else if (key == PhysicalKeyboardKey.arrowRight) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
-          context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
+          await context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
+          if (context.read<GameBoardModel>().puzzleSolved) {
+            context.read<GameModel>().markSolved();
+          }
         }
       } else if (key == PhysicalKeyboardKey.arrowUp) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
-          context.read<GameBoardModel>().moveColumnUp(gridSize: gridSize);
+          await context.read<GameBoardModel>().moveColumnUp(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
+          if (context.read<GameBoardModel>().puzzleSolved) {
+            context.read<GameModel>().markSolved();
+          }
         }
       } else if (key == PhysicalKeyboardKey.arrowDown) {
         if (status == Status.playable) {
           final gridSize = context.read<GameModel>().gridSize;
-          context.read<GameBoardModel>().moveColumnDown(gridSize: gridSize);
+          await context
+              .read<GameBoardModel>()
+              .moveColumnDown(gridSize: gridSize);
           context.read<GameModel>().addMove(shouldAdd: true);
+          if (context.read<GameBoardModel>().puzzleSolved) {
+            context.read<GameModel>().markSolved();
+          }
         }
       } else {
         print(event);
