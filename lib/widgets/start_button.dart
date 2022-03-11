@@ -16,7 +16,7 @@ class StartButton extends StatelessWidget {
     String label() {
       switch (status) {
         case Status.initial:
-          return 'Start';
+          return 'Play';
         case Status.finished:
           return 'Play Again';
         case Status.shuffling:

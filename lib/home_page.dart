@@ -29,6 +29,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     duration: const Duration(milliseconds: 2000),
   );
 
+  bool visibleShortcuts = false;
+
   @override
   void initState() {
     super.initState();
@@ -157,13 +159,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else if (key == PhysicalKeyboardKey.space ||
-          key == PhysicalKeyboardKey.f1) {
-        showDialog(
+      } else if (!visibleShortcuts &&
+          (key == PhysicalKeyboardKey.space || key == PhysicalKeyboardKey.f1)) {
+        visibleShortcuts = true;
+        await showDialog(
             context: context,
             builder: (context) {
-              return const ShortcutsDialog();
+              return const _ShortcutsDialog();
             });
+        visibleShortcuts = false;
       }
     }
   }
@@ -250,8 +254,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
-class ShortcutsDialog extends StatelessWidget {
-  const ShortcutsDialog({
+class _ShortcutsDialog extends StatelessWidget {
+  const _ShortcutsDialog({
     Key? key,
   }) : super(key: key);
 
