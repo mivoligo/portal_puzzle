@@ -67,22 +67,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     context.read<GameModel>().shuffle();
     await context.read<GameBoardModel>().shuffle(gridSize);
     context.read<GameModel>().markPlayable();
-    var boxes = context.read<GameBoardModel>().boxes;
-    for (var box in boxes) {
-      print(box.currentLoc);
-    }
   }
 
   Future<void> handleKeyDown(RawKeyEvent event) async {
     if (event is RawKeyDownEvent) {
       final key = event.physicalKey;
-      if (key == PhysicalKeyboardKey.keyS) {
+      if (key == PhysicalKeyboardKey.keyP || key == PhysicalKeyboardKey.enter) {
         if (!(status == Status.finished || status == Status.shuffling)) {
           final gridSize = context.read<GameModel>().gridSize;
           start(gridSize);
-        }
-      } else if (key == PhysicalKeyboardKey.keyP) {
-        if (status == Status.finished) {
+        } else if (status == Status.finished) {
           context.read<GameModel>().resetGame();
         }
       } else if (key == PhysicalKeyboardKey.keyE) {
@@ -117,7 +111,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameBoardModel>().selectRowAndColumn(index: 3);
           }
         }
-      } else if (key == PhysicalKeyboardKey.arrowLeft) {
+      } else if (key == PhysicalKeyboardKey.arrowLeft ||
+          key == PhysicalKeyboardKey.keyA) {
         if (status == Status.playable &&
             context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
@@ -127,7 +122,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else if (key == PhysicalKeyboardKey.arrowRight) {
+      } else if (key == PhysicalKeyboardKey.arrowRight ||
+          key == PhysicalKeyboardKey.keyD) {
         if (status == Status.playable &&
             context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
@@ -137,7 +133,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else if (key == PhysicalKeyboardKey.arrowUp) {
+      } else if (key == PhysicalKeyboardKey.arrowUp ||
+          key == PhysicalKeyboardKey.keyW) {
         if (status == Status.playable &&
             context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
@@ -147,7 +144,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else if (key == PhysicalKeyboardKey.arrowDown) {
+      } else if (key == PhysicalKeyboardKey.arrowDown ||
+          key == PhysicalKeyboardKey.keyS) {
         if (status == Status.playable &&
             context.read<GameModel>().useKeyboard) {
           final gridSize = context.read<GameModel>().gridSize;
@@ -159,8 +157,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context.read<GameModel>().markSolved();
           }
         }
-      } else {
-        print(event);
+      } else if (key == PhysicalKeyboardKey.space ||
+          key == PhysicalKeyboardKey.f1) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return const ShortcutsDialog();
+            });
       }
     }
   }
@@ -243,6 +246,125 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           },
         ),
       ),
+    );
+  }
+}
+
+class ShortcutsDialog extends StatelessWidget {
+  const ShortcutsDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SimpleDialog(
+      title: Center(child: Text('Keyboard shortcuts')),
+      contentPadding: EdgeInsets.all(16),
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Difficulty selection'),
+        ),
+        _Shortcut(shortcut: 'E', label: 'Easy'),
+        _Shortcut(shortcut: 'N', label: 'Normal'),
+        _Shortcut(shortcut: 'H', label: 'Hard'),
+        SizedBox(height: 12),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Gameplay'),
+        ),
+        _Shortcut(shortcut: 'P', altShortcut: '↵', label: 'Play (Shuffle)'),
+        SizedBox(height: 12),
+        _Shortcut(shortcut: '1', label: 'Select first row, column'),
+        _Shortcut(shortcut: '2', label: 'Select second row, column'),
+        _Shortcut(shortcut: '3', label: 'Select third row, column'),
+        _Shortcut(shortcut: '4', label: 'Select fourth row, column'),
+        SizedBox(height: 12),
+        _Shortcut(
+            shortcut: '↑', altShortcut: 'W', label: 'Move selected column up'),
+        _Shortcut(
+            shortcut: '↓',
+            altShortcut: 'S',
+            label: 'Move selected column down'),
+        _Shortcut(
+            shortcut: '←', altShortcut: 'A', label: 'Move selected row left'),
+        _Shortcut(
+            shortcut: '→', altShortcut: 'D', label: 'Move selected row right'),
+        SizedBox(height: 12),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('General'),
+        ),
+        _Shortcut(
+            shortcut: 'F1',
+            altShortcut: 'Space',
+            label: 'Show this window again'),
+        _Shortcut(shortcut: 'Esc', label: 'Close this window'),
+      ],
+    );
+  }
+}
+
+class _Shortcut extends StatelessWidget {
+  const _Shortcut({
+    Key? key,
+    required this.shortcut,
+    this.altShortcut,
+    required this.label,
+  }) : super(key: key);
+
+  final String shortcut;
+  final String? altShortcut;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Center(
+              child: Text(
+                shortcut,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: darkViolet, width: 2),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+          ),
+        ),
+        if (altShortcut != null) const Text('or'),
+        if (altShortcut != null)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Center(
+                child: Text(
+                  altShortcut!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: darkViolet, width: 2),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        Text(label),
+      ],
     );
   }
 }
