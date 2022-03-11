@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../models/models.dart';
 
 class GameBoxTile extends StatelessWidget {
@@ -18,6 +19,8 @@ class GameBoxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gridSize = context.watch<GameModel>().gridSize;
+    final tappedRow = context.watch<GameBoardModel>().tappedRow;
+    final tappedColumn = context.watch<GameBoardModel>().tappedColumn;
     final gameBoxRect = box.getRect(boardSize: boardSize, gridSize: gridSize);
     return AnimatedScale(
       duration: const Duration(milliseconds: 250),
@@ -33,7 +36,9 @@ class GameBoxTile extends StatelessWidget {
         height: gameBoxRect.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(boardSize * 0.01)),
-          color: const Color(0xAA94A3B8),
+          color: tappedRow.contains(box) || tappedColumn.contains(box)
+              ? lightRose.withOpacity(0.5)
+              : const Color(0xAA94A3B8),
           border: Border.all(color: const Color(0xAACBD5E1)),
         ),
         child: Center(

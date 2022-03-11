@@ -12,6 +12,8 @@ class GameBoardModel extends ChangeNotifier {
   final List<GameBox> _tappedColumn = [];
 
   List<GameBox> get boxes => _boxes;
+  List<GameBox> get tappedRow => _tappedRow;
+  List<GameBox> get tappedColumn => _tappedColumn;
 
   bool get puzzleSolved => !_boxes.any((box) => !box.isAtSpawn);
 
