@@ -71,6 +71,11 @@ class MediumLayout extends StatelessWidget {
             ),
           ],
         ),
+        const Positioned(
+          right: 24,
+          bottom: 24,
+          child: InfoButton(),
+        )
       ],
     );
   }

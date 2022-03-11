@@ -98,6 +98,11 @@ class LargeLayout extends StatelessWidget {
             );
           },
         ),
+        const Positioned(
+          right: 64,
+          bottom: 48,
+          child: InfoButton(),
+        )
       ],
     );
   }

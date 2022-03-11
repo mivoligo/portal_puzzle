@@ -7,6 +7,7 @@ export 'confetti_machine.dart';
 export 'difficulty_selector.dart';
 export 'game_box_tile.dart';
 export 'fancy_button.dart';
+export 'info_button.dart';
 export 'moves_counter.dart';
 export 'play_area.dart';
 export 'start_button.dart';
