@@ -367,7 +367,7 @@ class _Shortcut extends StatelessWidget {
               ),
             ),
           ),
-        Text(label),
+        Flexible(child: Text(label)),
       ],
     );
   }
