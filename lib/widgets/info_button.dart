@@ -64,6 +64,11 @@ class _InfoDialog extends StatelessWidget {
           child: Text(
               '3. Move the tiles horizontally or vertically until you find the solution.'),
         ),
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: Image.asset('assets/images/game-play-min.gif'),
+        ),
         const SizedBox(height: 16),
         const Text(
           'Tips & Tricks',
