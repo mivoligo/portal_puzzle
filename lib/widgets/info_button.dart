@@ -10,10 +10,10 @@ class InfoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FancyButton(
       label: '?',
-      surfaceColor: k.lightGreen,
-      sideColor: k.green,
-      textColor: k.darkGreen,
-      onPressed: () {},
+      surfaceColor: k.lightSlate,
+      sideColor: k.slate,
+      textColor: k.darkSlate,
+      onPressed: () => showAboutDialog(context: context),
     );
   }
 }

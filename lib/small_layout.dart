@@ -69,7 +69,7 @@ class SmallLayout extends StatelessWidget {
         ),
         const Positioned(
           right: 24,
-          top: 40,
+          bottom: 32,
           child: InfoButton(),
         )
       ],
