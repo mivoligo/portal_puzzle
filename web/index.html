@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <!--
+  <!--
       If you are serving your web app in a path other than the root, change the
       href value below to reflect the base path you are serving from.
 
@@ -14,79 +15,44 @@
       This is a placeholder for base href that will be replaced by the value of
       the `--base-href` argument provided to `flutter build`.
     -->
-    <base href="$FLUTTER_BASE_HREF">
+  <base href="$FLUTTER_BASE_HREF">
 
-    <meta charset="UTF-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="description" content="Swipe puzzle game with portals">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Swipe puzzle game with portals">
 
-    <!-- iOS meta tags & icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="portal_puzzle">
-    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="portal_puzzle">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png"/>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-    <style type="text/css">
-
-        .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
+  <style type="text/css">
+    #loader {
+      background: url('loading.webp') no-repeat center center;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
     }
+  </style>
 
-    .loader {
-      border: 4px solid #f3f3f3;
-      border-radius: 50%;
-      border-top: 4px solid blue;
-      border-right: 4px solid green;
-      border-bottom: 4px solid red;
-      border-left: 4px solid purple;
-      width: 120px;
-      height: 120px;
-      -webkit-animation: spin 2s linear infinite;
-      animation: spin 2s linear infinite;
-    }
-
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    </style>
-
-    <title>Portal Puzzle</title>
-    <link rel="manifest" href="manifest.json">
+  <title>Portal Puzzle</title>
+  <link rel="manifest" href="manifest.json">
 </head>
+
 <body style="background-color:#BFDBFE">
-<div class="loading">
-    <div class="loader"></div>
-</div>
-<!-- This script installs service_worker.js to provide PWA functionality to
+  
+    <div id="loader"></div>
+  
+  <!-- This script installs service_worker.js to provide PWA functionality to
      application. For more information, see:
      https://developers.google.com/web/fundamentals/primers/service-workers -->
-<script>
+  <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -151,26 +117,19 @@
     }
 
 
-
-
-
-
-
-</script>
-<script>
+  </script>
+  <script>
     window.onload = function () {
-        setTimeout(function () {
-          var loadingIndicator = document.getElementByClassName("loading");
-          if (loadingIndicator) {
-            loadingIndicator.remove();
-          }
-        }, 10000);
-};
+      setTimeout(function () {
+        var loadingIndicator = document.getElementById("loader");
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+      }, 10000);
+    };
 
 
-
-
-
-</script>
+  </script>
 </body>
+
 </html>
