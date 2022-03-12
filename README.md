@@ -23,7 +23,7 @@ Why not allow those tiles to move through "portals"... The rest is history (git 
 
 ## Play in your browser
 
-[Portal Puzzle online]()
+[Portal Puzzle online](https://mivoligo.github.io/puzzle/)
 
 ## Download for Linux 
 
