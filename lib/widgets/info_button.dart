@@ -61,7 +61,8 @@ class _InfoDialog extends StatelessWidget {
         ),
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text('3. Move the tiles around until you find the solution.'),
+          child: Text(
+              '3. Move the tiles horizontally or vertically until you find the solution.'),
         ),
         const SizedBox(height: 16),
         const Text(
