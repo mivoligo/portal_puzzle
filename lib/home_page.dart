@@ -345,8 +345,8 @@ class _Shortcut extends StatelessWidget {
             ),
           ),
         ),
-        if (altShortcut != null) const Text('or'),
-        if (altShortcut != null)
+        if (altShortcut != null) ...[
+          const Text('or'),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -367,6 +367,7 @@ class _Shortcut extends StatelessWidget {
               ),
             ),
           ),
+        ],
         Flexible(child: Text(label)),
       ],
     );

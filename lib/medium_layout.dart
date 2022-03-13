@@ -50,9 +50,9 @@ class MediumLayout extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (status != Status.finished)
-                    const MovesCounter(isLarge: true),
-                  if (status == Status.finished) const SolvedMessage(),
+                  (status != Status.finished)
+                      ? const MovesCounter(isLarge: true)
+                      : const SolvedMessage(),
                   StartButton(onPressed: () async {
                     await context.read<GameBoardModel>().shuffle(gridSize);
                   }),
