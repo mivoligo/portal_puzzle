@@ -74,12 +74,11 @@ class LargeLayout extends StatelessWidget {
                         style: const TextStyle(fontSize: 24),
                       ),
                     const SizedBox(height: 24),
-                    (status != Status.finished)
-                        ? const MovesCounter(isLarge: true)
-                        : const SolvedMessage(),
+                    if (status != Status.finished)
+                      const MovesCounter(isLarge: true),
                     (status != Status.finished)
                         ? const SizedBox(height: 24)
-                        : const SizedBox(height: 34),
+                        : const SizedBox(height: 90),
                     StartButton(
                       onPressed: () async {
                         await context.read<GameBoardModel>().shuffle(gridSize);

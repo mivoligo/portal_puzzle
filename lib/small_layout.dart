@@ -35,7 +35,7 @@ class SmallLayout extends StatelessWidget {
               padding: EdgeInsets.all(32.0),
               child: AppTitle(),
             ),
-            if (status != Status.finished)
+            if (status != Status.finished) ...[
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: DifficultySelector(
@@ -44,12 +44,8 @@ class SmallLayout extends StatelessWidget {
                   onHard: onHard,
                 ),
               ),
-            (status != Status.finished)
-                ? const MovesCounter()
-                : const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: SolvedMessage(),
-                  ),
+              const MovesCounter(),
+            ],
             const SizedBox(height: 12),
             Expanded(
               child: LayoutBuilder(

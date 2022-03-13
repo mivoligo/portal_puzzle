@@ -12,21 +12,13 @@ class SolvedMessage extends StatelessWidget {
     final numberOfMoves = context.select<GameModel, int>(
       (model) => model.numOfMoves,
     );
-    return TweenAnimationBuilder(
-      tween: IntTween(begin: 0, end: numberOfMoves),
-      duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeOutQuint,
-      builder: (_, value, __) {
-        return Text(
-          'Congrats! Solved in\n$value moves.',
-          style: const TextStyle(
-            fontSize: 24,
-            color: darkViolet,
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.center,
-        );
-      },
+    return Text(
+      'Congrats! Solved in $numberOfMoves moves.',
+      style: const TextStyle(
+        fontSize: 24,
+        color: darkViolet,
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }
