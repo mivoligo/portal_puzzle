@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    RawKeyboard.instance.addListener(handleKeyDown);
+    RawKeyboard.instance.addListener(handleKeyPress);
     status = context.read<GameModel>().status;
     final gridSize = context.read<GameModel>().gridSize;
     context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     difficultyAnimationController.dispose();
     finishAnimationController.dispose();
-    RawKeyboard.instance.removeListener(handleKeyDown);
+    RawKeyboard.instance.removeListener(handleKeyPress);
     super.dispose();
   }
 
@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     context.read<GameModel>().markPlayable();
   }
 
-  Future<void> handleKeyDown(RawKeyEvent event) async {
-    if (event is RawKeyDownEvent) {
+  Future<void> handleKeyPress(RawKeyEvent event) async {
+    if (event is RawKeyUpEvent) {
       final key = event.physicalKey;
       if (key == PhysicalKeyboardKey.keyP || key == PhysicalKeyboardKey.enter) {
         if (!(status == Status.finished || status == Status.shuffling)) {
