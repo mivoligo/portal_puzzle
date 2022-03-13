@@ -18,12 +18,13 @@ class SolvedMessage extends StatelessWidget {
       curve: Curves.easeOutQuint,
       builder: (_, value, __) {
         return Text(
-          'Congrats! Solved in $value moves.',
+          'Congrats! Solved in\n$value moves.',
           style: const TextStyle(
             fontSize: 24,
             color: darkViolet,
             fontWeight: FontWeight.w600,
           ),
+          textAlign: TextAlign.center,
         );
       },
     );
