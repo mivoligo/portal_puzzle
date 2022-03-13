@@ -47,7 +47,7 @@ class AnimatedBoard extends AnimatedWidget {
         : Transform(
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
-              ..rotateY(_difficultyAnimation.value * pi * 0.6),
+              ..rotateY(_difficultyAnimation.value * pi * 0.45),
             alignment: FractionalOffset.center,
             child: front,
           );
