@@ -49,7 +49,7 @@ class AnimatedBoard extends AnimatedWidget {
               ..setEntry(3, 2, 0.001)
               ..rotateY(_difficultyAnimation.value * pi * 0.6),
             alignment: FractionalOffset.center,
-            child: _difficultyAnimation.value < 0.85 ? front : back,
+            child: front,
           );
   }
 }
