@@ -14,7 +14,7 @@ class Bubbles extends StatefulWidget {
 class _BubblesState extends State<Bubbles> with SingleTickerProviderStateMixin {
   static final random = Random();
 
-  final bubbles = List<Bubble>.generate(18, (index) => Bubble(random));
+  final bubbles = List<Bubble>.generate(10, (index) => Bubble(random));
 
   late AnimationController _controller;
 
