@@ -1,0 +1,22 @@
+  name: portal-puzzle
+  version: 1.0.0
+  summary: Swipe puzzle without a frame
+  description: Do enjoy
+  confinement: strict
+  base: core20
+
+  compression: lzo
+
+  apps:
+    portal-puzzle:
+      command: portal_puzzle
+      extensions: [flutter-beta]
+  parts:
+    portal-puzzle:
+      source: .
+      plugin: flutter
+      flutter-target: lib/main.dart
+      stage-packages:
+      - libegl1
+      - libegl1-mesa
+      - libc6
