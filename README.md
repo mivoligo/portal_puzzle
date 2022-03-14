@@ -28,7 +28,7 @@ Why not allow those tiles to move through "portals"... The rest is history (git 
 
 ## Download for Linux 
 
-Coming soon
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/portal-puzzle)
 
 
 ## Download for Android
