@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Portal Puzzle
+Comment=Swipe puzzle without a frame
+Icon=${SNAP}/meta/gui/icon.png
+Exec=portal-puzzle
+Terminal=false
+Type=Application
+Categories=Games;
+Keywords=Portal;Puzzle;Game;Swipe;
