@@ -47,7 +47,7 @@ static void my_application_activate(GApplication* application) {
     gtk_window_set_title(window, "Portal Puzzle");
   }
 
-  gtk_window_set_size_request(GTK_WIDGET(window), 630, 520);
+  gtk_widget_set_size_request(GTK_WIDGET(window), 630, 520);
   gtk_widget_show(GTK_WIDGET(window));
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
