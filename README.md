@@ -1,6 +1,7 @@
 # Portal Puzzle
 
 In the digital world you don\'t have to be limited by an analog box
+<img src="assets/readme/game-play.gif">
 
 ## How to play
 
