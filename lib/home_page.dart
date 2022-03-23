@@ -188,65 +188,67 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: AnimatedContainer(
         duration: const Duration(milliseconds: 1000),
         color: backgroundColor,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final layoutWidth = constraints.maxWidth;
-            if (layoutWidth < widthSmall) {
-              return SmallLayout(
-                difficultyAnimation: status == Status.finished
-                    ? finishAnimationController
-                    : difficultyAnimationController,
-                onEasy: () => changeDifficulty(
-                  gridSize: 2,
-                  difficulty: Difficulty.easy,
-                ),
-                onNormal: () => changeDifficulty(
-                  gridSize: 3,
-                  difficulty: Difficulty.normal,
-                ),
-                onHard: () => changeDifficulty(
-                  gridSize: 4,
-                  difficulty: Difficulty.hard,
-                ),
-              );
-            } else if (layoutWidth < widthMedium) {
-              return MediumLayout(
-                difficultyAnimation: status == Status.finished
-                    ? finishAnimationController
-                    : difficultyAnimationController,
-                onEasy: () => changeDifficulty(
-                  gridSize: 2,
-                  difficulty: Difficulty.easy,
-                ),
-                onNormal: () => changeDifficulty(
-                  gridSize: 3,
-                  difficulty: Difficulty.normal,
-                ),
-                onHard: () => changeDifficulty(
-                  gridSize: 4,
-                  difficulty: Difficulty.hard,
-                ),
-              );
-            } else {
-              return LargeLayout(
-                animationController: status == Status.finished
-                    ? finishAnimationController
-                    : difficultyAnimationController,
-                onEasy: () => changeDifficulty(
-                  gridSize: 2,
-                  difficulty: Difficulty.easy,
-                ),
-                onNormal: () => changeDifficulty(
-                  gridSize: 3,
-                  difficulty: Difficulty.normal,
-                ),
-                onHard: () => changeDifficulty(
-                  gridSize: 4,
-                  difficulty: Difficulty.hard,
-                ),
-              );
-            }
-          },
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final layoutWidth = constraints.maxWidth;
+              if (layoutWidth < widthSmall) {
+                return SmallLayout(
+                  difficultyAnimation: status == Status.finished
+                      ? finishAnimationController
+                      : difficultyAnimationController,
+                  onEasy: () => changeDifficulty(
+                    gridSize: 2,
+                    difficulty: Difficulty.easy,
+                  ),
+                  onNormal: () => changeDifficulty(
+                    gridSize: 3,
+                    difficulty: Difficulty.normal,
+                  ),
+                  onHard: () => changeDifficulty(
+                    gridSize: 4,
+                    difficulty: Difficulty.hard,
+                  ),
+                );
+              } else if (layoutWidth < widthMedium) {
+                return MediumLayout(
+                  difficultyAnimation: status == Status.finished
+                      ? finishAnimationController
+                      : difficultyAnimationController,
+                  onEasy: () => changeDifficulty(
+                    gridSize: 2,
+                    difficulty: Difficulty.easy,
+                  ),
+                  onNormal: () => changeDifficulty(
+                    gridSize: 3,
+                    difficulty: Difficulty.normal,
+                  ),
+                  onHard: () => changeDifficulty(
+                    gridSize: 4,
+                    difficulty: Difficulty.hard,
+                  ),
+                );
+              } else {
+                return LargeLayout(
+                  animationController: status == Status.finished
+                      ? finishAnimationController
+                      : difficultyAnimationController,
+                  onEasy: () => changeDifficulty(
+                    gridSize: 2,
+                    difficulty: Difficulty.easy,
+                  ),
+                  onNormal: () => changeDifficulty(
+                    gridSize: 3,
+                    difficulty: Difficulty.normal,
+                  ),
+                  onHard: () => changeDifficulty(
+                    gridSize: 4,
+                    difficulty: Difficulty.hard,
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
