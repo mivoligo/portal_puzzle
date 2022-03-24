@@ -33,7 +33,7 @@ class SmallLayout extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.all(32.0),
-              child: AppTitle(),
+              child: FittedBox(child: AppTitle()),
             ),
             if (status != Status.finished) ...[
               Padding(
