@@ -33,4 +33,4 @@ Why not allow those tiles to move through "portals"... The rest is history (git 
 
 ## Download for Android
 
-Coming soon
+[Portal Puzzle in Play Store](https://play.google.com/store/apps/details?id=org.mivoligo.portal_puzzle)
