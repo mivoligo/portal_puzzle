@@ -37,6 +37,7 @@ class StartButton extends StatelessWidget {
       }
     }
 
+    final gameModel = context.read<GameModel>();
     return FancyButton(
       label: label(),
       surfaceColor: k.lightRose,
@@ -46,11 +47,11 @@ class StartButton extends StatelessWidget {
       isSmall: false,
       isSelected: status == Status.shuffling,
       onPressed: status == Status.finished
-          ? context.read<GameModel>().resetGame
+          ? gameModel.resetGame
           : () async {
-              context.read<GameModel>().shuffle();
+              gameModel.shuffle();
               await onPressed();
-              context.read<GameModel>().markPlayable();
+              gameModel.markPlayable();
             },
     );
   }

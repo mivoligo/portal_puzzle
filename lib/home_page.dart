@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    RawKeyboard.instance.addListener(handleKeyPress);
+    HardwareKeyboard.instance.addHandler(handleKeyPress);
     status = context.read<GameModel>().status;
     final gridSize = context.read<GameModel>().gridSize;
     context.read<GameBoardModel>().generateGameBoxes(gridSize: gridSize);
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     difficultyAnimationController.dispose();
     finishAnimationController.dispose();
-    RawKeyboard.instance.removeListener(handleKeyPress);
+    HardwareKeyboard.instance.removeHandler(handleKeyPress);
     super.dispose();
   }
 
@@ -66,20 +66,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> start(int gridSize) async {
-    context.read<GameModel>().shuffle();
+    final gameModel = context.read<GameModel>();
+
+    gameModel.shuffle();
     await context.read<GameBoardModel>().shuffle(gridSize);
-    context.read<GameModel>().markPlayable();
+    gameModel.markPlayable();
   }
 
-  Future<void> handleKeyPress(RawKeyEvent event) async {
-    if (event is RawKeyUpEvent) {
-      final key = event.physicalKey;
+  bool handleKeyPress(KeyEvent event) {
+    final key = event.physicalKey;
+    final gameModel = context.read<GameModel>();
+    final gameBoardModel = context.read<GameBoardModel>();
+
+    if (event is KeyUpEvent) {
       if (key == PhysicalKeyboardKey.keyP || key == PhysicalKeyboardKey.enter) {
         if (!(status == Status.finished || status == Status.shuffling)) {
-          final gridSize = context.read<GameModel>().gridSize;
+          final gridSize = gameModel.gridSize;
           start(gridSize);
         } else if (status == Status.finished) {
-          context.read<GameModel>().resetGame();
+          gameModel.resetGame();
         }
       } else if (key == PhysicalKeyboardKey.keyE) {
         changeDifficulty(difficulty: Difficulty.easy, gridSize: 2);
@@ -89,79 +94,73 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         changeDifficulty(difficulty: Difficulty.hard, gridSize: 4);
       } else if (key == PhysicalKeyboardKey.digit1) {
         if (status == Status.playable) {
-          context.read<GameModel>().useKeyboard = true;
-          context.read<GameBoardModel>().selectRowAndColumn(index: 0);
+          gameModel.useKeyboard = true;
+          gameBoardModel.selectRowAndColumn(index: 0);
         }
       } else if (key == PhysicalKeyboardKey.digit2) {
         if (status == Status.playable) {
-          context.read<GameModel>().useKeyboard = true;
-          context.read<GameBoardModel>().selectRowAndColumn(index: 1);
+          gameModel.useKeyboard = true;
+          gameBoardModel.selectRowAndColumn(index: 1);
         }
       } else if (key == PhysicalKeyboardKey.digit3) {
-        final gridSize = context.read<GameModel>().gridSize;
+        final gridSize = gameModel.gridSize;
         if (gridSize > 2) {
           if (status == Status.playable) {
-            context.read<GameModel>().useKeyboard = true;
-            context.read<GameBoardModel>().selectRowAndColumn(index: 2);
+            gameModel.useKeyboard = true;
+            gameBoardModel.selectRowAndColumn(index: 2);
           }
         }
       } else if (key == PhysicalKeyboardKey.digit4) {
-        final gridSize = context.read<GameModel>().gridSize;
+        final gridSize = gameModel.gridSize;
         if (gridSize > 3) {
           if (status == Status.playable) {
-            context.read<GameModel>().useKeyboard = true;
-            context.read<GameBoardModel>().selectRowAndColumn(index: 3);
+            gameModel.useKeyboard = true;
+            gameBoardModel.selectRowAndColumn(index: 3);
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowLeft ||
           key == PhysicalKeyboardKey.keyA) {
-        if (status == Status.playable &&
-            context.read<GameModel>().useKeyboard) {
-          final gridSize = context.read<GameModel>().gridSize;
-          await context.read<GameBoardModel>().moveRowLeft(gridSize: gridSize);
-          context.read<GameModel>().addMove(shouldAdd: true);
-          if (context.read<GameBoardModel>().puzzleSolved) {
-            context.read<GameModel>().markSolved();
+        if (status == Status.playable && gameModel.useKeyboard) {
+          final gridSize = gameModel.gridSize;
+          gameBoardModel.moveRowLeft(gridSize: gridSize);
+          gameModel.addMove(shouldAdd: true);
+          if (gameBoardModel.puzzleSolved) {
+            gameModel.markSolved();
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowRight ||
           key == PhysicalKeyboardKey.keyD) {
-        if (status == Status.playable &&
-            context.read<GameModel>().useKeyboard) {
-          final gridSize = context.read<GameModel>().gridSize;
-          await context.read<GameBoardModel>().moveRowRight(gridSize: gridSize);
-          context.read<GameModel>().addMove(shouldAdd: true);
-          if (context.read<GameBoardModel>().puzzleSolved) {
-            context.read<GameModel>().markSolved();
+        if (status == Status.playable && gameModel.useKeyboard) {
+          final gridSize = gameModel.gridSize;
+          gameBoardModel.moveRowRight(gridSize: gridSize);
+          gameModel.addMove(shouldAdd: true);
+          if (gameBoardModel.puzzleSolved) {
+            gameModel.markSolved();
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowUp ||
           key == PhysicalKeyboardKey.keyW) {
-        if (status == Status.playable &&
-            context.read<GameModel>().useKeyboard) {
-          final gridSize = context.read<GameModel>().gridSize;
-          await context.read<GameBoardModel>().moveColumnUp(gridSize: gridSize);
-          context.read<GameModel>().addMove(shouldAdd: true);
-          if (context.read<GameBoardModel>().puzzleSolved) {
-            context.read<GameModel>().markSolved();
+        if (status == Status.playable && gameModel.useKeyboard) {
+          final gridSize = gameModel.gridSize;
+          gameBoardModel.moveColumnUp(gridSize: gridSize);
+          gameModel.addMove(shouldAdd: true);
+          if (gameBoardModel.puzzleSolved) {
+            gameModel.markSolved();
           }
         }
       } else if (key == PhysicalKeyboardKey.arrowDown ||
           key == PhysicalKeyboardKey.keyS) {
-        if (status == Status.playable &&
-            context.read<GameModel>().useKeyboard) {
-          final gridSize = context.read<GameModel>().gridSize;
-          await context
-              .read<GameBoardModel>()
-              .moveColumnDown(gridSize: gridSize);
-          context.read<GameModel>().addMove(shouldAdd: true);
-          if (context.read<GameBoardModel>().puzzleSolved) {
-            context.read<GameModel>().markSolved();
+        if (status == Status.playable && gameModel.useKeyboard) {
+          final gridSize = gameModel.gridSize;
+          gameBoardModel.moveColumnDown(gridSize: gridSize);
+          gameModel.addMove(shouldAdd: true);
+          if (gameBoardModel.puzzleSolved) {
+            gameModel.markSolved();
           }
         }
       } else if (!visibleShortcuts && key == PhysicalKeyboardKey.space) {
         visibleShortcuts = true;
-        await showDialog(
+        showDialog(
             context: context,
             builder: (context) {
               return const _ShortcutsDialog();
@@ -169,6 +168,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         visibleShortcuts = false;
       }
     }
+    return true;
   }
 
   @override

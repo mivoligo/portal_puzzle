@@ -26,8 +26,8 @@ class _InfoDialog extends StatelessWidget {
   const _InfoDialog();
 
   Future<void> openSimpleLink(String link) async {
-    if (await canLaunch(link)) {
-      await launch(link);
+    if (await canLaunchUrl(Uri.parse(link))) {
+      await launchUrl(Uri.parse(link));
     }
   }
 
