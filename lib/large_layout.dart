@@ -7,12 +7,12 @@ import 'widgets/widgets.dart';
 
 class LargeLayout extends StatelessWidget {
   const LargeLayout({
-    Key? key,
+    super.key,
     required this.animationController,
     required this.onEasy,
     required this.onNormal,
     required this.onHard,
-  }) : super(key: key);
+  });
 
   final AnimationController animationController;
   final VoidCallback onEasy;

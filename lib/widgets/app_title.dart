@@ -4,9 +4,9 @@ import '../constants.dart';
 
 class AppTitle extends StatelessWidget {
   const AppTitle({
-    Key? key,
+    super.key,
     this.isLarge = false,
-  }) : super(key: key);
+  });
 
   final bool isLarge;
 

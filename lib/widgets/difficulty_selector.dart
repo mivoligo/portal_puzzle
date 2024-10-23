@@ -7,11 +7,11 @@ import 'widgets.dart';
 
 class DifficultySelector extends StatelessWidget {
   const DifficultySelector({
-    Key? key,
+    super.key,
     required this.onEasy,
     required this.onNormal,
     required this.onHard,
-  }) : super(key: key);
+  });
 
   final VoidCallback onEasy;
   final VoidCallback onNormal;

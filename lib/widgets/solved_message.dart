@@ -5,7 +5,7 @@ import '../constants.dart';
 import '../models/models.dart';
 
 class SolvedMessage extends StatelessWidget {
-  const SolvedMessage({Key? key}) : super(key: key);
+  const SolvedMessage({super.key});
 
   @override
   Widget build(BuildContext context) {

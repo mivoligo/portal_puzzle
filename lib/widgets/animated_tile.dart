@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AnimatedTile extends StatelessWidget {
   AnimatedTile({
-    Key? key,
+    super.key,
     required this.child,
     required int gridSize,
     required double dx,
@@ -30,8 +30,7 @@ class AnimatedTile extends StatelessWidget {
               curve: Curves.easeIn,
             ),
           ),
-        ),
-        super(key: key);
+        );
 
   final Widget child;
   final Animation<Offset> _slideAnimation;

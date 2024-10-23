@@ -6,11 +6,11 @@ import '../models/models.dart';
 
 class GameBoxTile extends StatelessWidget {
   const GameBoxTile({
-    Key? key,
+    super.key,
     required this.box,
     required this.text,
     required this.boardSize,
-  }) : super(key: key);
+  });
 
   final GameBox box;
   final String text;

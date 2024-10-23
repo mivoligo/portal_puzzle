@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AnimatedBoard extends AnimatedWidget {
   AnimatedBoard({
-    Key? key,
+    super.key,
     required this.finished,
     required this.front,
     required this.back,
@@ -25,7 +25,7 @@ class AnimatedBoard extends AnimatedWidget {
             curve: Curves.elasticOut,
           ),
         ),
-        super(key: key, listenable: animation);
+        super(listenable: animation);
 
   final bool finished;
   final Widget front;

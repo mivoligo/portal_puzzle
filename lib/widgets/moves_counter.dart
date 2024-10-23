@@ -5,9 +5,9 @@ import '../models/models.dart';
 
 class MovesCounter extends StatelessWidget {
   const MovesCounter({
-    Key? key,
+    super.key,
     this.isLarge = false,
-  }) : super(key: key);
+  });
 
   final bool isLarge;
 

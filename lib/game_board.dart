@@ -8,10 +8,10 @@ import 'widgets/widgets.dart';
 
 class GameBoard extends StatefulWidget {
   const GameBoard({
-    Key? key,
+    super.key,
     required this.parentSize,
     required this.animationController,
-  }) : super(key: key);
+  });
 
   final double parentSize;
   final Animation<double> animationController;

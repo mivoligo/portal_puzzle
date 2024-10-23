@@ -5,7 +5,7 @@ import '../constants.dart' as k;
 import 'widgets.dart';
 
 class InfoButton extends StatelessWidget {
-  const InfoButton({Key? key}) : super(key: key);
+  const InfoButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class InfoButton extends StatelessWidget {
 }
 
 class _InfoDialog extends StatelessWidget {
-  const _InfoDialog({Key? key}) : super(key: key);
+  const _InfoDialog();
 
   Future<void> openSimpleLink(String link) async {
     if (await canLaunch(link)) {

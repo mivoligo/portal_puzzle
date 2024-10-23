@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class ConfettiMachine extends StatelessWidget {
   const ConfettiMachine({
-    Key? key,
+    super.key,
     required this.confettiController,
     required this.starSize,
-  }) : super(key: key);
+  });
 
   final ConfettiController confettiController;
   final double starSize;

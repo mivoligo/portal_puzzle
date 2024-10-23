@@ -7,12 +7,12 @@ import 'widgets/widgets.dart';
 
 class SmallLayout extends StatelessWidget {
   const SmallLayout({
-    Key? key,
+    super.key,
     required this.difficultyAnimation,
     required this.onEasy,
     required this.onNormal,
     required this.onHard,
-  }) : super(key: key);
+  });
 
   final AnimationController difficultyAnimation;
   final VoidCallback onEasy;

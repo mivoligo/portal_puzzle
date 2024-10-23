@@ -5,13 +5,13 @@ import 'widgets.dart';
 
 class PlayArea extends StatelessWidget {
   const PlayArea({
-    Key? key,
+    super.key,
     required this.boardSize,
     required this.boxes,
     required this.gridSize,
     required this.status,
     required this.animationController,
-  }) : super(key: key);
+  });
 
   final double boardSize;
   final List<GameBox> boxes;
@@ -50,16 +50,16 @@ class PlayArea extends StatelessWidget {
                 gridSize: gridSize,
                 dx: box.currentLoc.dx,
                 dy: box.currentLoc.dy,
+                animation: animationController,
                 child: GameBoxTile(
                   box: box,
                   text: '${index + 1}',
                   boardSize: boardSize,
                 ),
-                animation: animationController,
               ),
             );
           },
-        ).toList(),
+        ),
       ],
     );
   }

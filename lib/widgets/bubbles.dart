@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class Bubbles extends StatefulWidget {
-  const Bubbles({Key? key}) : super(key: key);
+  const Bubbles({super.key});
 
   @override
   State<Bubbles> createState() => _BubblesState();

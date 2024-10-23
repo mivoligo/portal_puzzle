@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FancyButton extends StatefulWidget {
   const FancyButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     required this.surfaceColor,
@@ -11,7 +11,7 @@ class FancyButton extends StatefulWidget {
     this.iconData,
     this.isSmall = true,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   final String label;
   final Color surfaceColor;
@@ -58,11 +58,6 @@ class _FancyButtonState extends State<FancyButton> {
               padding: widget.isSmall
                   ? const EdgeInsets.symmetric(horizontal: 16, vertical: 12)
                   : const EdgeInsets.all(16),
-              child: AnimatedSize(
-                duration: const Duration(milliseconds: 100),
-                curve: Curves.easeInOut,
-                child: child,
-              ),
               decoration: BoxDecoration(
                 color: widget.surfaceColor,
                 borderRadius: widget.isSmall
@@ -80,6 +75,11 @@ class _FancyButtonState extends State<FancyButton> {
                     offset: Offset(0, value + 2),
                   ),
                 ],
+              ),
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 100),
+                curve: Curves.easeInOut,
+                child: child,
               ),
             ),
           );

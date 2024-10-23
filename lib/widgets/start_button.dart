@@ -6,7 +6,7 @@ import '../models/models.dart';
 import 'widgets.dart';
 
 class StartButton extends StatelessWidget {
-  const StartButton({Key? key, required this.onPressed}) : super(key: key);
+  const StartButton({super.key, required this.onPressed});
 
   final Future<void> Function() onPressed;
 

@@ -9,7 +9,7 @@ import 'models/models.dart';
 import 'small_layout.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -254,9 +254,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 }
 
 class _ShortcutsDialog extends StatelessWidget {
-  const _ShortcutsDialog({
-    Key? key,
-  }) : super(key: key);
+  const _ShortcutsDialog();
 
   @override
   Widget build(BuildContext context) {
@@ -311,11 +309,10 @@ class _ShortcutsDialog extends StatelessWidget {
 
 class _Shortcut extends StatelessWidget {
   const _Shortcut({
-    Key? key,
     required this.shortcut,
     this.altShortcut,
     required this.label,
-  }) : super(key: key);
+  });
 
   final String shortcut;
   final String? altShortcut;
@@ -329,18 +326,18 @@ class _Shortcut extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              border: Border.all(color: darkViolet, width: 2),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
             child: Center(
               child: Text(
                 shortcut,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: darkViolet, width: 2),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(8),
               ),
             ),
           ),
@@ -351,18 +348,18 @@ class _Shortcut extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                border: Border.all(color: darkViolet, width: 2),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
               child: Center(
                 child: Text(
                   altShortcut!,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: darkViolet, width: 2),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
                 ),
               ),
             ),

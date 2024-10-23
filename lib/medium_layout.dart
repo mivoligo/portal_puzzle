@@ -7,12 +7,12 @@ import 'widgets/widgets.dart';
 
 class MediumLayout extends StatelessWidget {
   const MediumLayout({
-    Key? key,
+    super.key,
     required this.difficultyAnimation,
     required this.onEasy,
     required this.onNormal,
     required this.onHard,
-  }) : super(key: key);
+  });
 
   final AnimationController difficultyAnimation;
   final VoidCallback onEasy;

@@ -11,9 +11,9 @@ import 'widgets.dart';
 
 class AnimatedBoardBack extends StatefulWidget {
   const AnimatedBoardBack({
-    Key? key,
+    super.key,
     required this.boardSize,
-  }) : super(key: key);
+  });
 
   final double boardSize;
 
